@@ -1,4 +1,4 @@
-package com.yms.newszone.ui.theme
+package com.yms.theme
 
 import androidx.compose.ui.graphics.Color
 

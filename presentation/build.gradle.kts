@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.yms.presentation"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24

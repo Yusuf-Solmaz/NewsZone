@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_title_1">Stay Updated Instantly</string>
+    <string name="onboarding_description_1">The latest news on technology, world events, and more is just a tap away. Discover NewsZone to stay informed in real-time.</string>
+    <string name="onboarding_title_2">Personalized Content</string>
+    <string name="onboarding_description_2">Filter news based on your preferences and get only the topics you\'re interested in. Let us customize your news feed.</string>
+    <string name="onboarding_title_3">Quick and Easy Access</string>
+    <string name="onboarding_description_3">Our app is designed for quick and easy access. Get the latest updates within minutes and browse your news feed effortlessly.</string>
+    <string name="home">ZoneNews</string>
+    <string name="get_started">Get Started</string>
+    <string name="next">Next</string>
+</resources>

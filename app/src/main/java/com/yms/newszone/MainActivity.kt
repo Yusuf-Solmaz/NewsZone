@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.yms.newszone.ui.theme.NewsZoneTheme
-import com.yms.presentation.navigation.TestPage
+import com.yms.presentation.main.NewsZoneApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,9 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NewsZoneTheme {
-                TestPage()
-            }
+            NewsZoneApp()
         }
     }
 }
