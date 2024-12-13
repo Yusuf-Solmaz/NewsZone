@@ -1,9 +1,9 @@
 package com.yms.data.di
 
 import com.yms.domain.repository.UserPreferencesRepository
-import com.yms.domain.usecase.user_preferences.ReadAppEntry
-import com.yms.domain.usecase.user_preferences.SaveAppEntry
-import com.yms.domain.usecase.user_preferences.UserPreferencesUseCase
+import com.yms.domain.usecase.user_preferences.app_entry.ReadAppEntry
+import com.yms.domain.usecase.user_preferences.app_entry.SaveAppEntry
+import com.yms.domain.usecase.user_preferences.app_entry.UserPreferencesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,12 +15,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
 
+
     @Provides
     @Singleton
-    fun provideUserPreferencesUseCase(userPreferencesManager: UserPreferencesRepository): UserPreferencesUseCase {
+    fun provideUserPreferencesUseCase(userPreferencesRepository: UserPreferencesRepository): UserPreferencesUseCase {
         return UserPreferencesUseCase(
-            saveAppEntry = SaveAppEntry(userPreferencesManager),
-            readAppEntry = ReadAppEntry(userPreferencesManager)
+            saveAppEntry = SaveAppEntry(userPreferencesRepository),
+            readAppEntry = ReadAppEntry(userPreferencesRepository)
         )
     }
 }
