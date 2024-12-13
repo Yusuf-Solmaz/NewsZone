@@ -43,6 +43,7 @@ fun NewsZoneNavigation(
         ){
             composable(NavigationGraph.ONBOARDING_SCREEN.name){
                 OnBoardingScreen(
+                    modifier = Modifier.fillMaxSize(),
                     saveAppEntry = {
                         saveAppEntry(OnBoardingEvent.SaveAppEntry)
                     },

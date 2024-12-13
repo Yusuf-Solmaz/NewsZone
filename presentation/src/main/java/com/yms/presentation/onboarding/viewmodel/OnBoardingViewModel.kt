@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.yms.domain.usecase.user_preferences.UserPreferencesUseCase
 import com.yms.presentation.navigation.NavigationGraph
 import dagger.hilt.android.lifecycle.HiltViewModel
-
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -20,8 +19,9 @@ class OnBoardingViewModel @Inject constructor(
     private val userPreferencesUseCase: UserPreferencesUseCase
 ) : ViewModel(){
 
-    companion object {
+    private companion object {
         const val STOP_TIME_MILLIS = 5_000L
+        const val TAG = "OnBoardingViewModel"
     }
 
     fun onEvent(event: OnBoardingEvent){
@@ -41,7 +41,7 @@ class OnBoardingViewModel @Inject constructor(
     val uiState: StateFlow<OnBoardingState> =
         userPreferencesUseCase.readAppEntry().map {
             appEntry ->
-            Log.d("OnBoardingViewModel", "App Entry: $appEntry")
+            Log.d(TAG, "App Entry: $appEntry")
             if (appEntry){
                 OnBoardingState(isLoading = false,startDestination = NavigationGraph.HOME.name,isSplashScreenVisible = false)
             }

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,7 +33,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen(saveAppEntry: () -> Unit, navigateToHome: () -> Unit) {
+fun OnBoardingScreen(modifier: Modifier = Modifier,saveAppEntry: () -> Unit, navigateToHome: () -> Unit) {
 
     val pager = getOnboardingPages()
     val pagerState = rememberPagerState(initialPage = 0) {
@@ -43,9 +42,7 @@ fun OnBoardingScreen(saveAppEntry: () -> Unit, navigateToHome: () -> Unit) {
     val scope = rememberCoroutineScope()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+        modifier = modifier.background(MaterialTheme.colorScheme.background)
     ) {
         HorizontalPager(
             state = pagerState,
