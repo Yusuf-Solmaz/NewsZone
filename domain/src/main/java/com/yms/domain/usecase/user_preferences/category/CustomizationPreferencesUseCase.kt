@@ -1,3 +1,3 @@
 package com.yms.domain.usecase.user_preferences.category
 
-data class CustomizationPreferencesUseCase(val saveCategory: SaveCategory)
+data class CustomizationPreferencesUseCase(val saveCategory: SaveCategory, val readCategory: ReadCategory)
