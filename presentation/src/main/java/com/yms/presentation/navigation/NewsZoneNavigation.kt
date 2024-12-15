@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.yms.presentation.customization.CustomizationScreen
-import com.yms.presentation.home.HomeScreen
+import com.yms.presentation.home.NewsHomeScreen
 import com.yms.presentation.onboarding.OnBoardingScreen
 import com.yms.presentation.onboarding.viewmodel.OnBoardingEvent
 import com.yms.presentation.onboarding.viewmodel.OnBoardingState
@@ -53,14 +53,14 @@ fun NewsZoneNavigation(
             composable(NavigationGraph.CUSTOMIZATION_SCREEN.name){
                 CustomizationScreen(
                     saveAppEntry = { saveAppEntry(OnBoardingEvent.SaveAppEntry)},
-                    navigateToHome = {navController.navigate(NavigationGraph.HOME.name)}
+                    navigateToHome = {navController.navigate(NavigationGraph.NEWS_HOME.name)}
                 )
             }
             composable(NavigationGraph.SPLASH_SCREEN.name){
                 SplashScreen()
             }
-            composable(NavigationGraph.HOME.name){
-                HomeScreen()
+            composable(NavigationGraph.NEWS_HOME.name){
+                NewsHomeScreen()
             }
         }
     }

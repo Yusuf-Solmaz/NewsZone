@@ -7,5 +7,5 @@ enum class NavigationGraph(@StringRes val title: Int?){
     ONBOARDING_SCREEN(null),
     SPLASH_SCREEN(null),
     CUSTOMIZATION_SCREEN(null),
-    HOME(R.string.home)
+    NEWS_HOME(R.string.home)
 }

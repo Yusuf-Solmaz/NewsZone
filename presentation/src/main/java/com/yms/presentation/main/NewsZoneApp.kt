@@ -26,7 +26,7 @@ fun NewsZoneApp(viewModel: OnBoardingViewModel = hiltViewModel(),navController: 
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = NavigationGraph.valueOf(
-        backStackEntry?.destination?.route ?: NavigationGraph.HOME.name
+        backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
     )
 
     val onBoardingState by viewModel.uiState.collectAsState()
