@@ -9,4 +9,8 @@
     <string name="home">ZoneNews</string>
     <string name="get_started">Get Started</string>
     <string name="next">Next</string>
+    <string name="follow_up_time_question">How often do you follow the news?</string>
+    <string name="age_group_question">Select your age group</string>
+    <string name="gender_question">Select gender</string>
+    <string name="back">Back</string>
 </resources>
