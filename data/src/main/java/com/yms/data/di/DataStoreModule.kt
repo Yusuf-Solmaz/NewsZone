@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.yms.data.repository.UserPreferencesRepositoryImpl
+import com.yms.data.datastore.UserPreferencesDataStore
 import com.yms.data.utils.USER_PREFERENCES
 import com.yms.domain.repository.UserPreferencesRepository
 import dagger.Module
@@ -27,7 +27,7 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository {
-        return UserPreferencesRepositoryImpl(dataStore)
+    fun provideUserPreferencesDataStore(dataStore: DataStore<Preferences>): UserPreferencesRepository {
+        return UserPreferencesDataStore(dataStore)
     }
 }
