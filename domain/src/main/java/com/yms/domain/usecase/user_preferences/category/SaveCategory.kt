@@ -1,9 +1,9 @@
 package com.yms.domain.usecase.user_preferences.category
 
-import com.yms.domain.model.user_preferences_model.AgeGroup
-import com.yms.domain.model.user_preferences_model.FollowUpTime
-import com.yms.domain.model.user_preferences_model.Gender
-import com.yms.domain.repository.CustomizationRepository
+import com.yms.domain.model.user_preferences.AgeGroup
+import com.yms.domain.model.user_preferences.FollowUpTime
+import com.yms.domain.model.user_preferences.Gender
+import com.yms.domain.repository.user_preferences.CustomizationRepository
 
 class SaveCategory (
     private val customizationRepository: CustomizationRepository){

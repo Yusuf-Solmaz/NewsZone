@@ -1,6 +1,6 @@
 package com.yms.domain.usecase.user_preferences.app_entry
 
-import com.yms.domain.repository.UserPreferencesRepository
+import com.yms.domain.repository.user_preferences.UserPreferencesRepository
 
 class SaveAppEntry (private val userPreferencesRepository: UserPreferencesRepository){
 

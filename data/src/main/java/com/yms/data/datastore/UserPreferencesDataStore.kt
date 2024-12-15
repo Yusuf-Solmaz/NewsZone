@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.yms.data.utils.APP_ENTRY_PREFERENCES
 import com.yms.data.utils.CATEGORY_PREFERENCES
-import com.yms.domain.repository.UserPreferencesRepository
+import com.yms.domain.repository.user_preferences.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

@@ -10,10 +10,10 @@ import com.yms.data.worker.SaveCategoryWorker
 import com.yms.data.worker.utils.AGE_GROUP_KEY
 import com.yms.data.worker.utils.FOLLOW_UP_TIME_KEY
 import com.yms.data.worker.utils.GENDER_KEY
-import com.yms.domain.model.user_preferences_model.AgeGroup
-import com.yms.domain.model.user_preferences_model.FollowUpTime
-import com.yms.domain.model.user_preferences_model.Gender
-import com.yms.domain.repository.CustomizationRepository
+import com.yms.domain.model.user_preferences.AgeGroup
+import com.yms.domain.model.user_preferences.FollowUpTime
+import com.yms.domain.model.user_preferences.Gender
+import com.yms.domain.repository.user_preferences.CustomizationRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
