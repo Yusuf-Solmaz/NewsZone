@@ -6,5 +6,6 @@ import com.yms.presentation.R
 enum class NavigationGraph(@StringRes val title: Int?){
     ONBOARDING_SCREEN(null),
     SPLASH_SCREEN(null),
+    CUSTOMIZATION_SCREEN(null),
     HOME(R.string.home)
 }

@@ -3,7 +3,7 @@ package com.yms.presentation.onboarding.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yms.domain.usecase.user_preferences.UserPreferencesUseCase
+import com.yms.domain.usecase.user_preferences.app_entry.UserPreferencesUseCase
 import com.yms.presentation.navigation.NavigationGraph
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted

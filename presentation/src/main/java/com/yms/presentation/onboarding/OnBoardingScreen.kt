@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen(modifier: Modifier = Modifier,saveAppEntry: () -> Unit, navigateToHome: () -> Unit) {
+fun OnBoardingScreen(modifier: Modifier = Modifier,navigateToCustomization: () -> Unit) {
 
     val pager = getOnboardingPages()
     val pagerState = rememberPagerState(initialPage = 0) {
@@ -77,8 +77,7 @@ fun OnBoardingScreen(modifier: Modifier = Modifier,saveAppEntry: () -> Unit, nav
                 },
                 onGetStartedClick = {
                     scope.launch {
-                        saveAppEntry()
-                        navigateToHome()
+                        navigateToCustomization()
                     }
                 }
             )
