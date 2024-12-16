@@ -14,13 +14,14 @@ import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(val api: NewsApi): NewsRepository {
     override fun getNewsByCategory(
-        category: String,
+        category: String?,
         page: Int,
         pageSize: Int
     ): Flow<RootResult<NewsData>> = flow {
         emit(RootResult.Loading)
 
         try {
+
             val response = api.getNewsByCategory(category = category, page = page, pageSize = pageSize)
 
             Log.d("NewsRepositoryImpl", "getNewsByCategory: ${response.articleDtos?.size}")

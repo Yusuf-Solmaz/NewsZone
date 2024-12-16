@@ -43,10 +43,10 @@ class NewsHomeViewModel @Inject constructor(
         )
 
     init {
-        getNewsByCategory("technology", 1, 20)
+        getNewsByCategory(category = null, page = 1, pageSize =  20)
     }
 
-    fun getNewsByCategory(category: String, page: Int, pageSize: Int) {
+    fun getNewsByCategory(category: String?, page: Int, pageSize: Int) {
         viewModelScope.launch {
             newsUseCase.getNewsByCategory(category, page, pageSize).collect { result ->
                 when (result) {
