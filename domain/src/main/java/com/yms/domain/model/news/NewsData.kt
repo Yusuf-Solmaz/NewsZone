@@ -12,7 +12,8 @@ data class ArticleData(
     val sourceDto: SourceData,
     val title: String,
     val url: String,
-    val urlToImage: String
+    val urlToImage: String,
+    val timeAgo: String
 )
 
 data class SourceData(
