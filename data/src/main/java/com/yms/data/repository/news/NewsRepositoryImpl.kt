@@ -1,7 +1,6 @@
 package com.yms.data.repository.news
 
-import android.util.Log
-import com.yms.data.mapper.NewsMapper.toDomain
+import com.yms.data.mapper.NewsMapper.toNews
 import com.yms.data.remote.NewsApi
 import com.yms.domain.model.news.NewsData
 import com.yms.domain.repository.news.NewsRepository
@@ -16,24 +15,23 @@ class NewsRepositoryImpl @Inject constructor(val api: NewsApi): NewsRepository {
     override fun getNewsByCategory(
         category: String?,
         page: Int,
-        pageSize: Int
+        pageSize: Int,
+        source: String?,
     ): Flow<RootResult<NewsData>> = flow {
         emit(RootResult.Loading)
 
         try {
 
-            val response = api.getNewsByCategory(category = category, page = page, pageSize = pageSize)
+            val response = api.getNewsByCategory(category = category, page = page, pageSize = pageSize, source = source)
 
-            Log.d("NewsRepositoryImpl", "getNewsByCategory: ${response.articleDtos?.size}")
+            emit(RootResult.Success(response.toNews()))
 
-            emit(RootResult.Success(response.toDomain()))
-
-            Log.d("NewsRepositoryImpl", "getNewsByCategory: ${response.toDomain().articleDtos.size}")
         }
         catch (e:Exception){
             emit(RootResult.Error(e.message.toString()))
         }
     }.flowOn(Dispatchers.IO)
+
 
     override fun searchNews(
         query: String,
@@ -45,7 +43,7 @@ class NewsRepositoryImpl @Inject constructor(val api: NewsApi): NewsRepository {
         try {
             val response = api.searchNews(query = query, sortBy = sortBy, page = page, pageSize = pageSize)
 
-            emit(RootResult.Success(response.toDomain()))
+            emit(RootResult.Success(response.toNews()))
         }
         catch (e:Exception){
             emit(RootResult.Error(e.message.toString()))

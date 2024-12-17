@@ -3,6 +3,7 @@ package com.yms.data.di
 import com.yms.domain.repository.news.NewsRepository
 import com.yms.domain.repository.user_preferences.CustomizationRepository
 import com.yms.domain.repository.user_preferences.UserPreferencesRepository
+import com.yms.domain.usecase.news.GetBreakingNews
 import com.yms.domain.usecase.news.GetNewsByCategory
 import com.yms.domain.usecase.news.NewsUseCase
 import com.yms.domain.usecase.news.SearchNews
@@ -42,7 +43,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideNewsUseCase(newsRepository: NewsRepository): NewsUseCase {
-        return NewsUseCase(GetNewsByCategory(newsRepository), SearchNews(newsRepository))
+        return NewsUseCase(GetNewsByCategory(newsRepository), SearchNews(newsRepository), GetBreakingNews(newsRepository))
     }
 
 }
