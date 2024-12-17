@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_small">8.dp</dimen>
+    <dimen name="padding_medium">16.dp</dimen>
+    <dimen name="padding_big">32.dp</dimen>
+
+    <dimen name= "elevation_small">4.dp</dimen>"
+    <dimen name="elevation_medium">8.dp</dimen>
+    <dimen name="elevation_big">16.dp</dimen>
+
+    <dimen name="corner_shape_small">8.dp</dimen>
+    <dimen name="corner_shape_medium">16.dp</dimen>
+    <dimen name="corner_shape_big">32.dp</dimen>
+</resources>
