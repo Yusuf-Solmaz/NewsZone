@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.yms.domain"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
