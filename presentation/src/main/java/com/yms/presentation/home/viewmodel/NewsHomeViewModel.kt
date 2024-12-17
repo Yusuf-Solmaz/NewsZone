@@ -33,6 +33,10 @@ class NewsHomeViewModel @Inject constructor(
     val newsState: StateFlow<NewsState>
         get() = _newsState
 
+    private val _breakingNewsState = MutableStateFlow(BreakingNewsState())
+    val breakingNewsState: StateFlow<BreakingNewsState>
+        get() = _breakingNewsState
+
     val categoryState: StateFlow<CategoryState> =
         customizationPreferencesUseCase.readCategory().map { category ->
             CategoryState(category = category, isLoading = false)
@@ -43,7 +47,40 @@ class NewsHomeViewModel @Inject constructor(
         )
 
     init {
-        getNewsByCategory(category = null, page = 1, pageSize =  20)
+        //getNewsByCategory(category = categoryState.value.category, page = 1, pageSize = 20)
+        getBreakingNews()
+
+        Log.d("CategoryState", "$categoryState")
+    }
+
+    fun getBreakingNews(page: Int = 1, pageSize: Int = 5) {
+        viewModelScope.launch {
+            newsUseCase.getBreakingNews(page, pageSize).collect { result ->
+                when (result) {
+                    is RootResult.Error -> {
+                        _breakingNewsState.update { state ->
+                            state.copy(isLoading = false, error = result.message)
+                        }
+
+                    }
+
+                    RootResult.Loading -> {
+                        _breakingNewsState.update { state ->
+                            state.copy(isLoading = true)
+                        }
+                    }
+
+                    is RootResult.Success -> {
+
+                        val articles = result.data?.articleDtos ?: emptyList()
+                        Log.d("BreakingNews", "Articles: ${articles.get(0)}")
+                        _breakingNewsState.update { state ->
+                            state.copy(isLoading = false, news = articles)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun getNewsByCategory(category: String?, page: Int, pageSize: Int) {
@@ -56,12 +93,14 @@ class NewsHomeViewModel @Inject constructor(
                             state.copy(isLoading = false, error = result.message)
                         }
                     }
+
                     is RootResult.Loading -> {
                         Log.d(TAG, "Loading...")
                         _newsState.update { state ->
                             state.copy(isLoading = true)
                         }
                     }
+
                     is RootResult.Success -> {
                         Log.d(TAG, "Success: ${result.data}")
                         val articles = result.data?.articleDtos ?: emptyList()
@@ -79,7 +118,13 @@ class NewsHomeViewModel @Inject constructor(
 
 
 data class NewsState(
-    val news: List<ArticleData> = emptyList(),
+    val news: List<ArticleData>? = null,
+    val isLoading: Boolean = true,
+    val error: String? = null
+)
+
+data class BreakingNewsState(
+    val news: List<ArticleData>? = null,
     val isLoading: Boolean = true,
     val error: String? = null
 )
