@@ -10,7 +10,9 @@ interface NewsApi {
     @GET("top-headlines")
     suspend fun getNewsByCategory(
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
+        @Query("sources") source: String?,
         @Query("language") language: String = "en",
+        @Query("sortBy") sortBy: String = "publishedAt",
         @Query("category") category: String?,
         @Query("page") page: Int = 1,
         @Query("pageSize") pageSize: Int = 20
