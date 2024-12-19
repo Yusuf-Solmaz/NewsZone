@@ -3,11 +3,14 @@ package com.yms.presentation.home.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.yms.domain.model.news.ArticleData
 import com.yms.domain.usecase.news.NewsUseCase
 import com.yms.domain.usecase.user_preferences.category.CustomizationPreferencesUseCase
 import com.yms.domain.utils.RootResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -20,18 +23,29 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsHomeViewModel @Inject constructor(
     val customizationPreferencesUseCase: CustomizationPreferencesUseCase,
-    val newsUseCase: NewsUseCase
+    val newsUseCase: NewsUseCase,
 ) :
     ViewModel() {
 
     private companion object {
         const val STOP_TIME_MILLIS = 5_000L
-        const val TAG = "NewsHomeViewModel"
+
     }
 
-    private val _newsState = MutableStateFlow(NewsState())
-    val newsState: StateFlow<NewsState>
-        get() = _newsState
+    val pagedNews = MutableStateFlow<PagingData<ArticleData>>(PagingData.empty())
+
+    fun getPagedNewsWithMediator(category: String?) {
+        viewModelScope.launch {
+
+            newsUseCase.getNewsByMediator(category) // Burada getNewsByMediator çağırıyoruz
+                .cachedIn(viewModelScope)
+                .collect {
+                    pagedNews.value = it
+                }
+        }
+    }
+
+
 
     private val _breakingNewsState = MutableStateFlow(BreakingNewsState())
     val breakingNewsState: StateFlow<BreakingNewsState>
@@ -46,8 +60,22 @@ class NewsHomeViewModel @Inject constructor(
             initialValue = CategoryState()
         )
 
+
+
+    fun getPagedNewsByCategory(category: String?) {
+        viewModelScope.launch {
+
+            pagedNews.value = PagingData.empty()
+            newsUseCase.getPagedNewsByCategory(category)
+                .cachedIn(viewModelScope)
+                .collect {
+                    pagedNews.value = it
+                }
+
+        }
+    }
+
     init {
-        //getNewsByCategory(category = categoryState.value.category, page = 1, pageSize = 20)
         getBreakingNews()
 
         Log.d("CategoryState", "$categoryState")
@@ -75,37 +103,6 @@ class NewsHomeViewModel @Inject constructor(
                         val articles = result.data?.articleDtos ?: emptyList()
                         Log.d("BreakingNews", "Articles: ${articles.get(0)}")
                         _breakingNewsState.update { state ->
-                            state.copy(isLoading = false, news = articles)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    fun getNewsByCategory(category: String?, page: Int, pageSize: Int) {
-        viewModelScope.launch {
-            newsUseCase.getNewsByCategory(category, page, pageSize).collect { result ->
-                when (result) {
-                    is RootResult.Error -> {
-                        Log.d(TAG, "Error: ${result.message}")
-                        _newsState.update { state ->
-                            state.copy(isLoading = false, error = result.message)
-                        }
-                    }
-
-                    is RootResult.Loading -> {
-                        Log.d(TAG, "Loading...")
-                        _newsState.update { state ->
-                            state.copy(isLoading = true)
-                        }
-                    }
-
-                    is RootResult.Success -> {
-                        Log.d(TAG, "Success: ${result.data}")
-                        val articles = result.data?.articleDtos ?: emptyList()
-                        Log.d(TAG, "Articles: $articles")
-                        _newsState.update { state ->
                             state.copy(isLoading = false, news = articles)
                         }
                     }
