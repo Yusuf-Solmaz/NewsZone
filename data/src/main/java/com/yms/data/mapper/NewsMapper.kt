@@ -1,5 +1,6 @@
 package com.yms.data.mapper
 
+import com.yms.data.local.model.NewsEntity
 import com.yms.data.remote.dto.news.ArticleDto
 import com.yms.data.remote.dto.news.NewsRoot
 import com.yms.data.remote.dto.news.SourceDto
@@ -12,9 +13,68 @@ import java.util.TimeZone
 
 object NewsMapper {
 
+
+    fun articleDataToNewsEntity(article: ArticleData): NewsEntity {
+        return NewsEntity(
+            author = article.author,
+            content = article.content,
+            description = article.description,
+            publishedAt = article.publishedAt,
+            title = article.title,
+            url = article.url,
+            urlToImage = article.urlToImage,
+            timeAgo = article.timeAgo,
+            sourceName = article.sourceDto.name
+        )
+    }
+
+
+
+
     fun NewsRoot.toNews(): NewsData {
         return NewsData(
             articleDtos = articleDtos?.map { it.toArticle() } ?: emptyList()
+        )
+    }
+
+    fun NewsRoot.toEntity(): List<NewsEntity> {
+        return articleDtos?.map { it.toEntity() } ?: emptyList()
+    }
+
+
+    fun NewsEntity.toArticleData(): ArticleData {
+        return ArticleData(
+            id = id,
+            author = author,
+            content = content,
+            description = description,
+            publishedAt = publishedAt,
+            sourceDto = SourceData(
+                id = "",
+                name = sourceName
+            ),
+            title = title,
+            url = url,
+            urlToImage = urlToImage,
+            timeAgo = timeAgo
+        )
+    }
+
+    fun ArticleDto.toEntity(): NewsEntity {
+        val formattedPublishedAt = formatPublishedAt(publishedAt)
+        val timeAgo = calculateTimeAgo(publishedAt)
+
+        return NewsEntity(
+            id = 0,
+            author = author ?: "Data not available",
+            content = content ?: "Data not available",
+            description = description ?: "Data not available",
+            publishedAt = formattedPublishedAt,
+            title = title ?: "Data not available",
+            url = url ?: "Data not available",
+            urlToImage = urlToImage ?: "",
+            timeAgo = timeAgo,
+            sourceName = sourceDto?.name ?: "Data not available"
         )
     }
 
@@ -33,8 +93,9 @@ object NewsMapper {
             ),
             title = title ?: "Data not available",
             url = url ?: "Data not available",
-            urlToImage = urlToImage ?: "Data not available",
-            timeAgo = timeAgo
+            urlToImage = urlToImage ?: "",
+            timeAgo = timeAgo,
+            id = 0
         )
     }
 
@@ -48,22 +109,22 @@ object NewsMapper {
     private fun formatPublishedAt(publishedAt: String?): String {
         return publishedAt?.let {
             val formats = listOf(
-                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", // Milisaniyeli format
-                "yyyy-MM-dd'T'HH:mm:ss'Z'"     // Milisaniyesiz format
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss'Z'"
             )
 
             val outputFormat = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
             outputFormat.timeZone = TimeZone.getDefault()
 
-            var date: java.util.Date? = null // Tipini java.util.Date? olarak belirt
+            var date: java.util.Date? = null
             for (format in formats) {
                 try {
                     val inputFormat = SimpleDateFormat(format, Locale.getDefault())
                     inputFormat.timeZone = TimeZone.getTimeZone("UTC")
                     date = inputFormat.parse(it)
-                    break // Başarıyla parse edilirse döngüden çık
+                    break
                 } catch (e: Exception) {
-                    // Hata alırsak diğer formata geç
+
                 }
             }
             date?.let { outputFormat.format(it) } ?: "Data not available"
@@ -73,8 +134,8 @@ object NewsMapper {
     private fun calculateTimeAgo(publishedAt: String?): String {
         return publishedAt?.let {
             val formats = listOf(
-                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", // Milisaniyeli format
-                "yyyy-MM-dd'T'HH:mm:ss'Z'"     // Milisaniyesiz format
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss'Z'"
             )
 
             var publishedDate: java.util.Date? = null
@@ -83,9 +144,9 @@ object NewsMapper {
                     val inputFormat = SimpleDateFormat(format, Locale.getDefault())
                     inputFormat.timeZone = TimeZone.getTimeZone("UTC")
                     publishedDate = inputFormat.parse(it)
-                    break // Başarıyla parse edilirse döngüden çık
+                    break
                 } catch (e: Exception) {
-                    // Hata alırsak diğer formata geç
+
                 }
             }
 
