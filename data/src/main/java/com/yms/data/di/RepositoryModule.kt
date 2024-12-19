@@ -2,9 +2,10 @@ package com.yms.data.di
 
 import android.content.Context
 import androidx.work.WorkManager
+import com.yms.data.local.db.NewsDatabase
 import com.yms.data.remote.NewsApi
 import com.yms.data.repository.customization.CustomizationRepositoryImpl
-import com.yms.data.repository.news.NewsRepositoryImpl
+import com.yms.data.repository.remote.news.NewsRepositoryImpl
 import com.yms.domain.repository.news.NewsRepository
 import com.yms.domain.repository.user_preferences.CustomizationRepository
 import dagger.Module
@@ -29,7 +30,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(api:NewsApi): NewsRepository {
-        return NewsRepositoryImpl(api)
+    fun provideNewsRepository(api:NewsApi,newsDatabase: NewsDatabase): NewsRepository {
+        return NewsRepositoryImpl(api,newsDatabase)
     }
 }
