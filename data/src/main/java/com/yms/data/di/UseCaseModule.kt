@@ -5,8 +5,11 @@ import com.yms.domain.repository.user_preferences.CustomizationRepository
 import com.yms.domain.repository.user_preferences.UserPreferencesRepository
 import com.yms.domain.usecase.news.GetBreakingNews
 import com.yms.domain.usecase.news.GetNewsByCategory
+import com.yms.domain.usecase.news.GetNewsByMediator
+import com.yms.domain.usecase.news.GetPagedNewsByCategory
 import com.yms.domain.usecase.news.NewsUseCase
 import com.yms.domain.usecase.news.SearchNews
+import com.yms.domain.usecase.news.SearchPagedNews
 import com.yms.domain.usecase.user_preferences.app_entry.ReadAppEntry
 import com.yms.domain.usecase.user_preferences.app_entry.SaveAppEntry
 import com.yms.domain.usecase.user_preferences.app_entry.UserPreferencesUseCase
@@ -43,7 +46,14 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideNewsUseCase(newsRepository: NewsRepository): NewsUseCase {
-        return NewsUseCase(GetNewsByCategory(newsRepository), SearchNews(newsRepository), GetBreakingNews(newsRepository))
+        return NewsUseCase(
+            GetNewsByCategory(newsRepository),
+            SearchNews(newsRepository),
+            GetBreakingNews(newsRepository),
+            GetPagedNewsByCategory(newsRepository),
+            SearchPagedNews(newsRepository),
+            GetNewsByMediator(newsRepository)
+        )
     }
 
 }
