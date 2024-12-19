@@ -5,6 +5,7 @@ data class NewsData(
 )
 
 data class ArticleData(
+    val id: Int,
     val author: String,
     val content: String,
     val description: String,
