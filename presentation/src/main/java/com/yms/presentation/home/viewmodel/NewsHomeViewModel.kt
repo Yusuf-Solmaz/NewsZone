@@ -9,8 +9,8 @@ import com.yms.domain.model.news.ArticleData
 import com.yms.domain.usecase.news.NewsUseCase
 import com.yms.domain.usecase.user_preferences.category.CustomizationPreferencesUseCase
 import com.yms.domain.utils.RootResult
+import com.yms.utils.NewsCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,10 +34,10 @@ class NewsHomeViewModel @Inject constructor(
 
     val pagedNews = MutableStateFlow<PagingData<ArticleData>>(PagingData.empty())
 
-    fun getPagedNewsWithMediator(category: String?) {
+    fun getPagedNewsWithMediator(category: NewsCategory?) {
         viewModelScope.launch {
 
-            newsUseCase.getNewsByMediator(category) // Burada getNewsByMediator çağırıyoruz
+            newsUseCase.getNewsByMediator(category?.title) // Burada getNewsByMediator çağırıyoruz
                 .cachedIn(viewModelScope)
                 .collect {
                     pagedNews.value = it
@@ -53,7 +53,13 @@ class NewsHomeViewModel @Inject constructor(
 
     val categoryState: StateFlow<CategoryState> =
         customizationPreferencesUseCase.readCategory().map { category ->
-            CategoryState(category = category, isLoading = false)
+            try {
+                val enumCategory = NewsCategory.fromString(category) ?: NewsCategory.GENERAL
+
+                CategoryState(category = enumCategory, isLoading = false)
+            } catch (e: IllegalArgumentException) {
+                CategoryState(category = NewsCategory.GENERAL, isLoading = false)
+            }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(STOP_TIME_MILLIS),
@@ -127,6 +133,6 @@ data class BreakingNewsState(
 )
 
 data class CategoryState(
-    val category: String = "",
+    val category: NewsCategory = NewsCategory.GENERAL,
     val isLoading: Boolean = true
 )

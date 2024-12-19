@@ -44,21 +44,20 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.yms.domain.model.news.ArticleData
 import com.yms.domain.model.news.SourceData
 import com.yms.presentation.R
-import com.yms.utils.newsTabTitles
+import com.yms.utils.NewsCategory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsCategorySection(
-    onTabSelected: (String) -> Unit,
+    onTabSelected: (NewsCategory) -> Unit, // Update to use enum
     modifier: Modifier = Modifier,
     pagedNews: LazyPagingItems<ArticleData>,
-    category: String
+    category: NewsCategory
 ) {
-
     val selectedTabIndex = remember { mutableStateOf(0) }
 
     LaunchedEffect(category) {
-        val initialIndex = newsTabTitles.indexOf(category).coerceAtLeast(0)
+        val initialIndex = NewsCategory.entries.indexOf(category).coerceAtLeast(0)
         selectedTabIndex.value = initialIndex
     }
 
@@ -68,16 +67,16 @@ fun NewsCategorySection(
             modifier = modifier.fillMaxWidth(),
             edgePadding = 8.dp
         ) {
-            newsTabTitles.forEachIndexed { index, title ->
+            NewsCategory.entries.forEachIndexed { index, categoryEnum ->
                 Tab(
                     selected = selectedTabIndex.value == index,
                     onClick = {
                         selectedTabIndex.value = index
-                        onTabSelected(title)
+                        onTabSelected(categoryEnum)
                     },
                     text = {
                         Text(
-                            text = title.replaceFirstChar { it.uppercase() },
+                            text = categoryEnum.title.replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.titleSmall.copy(
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -90,7 +89,6 @@ fun NewsCategorySection(
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn {
-
             items(pagedNews.itemCount) { index ->
                 val article = pagedNews[index]
 

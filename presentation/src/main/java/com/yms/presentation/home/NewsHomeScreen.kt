@@ -20,6 +20,7 @@ import com.yms.presentation.R
 import com.yms.presentation.home.content.BreakingNewsSection
 import com.yms.presentation.home.content.NewsCategorySection
 import com.yms.presentation.home.viewmodel.NewsHomeViewModel
+import com.yms.utils.NewsCategory
 
 
 @Composable
@@ -57,7 +58,10 @@ fun NewsHomeScreen(
         BreakingNewsSection(breakingNewsState = viewModel.breakingNewsState.collectAsState().value)
 
         NewsCategorySection(
-            onTabSelected = { category -> viewModel.getPagedNewsByCategory(category) },
-            pagedNews = pagedNews, category = categoryState.category)
+            onTabSelected = { category -> viewModel.getPagedNewsByCategory(category.title) }, // Pass the title
+            pagedNews = pagedNews,
+            category = NewsCategory.fromString(categoryState.category.title) ?: NewsCategory.GENERAL
+
+        )
     }
 }
