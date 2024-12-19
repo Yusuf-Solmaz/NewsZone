@@ -14,8 +14,8 @@ interface NewsApi {
         @Query("language") language: String = "en",
         @Query("sortBy") sortBy: String = "publishedAt",
         @Query("category") category: String?,
-        @Query("page") page: Int = 1,
-        @Query("pageSize") pageSize: Int = 20
+        @Query("page") page: Int ,
+        @Query("pageSize") pageSize: Int
     ): NewsRoot
 
 
