@@ -58,7 +58,7 @@ class NewsHomeViewModel @Inject constructor(
 
                 CategoryState(category = enumCategory, isLoading = false)
             } catch (e: IllegalArgumentException) {
-                CategoryState(category = NewsCategory.GENERAL, isLoading = false)
+                CategoryState(category = NewsCategory.GENERAL, isLoading = false,error = e.message)
             }
         }.stateIn(
             scope = viewModelScope,
@@ -120,12 +120,6 @@ class NewsHomeViewModel @Inject constructor(
 }
 
 
-data class NewsState(
-    val news: List<ArticleData>? = null,
-    val isLoading: Boolean = true,
-    val error: String? = null
-)
-
 data class BreakingNewsState(
     val news: List<ArticleData>? = null,
     val isLoading: Boolean = true,
@@ -134,5 +128,6 @@ data class BreakingNewsState(
 
 data class CategoryState(
     val category: NewsCategory = NewsCategory.GENERAL,
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val error: String? = null
 )
