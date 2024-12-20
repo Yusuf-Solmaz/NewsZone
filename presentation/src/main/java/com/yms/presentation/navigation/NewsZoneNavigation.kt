@@ -16,6 +16,8 @@ import com.yms.presentation.home.NewsHomeScreen
 import com.yms.presentation.onboarding.OnBoardingScreen
 import com.yms.presentation.onboarding.viewmodel.OnBoardingEvent
 import com.yms.presentation.onboarding.viewmodel.OnBoardingState
+import com.yms.presentation.search.SearchScreen
+import com.yms.presentation.settings.SettingsScreen
 import com.yms.presentation.splash.SplashScreen
 
 @Composable
@@ -24,25 +26,23 @@ fun NewsZoneNavigation(
     modifier: Modifier = Modifier,
     saveAppEntry: (OnBoardingEvent) -> Unit,
     onBoardingState: OnBoardingState
-){
+) {
 
-    if (onBoardingState.isSplashScreenVisible){
+    if (onBoardingState.isSplashScreenVisible) {
         SplashScreen()
-    }
-    else if (onBoardingState.isLoading) {
+    } else if (onBoardingState.isLoading) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             Text("Loading...")
         }
-    }
-    else {
+    } else {
         NavHost(
             navController = navController,
             startDestination = onBoardingState.startDestination
-        ){
-            composable(NavigationGraph.ONBOARDING_SCREEN.name){
+        ) {
+            composable(NavigationGraph.ONBOARDING_SCREEN.name) {
                 OnBoardingScreen(
                     modifier = Modifier.fillMaxSize(),
                     navigateToCustomization = {
@@ -50,19 +50,26 @@ fun NewsZoneNavigation(
                     }
                 )
             }
-            composable(NavigationGraph.CUSTOMIZATION_SCREEN.name){
+            composable(NavigationGraph.CUSTOMIZATION_SCREEN.name) {
                 CustomizationScreen(
-                    saveAppEntry = { saveAppEntry(OnBoardingEvent.SaveAppEntry)},
-                    navigateToHome = {navController.navigate(NavigationGraph.NEWS_HOME.name)}
+                    saveAppEntry = { saveAppEntry(OnBoardingEvent.SaveAppEntry) },
+                    navigateToHome = { navController.navigate(NavigationGraph.NEWS_HOME.name) }
                 )
             }
-            composable(NavigationGraph.SPLASH_SCREEN.name){
+            composable(NavigationGraph.SPLASH_SCREEN.name) {
                 SplashScreen()
             }
-            composable(NavigationGraph.NEWS_HOME.name){
-                NewsHomeScreen()
+            composable(NavigationGraph.NEWS_HOME.name) {
+                NewsHomeScreen(
+                    navigateToSearchScreen = { navController.navigate(NavigationGraph.SEARCH_SCREEN.name) }
+                )
+            }
+            composable(NavigationGraph.SEARCH_SCREEN.name) {
+                SearchScreen()
+            }
+            composable(NavigationGraph.SETTINGS_SCREEN.name) {
+                SettingsScreen()
             }
         }
     }
-
 }
