@@ -7,12 +7,9 @@ import com.yms.domain.utils.RootResult
 import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
-    fun getPagedNewsByCategory(category: String?): Flow<PagingData<ArticleData>>
-    fun searchPagedNews(query: String): Flow<PagingData<ArticleData>>
 
-    fun getNewsByCategory(category: String?, page: Int, pageSize: Int, source: String?): Flow<RootResult<NewsData>>
-    fun searchNews(query: String, sortBy: String?, page: Int, pageSize: Int): Flow<RootResult<NewsData>>
-
+    fun searchPagedNews(query: String, sortBy: String?, searchIn: String, fromDate: String?, toDate: String?): Flow<PagingData<ArticleData>>
     fun getNewsWithMediator(category: String?): Flow<PagingData<ArticleData>>
+    fun getBreakingNews(category: String?, page: Int, pageSize: Int, source: String?): Flow<RootResult<NewsData>>
 
 }
