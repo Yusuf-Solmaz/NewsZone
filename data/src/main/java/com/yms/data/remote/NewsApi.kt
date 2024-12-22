@@ -23,6 +23,9 @@ interface NewsApi {
     suspend fun searchNews(
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
         @Query("q") query: String,
+        @Query("searchIn") searchIn: String?,
+        @Query("from") fromDate: String?,
+        @Query("to") toDate: String?,
         @Query("sortBy") sortBy: String? = "publishedAt",
         @Query("page") page: Int = 1,
         @Query("pageSize") pageSize: Int = 20
