@@ -26,6 +26,19 @@ import javax.inject.Inject
 @OptIn(ExperimentalPagingApi::class)
 class NewsRepositoryImpl @Inject constructor(val api: NewsApi, val newsDatabase: NewsDatabase): NewsRepository {
 
+    override fun searchPagedNews(
+        query: String,
+        sortBy: String?,
+        searchIn: String,
+        fromDate: String?,
+        toDate: String?
+    ): Flow<PagingData<ArticleData>> {
+        return Pager(
+            config = PagingConfig(pageSize = 5, initialLoadSize = 10),
+            pagingSourceFactory = { NewsPagingSource(api, query = query, sortBy = sortBy, searchIn = searchIn, fromDate = fromDate, toDate = toDate) }
+        ).flow
+    }
+
 
     override fun getNewsWithMediator(category: String?): Flow<PagingData<ArticleData>> {
         return Pager(
@@ -49,21 +62,7 @@ class NewsRepositoryImpl @Inject constructor(val api: NewsApi, val newsDatabase:
             }
     }
 
-    override fun getPagedNewsByCategory(category: String?): Flow<PagingData<ArticleData>> {
-        return Pager(
-            config = PagingConfig(pageSize = 5, enablePlaceholders = false, initialLoadSize = 5),
-            pagingSourceFactory = { NewsPagingSource(api, category, query = null, source = null) }
-        ).flow
-    }
-
-    override fun searchPagedNews(query: String): Flow<PagingData<ArticleData>> {
-        return Pager(
-            config = PagingConfig(pageSize = 20, initialLoadSize = 20),
-            pagingSourceFactory = { NewsPagingSource(api, null, query = query, source = null) }
-        ).flow
-    }
-
-    override fun getNewsByCategory(
+    override fun getBreakingNews(
         category: String?,
         page: Int,
         pageSize: Int,
@@ -72,33 +71,11 @@ class NewsRepositoryImpl @Inject constructor(val api: NewsApi, val newsDatabase:
         emit(RootResult.Loading)
 
         try {
-
             val response = api.getNewsByCategory(category = category, page = page, pageSize = pageSize, source = source)
-
-            emit(RootResult.Success(response.toNews()))
-
-        }
-        catch (e:Exception){
-            emit(RootResult.Error(e.message.toString()))
-        }
-    }.flowOn(Dispatchers.IO)
-
-
-    override fun searchNews(
-        query: String,
-        sortBy: String?,
-        page: Int,
-        pageSize: Int
-    ): Flow<RootResult<NewsData>> = flow {
-        emit(RootResult.Loading)
-        try {
-            val response = api.searchNews(query = query, sortBy = sortBy, page = page, pageSize = pageSize)
-
             emit(RootResult.Success(response.toNews()))
         }
         catch (e:Exception){
             emit(RootResult.Error(e.message.toString()))
         }
     }.flowOn(Dispatchers.IO)
-
 }
