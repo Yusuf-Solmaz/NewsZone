@@ -67,20 +67,6 @@ class NewsHomeViewModel @Inject constructor(
         )
 
 
-
-    fun getPagedNewsByCategory(category: String?) {
-        viewModelScope.launch {
-
-            pagedNews.value = PagingData.empty()
-            newsUseCase.getPagedNewsByCategory(category)
-                .cachedIn(viewModelScope)
-                .collect {
-                    pagedNews.value = it
-                }
-
-        }
-    }
-
     init {
         getBreakingNews()
 
