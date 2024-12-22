@@ -13,4 +13,8 @@
     <string name="age_group_question">Select your age group</string>
     <string name="gender_question">Select gender</string>
     <string name="back">Back</string>
+    <string name="breaking_news">Breaking News</string>
+    <string name="view_all">View All</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
 </resources>

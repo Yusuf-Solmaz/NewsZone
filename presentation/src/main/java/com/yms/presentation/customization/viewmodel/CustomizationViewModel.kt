@@ -4,9 +4,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yms.domain.model.user_preferences_model.AgeGroup
-import com.yms.domain.model.user_preferences_model.FollowUpTime
-import com.yms.domain.model.user_preferences_model.Gender
+import com.yms.domain.model.user_preferences.AgeGroup
+import com.yms.domain.model.user_preferences.FollowUpTime
+import com.yms.domain.model.user_preferences.Gender
 import com.yms.domain.usecase.user_preferences.category.CustomizationPreferencesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

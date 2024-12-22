@@ -58,8 +58,12 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(libs.hilt.android)
+    debugImplementation(libs.ui.tooling)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation (libs.gson)
+
+    implementation (libs.androidx.paging.runtime.ktx)
+    implementation (libs.androidx.paging.compose)
 }

@@ -12,9 +12,10 @@ import com.yms.data.worker.utils.GENDER_KEY
 import com.yms.data.worker.utils.OUTPUT_CATEGORY_KEY
 import com.yms.data.worker.utils.WORKER_ERROR
 import com.yms.domain.R
-import com.yms.domain.model.user_preferences_model.AgeGroup
-import com.yms.domain.model.user_preferences_model.FollowUpTime
-import com.yms.domain.model.user_preferences_model.Gender
+import com.yms.domain.model.user_preferences.Category
+import com.yms.domain.model.user_preferences.AgeGroup
+import com.yms.domain.model.user_preferences.FollowUpTime
+import com.yms.domain.model.user_preferences.Gender
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -60,13 +61,13 @@ class DetermineCategoryWorker @AssistedInject constructor(
 
     private fun determineCategory(followUpTime: FollowUpTime?, ageGroup: AgeGroup?, gender: Gender?): String {
         return when {
-            followUpTime == FollowUpTime.EVERY_DAY && ageGroup == AgeGroup.AGE_16_25 -> "technology"
-            followUpTime == FollowUpTime.A_FEW_TIMES_A_WEEK && ageGroup == AgeGroup.AGE_26_35 -> "business"
-            followUpTime == FollowUpTime.SOMETIMES && gender == Gender.FEMALE -> "entertainment"
-            followUpTime == FollowUpTime.VERY_RARELY && ageGroup == AgeGroup.AGE_35_PLUS -> "health"
-            ageGroup == AgeGroup.AGE_5_15 -> "science"
-            gender == Gender.MALE && followUpTime == FollowUpTime.EVERY_DAY -> "sports"
-            else -> "general"
+            followUpTime == FollowUpTime.EVERY_DAY && ageGroup == AgeGroup.AGE_16_25 -> Category.TECHNOLOGY.categoryName
+            followUpTime == FollowUpTime.A_FEW_TIMES_A_WEEK && ageGroup == AgeGroup.AGE_26_35 -> Category.BUSINESS.categoryName
+            followUpTime == FollowUpTime.SOMETIMES && gender == Gender.FEMALE -> Category.ENTERTAINMENT.categoryName
+            followUpTime == FollowUpTime.VERY_RARELY && ageGroup == AgeGroup.AGE_35_PLUS -> Category.HEALTH.categoryName
+            ageGroup == AgeGroup.AGE_5_15 -> Category.SCIENCE.categoryName
+            gender == Gender.MALE && followUpTime == FollowUpTime.EVERY_DAY -> Category.SPORTS.categoryName
+            else -> Category.GENERAL.categoryName
         }
     }
 

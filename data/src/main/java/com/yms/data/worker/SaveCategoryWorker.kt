@@ -9,7 +9,7 @@ import androidx.work.workDataOf
 import com.yms.data.worker.utils.OUTPUT_CATEGORY_KEY
 import com.yms.data.worker.utils.WORKER_ERROR
 import com.yms.domain.R
-import com.yms.domain.repository.UserPreferencesRepository
+import com.yms.domain.repository.user_preferences.UserPreferencesRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers

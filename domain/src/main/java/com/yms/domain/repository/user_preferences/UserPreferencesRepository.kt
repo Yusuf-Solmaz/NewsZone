@@ -1,4 +1,4 @@
-package com.yms.domain.repository
+package com.yms.domain.repository.user_preferences
 
 import kotlinx.coroutines.flow.Flow
 

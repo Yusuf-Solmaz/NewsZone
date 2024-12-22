@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.yms.domain"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -48,4 +48,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     ksp(libs.hilt.androidx.compiler)
+
+    implementation (libs.androidx.paging.runtime.ktx)
+    implementation (libs.androidx.paging.compose)
 }

@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.yms.data.datastore.UserPreferencesDataStore
 import com.yms.data.utils.USER_PREFERENCES
-import com.yms.domain.repository.UserPreferencesRepository
+import com.yms.domain.repository.user_preferences.UserPreferencesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

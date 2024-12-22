@@ -1,4 +1,4 @@
-package com.yms.domain.model.user_preferences_model
+package com.yms.domain.model.user_preferences
 
 interface Displayable {
     val displayName: String

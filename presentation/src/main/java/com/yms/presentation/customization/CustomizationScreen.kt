@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.yms.domain.model.user_preferences_model.AgeGroup
-import com.yms.domain.model.user_preferences_model.Displayable
-import com.yms.domain.model.user_preferences_model.FollowUpTime
-import com.yms.domain.model.user_preferences_model.Gender
+import com.yms.domain.model.user_preferences.AgeGroup
+import com.yms.domain.model.user_preferences.Displayable
+import com.yms.domain.model.user_preferences.FollowUpTime
+import com.yms.domain.model.user_preferences.Gender
 import com.yms.presentation.R
 import com.yms.presentation.customization.viewmodel.CustomizationViewModel
 
