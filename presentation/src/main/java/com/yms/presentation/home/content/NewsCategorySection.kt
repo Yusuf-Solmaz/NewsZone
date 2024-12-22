@@ -52,7 +52,8 @@ fun NewsCategorySection(
     onTabSelected: (NewsCategory) -> Unit, // Update to use enum
     modifier: Modifier = Modifier,
     pagedNews: LazyPagingItems<ArticleData>,
-    category: NewsCategory
+    category: NewsCategory,
+    navigateToArticleDetailScreen: (ArticleData) -> Unit
 ) {
     val selectedTabIndex = remember { mutableStateOf(0) }
 
@@ -95,7 +96,8 @@ fun NewsCategorySection(
                 if (article != null) {
                     Log.d("NewsHomeScreen", "Article: ${article.urlToImage}")
                     NewsCard(
-                        articleData = article
+                        articleData = article,
+                        navigateToArticleDetailScreen = navigateToArticleDetailScreen
                     )
                 }
             }
@@ -110,7 +112,8 @@ fun NewsCategorySection(
 
 @Composable
 fun NewsCard(
-    articleData: ArticleData
+    articleData: ArticleData,
+    navigateToArticleDetailScreen: (ArticleData) -> Unit
 ) {
 
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
@@ -121,7 +124,10 @@ fun NewsCard(
             .height(120.dp)
             .padding(8.dp)
             .background(MaterialTheme.colorScheme.background),
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.medium,
+        onClick = {
+            navigateToArticleDetailScreen(articleData)
+        }
     ) {
 
 
@@ -212,7 +218,8 @@ fun NewsCardPreview() {
                 url = "url",
                 urlToImage = "urlToImage",
                 timeAgo = "1d ago"
-            )
+            ),
+            navigateToArticleDetailScreen = {}
         )
 
     }
