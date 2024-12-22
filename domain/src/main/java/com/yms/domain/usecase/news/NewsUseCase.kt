@@ -6,13 +6,15 @@ import com.yms.domain.repository.news.NewsRepository
 import kotlinx.coroutines.flow.Flow
 
 data class NewsUseCase(
-    val getNewsByCategory: GetNewsByCategory,
     val searchNews: SearchNews,
     val getBreakingNews: GetBreakingNews,
-    val getPagedNewsByCategory: GetPagedNewsByCategory,
-    val searchPagedNews: SearchPagedNews,
     val getNewsByMediator: GetNewsByMediator
 )
+
+class SearchNews(val newsRepository: NewsRepository){
+    operator fun invoke(query: String, sortBy: String?, searchIn: String, fromDate: String?, toDate: String?): Flow<PagingData<ArticleData>> = newsRepository.searchPagedNews(query, sortBy, searchIn, fromDate, toDate)
+}
+
 
 class GetNewsByMediator(private val newsRepository: NewsRepository) {
     operator fun invoke(category: String?): Flow<PagingData<ArticleData>> {
@@ -20,15 +22,8 @@ class GetNewsByMediator(private val newsRepository: NewsRepository) {
     }
 }
 
-class GetPagedNewsByCategory(private val newsRepository: NewsRepository) {
-    operator fun invoke(category: String?): Flow<PagingData<ArticleData>> {
-        return newsRepository.getPagedNewsByCategory(category)
-    }
+class GetBreakingNews (val newsRepository: NewsRepository){
+    operator fun invoke(page: Int, pageSize: Int) = newsRepository.getBreakingNews(category = null ,page = 1, pageSize, source = "cnn")
 }
 
-class SearchPagedNews(private val newsRepository: NewsRepository) {
-    operator fun invoke(query: String): Flow<PagingData<ArticleData>> {
-        return newsRepository.searchPagedNews(query)
-    }
-}
 
