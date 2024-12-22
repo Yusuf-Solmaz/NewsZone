@@ -43,7 +43,7 @@ class OnBoardingViewModel @Inject constructor(
             appEntry ->
             Log.d(TAG, "App Entry: $appEntry")
             if (appEntry){
-                OnBoardingState(isLoading = false,startDestination = NavigationGraph.NEWS_HOME.name,isSplashScreenVisible = false)
+                OnBoardingState(isLoading = false,startDestination =NavigationGraph.MAIN_CONTENT.name,isSplashScreenVisible = false)
             }
             else{
                 OnBoardingState(isLoading = false,startDestination = NavigationGraph.ONBOARDING_SCREEN.name,isSplashScreenVisible = false)
