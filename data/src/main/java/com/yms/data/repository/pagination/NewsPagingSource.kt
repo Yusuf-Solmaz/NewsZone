@@ -1,5 +1,6 @@
 package com.yms.data.repository.pagination
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.yms.data.mapper.NewsMapper.toArticle
@@ -8,28 +9,28 @@ import com.yms.domain.model.news.ArticleData
 
 class NewsPagingSource(
     private val newsApi: NewsApi,
-    private val category: String?,
-    private val source: String?,
-    private val query: String?
+    private val query: String?,
+    private val sortBy: String?,
+    private val searchIn: String?,
+    private val fromDate: String?,
+    private val toDate: String?
 ) : PagingSource<Int, ArticleData>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleData> {
         val currentPage = params.key ?: 1
         return try {
-            val response = if (query.isNullOrBlank()) {
-                newsApi.getNewsByCategory(
-                    category = category,
-                    source = source,
-                    page = currentPage,
-                    pageSize = params.loadSize
-                )
-            } else {
+            val response =
                 newsApi.searchNews(
-                    query = query,
+                    query = query ?: "",
+                    sortBy = sortBy,
+                    searchIn = searchIn,
+                    fromDate = fromDate,
+                    toDate = toDate,
                     page = currentPage,
                     pageSize = params.loadSize
                 )
-            }
+
+            Log.d("SearchViewModel", "searchNews: $query $sortBy $searchIn $fromDate $toDate")
 
             val articles = response.articleDtos?.map { it.toArticle() } ?: emptyList()
 
