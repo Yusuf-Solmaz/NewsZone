@@ -11,4 +11,5 @@
     <dimen name="corner_shape_small">8.dp</dimen>
     <dimen name="corner_shape_medium">16.dp</dimen>
     <dimen name="corner_shape_big">32.dp</dimen>
+    <dimen name="corner_shape_biggest">64.dp</dimen>
 </resources>
