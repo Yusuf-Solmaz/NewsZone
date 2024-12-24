@@ -1,5 +1,6 @@
 package com.yms.presentation.home
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,14 +49,25 @@ fun NewsHomeScreen(
     val context = LocalContext.current
 
     LaunchedEffect(key1 = pagedNews.loadState) {
-        if (pagedNews.loadState.refresh is LoadState.Error) {
+        if (pagedNews.itemCount > 0) {
+            Toast.makeText(
+                context,
+                "Info: News loaded successfully",
+                Toast.LENGTH_LONG
+            ).show()
+
+            Log.d("NewsHomeScreen", "News loaded successfully with ${pagedNews.itemCount} items")
+        } else if (pagedNews.loadState.refresh is LoadState.Error) {
             Toast.makeText(
                 context,
                 "Error: " + (pagedNews.loadState.refresh as LoadState.Error).error.message,
                 Toast.LENGTH_LONG
             ).show()
         }
+
     }
+
+
 
     if (!categoryState.isLoading) {
         LaunchedEffect(categoryState.category) {
