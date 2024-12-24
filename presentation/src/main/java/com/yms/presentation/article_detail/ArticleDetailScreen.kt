@@ -82,6 +82,42 @@ fun ArticleDetailScreen(sharedState: ArticleState, modifier: Modifier = Modifier
                 )
             }
 
+            Box(modifier = Modifier.fillMaxWidth().align(Alignment.TopStart).padding(16.dp)){
+                Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(
+                                color = Color.Black.copy(alpha = 0.3f),
+                                shape = MaterialTheme.shapes.small
+                            )
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_search),
+                            contentDescription = "Back",
+                            tint = Color.White,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(
+                                color = Color.Black.copy(alpha = 0.3f),
+                                shape = MaterialTheme.shapes.small
+                            )
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_send),
+                            contentDescription = "Share",
+                            tint = Color.White,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
