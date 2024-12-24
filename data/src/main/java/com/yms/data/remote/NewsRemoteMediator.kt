@@ -9,9 +9,9 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.yms.data.local.db.NewsDatabase
-import com.yms.data.local.model.NewsEntity
-import com.yms.data.mapper.NewsMapper.articleDataToNewsEntity
+import com.yms.data.local.model.CachedNewsEntity
 import com.yms.data.mapper.NewsMapper.toNews
+import com.yms.data.mapper.NewsMapper.toNewsEntity
 import okio.IOException
 import retrofit2.HttpException
 
@@ -20,11 +20,11 @@ class NewsRemoteMediator(
     private val newsApi: NewsApi,
     private val newsDb: NewsDatabase,
     private val category: String?,
-) : RemoteMediator<Int, NewsEntity>() {
+) : RemoteMediator<Int, CachedNewsEntity>() {
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, NewsEntity>
+        state: PagingState<Int, CachedNewsEntity>
     ): MediatorResult {
         return try {
             val loadKey = when (loadType) {
@@ -48,15 +48,15 @@ class NewsRemoteMediator(
             )
 
             val newsData = response.toNews()
-            val newsEntities: List<NewsEntity> = newsData.articleDtos.map { articleData ->
-                articleDataToNewsEntity(articleData)
+            val newsEntities: List<CachedNewsEntity> = newsData.articleDtos.map { articleData ->
+                articleData.toNewsEntity()
             }
 
             newsDb.withTransaction {
                 if (loadType == REFRESH) {
-                    newsDb.dao.clearAll()
+                    newsDb.cachedNewsDao.clearAll()
                 }
-                newsDb.dao.upsertAll(newsEntities)
+                newsDb.cachedNewsDao.upsertAll(newsEntities)
                 Log.d("NewsRemoteMediator", "Inserted ${newsEntities.size} news entities")
             }
 

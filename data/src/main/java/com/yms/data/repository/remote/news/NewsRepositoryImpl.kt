@@ -51,7 +51,7 @@ class NewsRepositoryImpl @Inject constructor(val api: NewsApi, val newsDatabase:
                 newsDb = newsDatabase,
                 category = category
             ),
-            pagingSourceFactory = { newsDatabase.dao.pagingSource() }
+            pagingSourceFactory = { newsDatabase.cachedNewsDao.pagingSource() }
         ).flow
             .map { pagingData ->
                 pagingData

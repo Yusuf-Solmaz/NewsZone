@@ -2,7 +2,7 @@ package com.yms.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.yms.data.local.dao.NewsDao
+import com.yms.data.local.dao.CachedNewsDao
 import com.yms.data.local.db.NewsDatabase
 import dagger.Module
 import dagger.Provides
@@ -27,5 +27,5 @@ object LocalModule {
 
     @Provides
     @Singleton
-    fun provideNewsDao(newsDatabase: NewsDatabase): NewsDao = newsDatabase.dao
+    fun provideCachedNewsDao(newsDatabase: NewsDatabase): CachedNewsDao = newsDatabase.cachedNewsDao
 }

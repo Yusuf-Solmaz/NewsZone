@@ -1,6 +1,6 @@
 package com.yms.data.mapper
 
-import com.yms.data.local.model.NewsEntity
+import com.yms.data.local.model.CachedNewsEntity
 import com.yms.data.remote.dto.news.ArticleDto
 import com.yms.data.remote.dto.news.NewsRoot
 import com.yms.data.remote.dto.news.SourceDto
@@ -13,23 +13,19 @@ import java.util.TimeZone
 
 object NewsMapper {
 
-
-    fun articleDataToNewsEntity(article: ArticleData): NewsEntity {
-        return NewsEntity(
-            author = article.author,
-            content = article.content,
-            description = article.description,
-            publishedAt = article.publishedAt,
-            title = article.title,
-            url = article.url,
-            urlToImage = article.urlToImage,
-            timeAgo = article.timeAgo,
-            sourceName = article.sourceDto.name
+    fun ArticleData.toNewsEntity(): CachedNewsEntity {
+        return CachedNewsEntity(
+            author = author,
+            content = content,
+            description = description,
+            publishedAt = publishedAt,
+            title = title,
+            url = url,
+            urlToImage = urlToImage,
+            timeAgo = timeAgo,
+            sourceName = sourceDto.name
         )
     }
-
-
-
 
     fun NewsRoot.toNews(): NewsData {
         return NewsData(
@@ -37,12 +33,8 @@ object NewsMapper {
         )
     }
 
-    fun NewsRoot.toEntity(): List<NewsEntity> {
-        return articleDtos?.map { it.toEntity() } ?: emptyList()
-    }
 
-
-    fun NewsEntity.toArticleData(): ArticleData {
+    fun CachedNewsEntity.toArticleData(): ArticleData {
         return ArticleData(
             id = id,
             author = author,
@@ -57,24 +49,6 @@ object NewsMapper {
             url = url,
             urlToImage = urlToImage,
             timeAgo = timeAgo
-        )
-    }
-
-    fun ArticleDto.toEntity(): NewsEntity {
-        val formattedPublishedAt = formatPublishedAt(publishedAt)
-        val timeAgo = calculateTimeAgo(publishedAt)
-
-        return NewsEntity(
-            id = 0,
-            author = author ?: "Data not available",
-            content = content ?: "Data not available",
-            description = description ?: "Data not available",
-            publishedAt = formattedPublishedAt,
-            title = title ?: "Data not available",
-            url = url ?: "Data not available",
-            urlToImage = urlToImage ?: "",
-            timeAgo = timeAgo,
-            sourceName = sourceDto?.name ?: "Data not available"
         )
     }
 
