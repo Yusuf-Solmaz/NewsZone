@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,11 +26,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -58,11 +63,18 @@ fun ArticleDetailScreen(sharedState: ArticleState, viewModel: ArticleDetailViewM
     val article = sharedState.article
 
     val insertState = viewModel.state.collectAsState()
+    val isSaved = viewModel.isArticleSaved.collectAsState()
 
     DisposableEffect(Unit) {
         systemUiController.isStatusBarVisible = false
         onDispose {
             systemUiController.isStatusBarVisible = true
+        }
+    }
+
+    LaunchedEffect(key1 = article) {
+        if (article != null){
+            viewModel.onEvent(ArticleDetailEvent.IsArticleSaved(article.url))
         }
     }
 
@@ -108,14 +120,14 @@ fun ArticleDetailScreen(sharedState: ArticleState, viewModel: ArticleDetailViewM
                         modifier = Modifier
                             .size(48.dp)
                             .background(
-                                color = Color.Black.copy(alpha = 0.3f),
+                                color = Color.Black.copy(alpha = 0.2f),
                                 shape = MaterialTheme.shapes.small
                             )
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.ic_search),
+                            painter = painterResource(R.drawable.ic_back),
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
@@ -124,22 +136,19 @@ fun ArticleDetailScreen(sharedState: ArticleState, viewModel: ArticleDetailViewM
                         modifier = Modifier
                             .size(48.dp)
                             .background(
-                                color = Color.Black.copy(alpha = 0.3f),
+                                color = Color.Black.copy(alpha = 0.2f),
                                 shape = MaterialTheme.shapes.small
                             )
                     ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_send),
-                            contentDescription = "Share",
-                            tint = Color.White,
-                            modifier = Modifier.align(Alignment.Center).clickable(
-                                onClick = {
-                                    if (article != null){
-                                        viewModel.onEvent(ArticleDetailEvent.InsertArticle(article))
-                                    }
-                                }
-                            )
+                        AnimatedBookmarkIcon(
+                            isSaved = isSaved.value,
+                            delete = { viewModel.onEvent(ArticleDetailEvent.DeleteArticle(article?.url ?: "")) },
+                            add = {  article?.let {
+                                viewModel.onEvent(ArticleDetailEvent.InsertArticle(it))
+                            } }
                         )
+
+
                     }
                 }
             }
@@ -243,6 +252,32 @@ fun ArticleDetailScreen(sharedState: ArticleState, viewModel: ArticleDetailViewM
             }
 
         }
+    }
+}
+
+@Composable
+fun AnimatedBookmarkIcon(
+    isSaved: Boolean,
+    delete: () -> Unit,
+    add: () -> Unit
+) {
+
+    val tint by animateColorAsState(
+        targetValue = if (isSaved) MaterialTheme.colorScheme.primary else Color.White,
+        animationSpec = tween(durationMillis = 300), label = "Bookmark Icon"
+    )
+
+    IconButton(
+        onClick = {
+            if (isSaved) delete() else add()
+        },
+        modifier = Modifier.size(56.dp)
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_bookmark),
+            contentDescription = "Bookmark",
+            tint = tint
+        )
     }
 }
 
