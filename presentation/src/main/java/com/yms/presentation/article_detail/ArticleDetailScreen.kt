@@ -43,20 +43,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.yms.domain.model.news.ArticleData
-import com.yms.domain.model.news.SourceData
 import com.yms.presentation.R
 import com.yms.utils.ArticleState
 
 @Composable
-fun ArticleDetailScreen(sharedState: ArticleState, viewModel: ArticleDetailViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
+fun ArticleDetailScreen(onBack: () -> Unit,sharedState: ArticleState, viewModel: ArticleDetailViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
 
     val systemUiController = rememberSystemUiController()
     val context = LocalContext.current
@@ -129,6 +126,9 @@ fun ArticleDetailScreen(sharedState: ArticleState, viewModel: ArticleDetailViewM
                             contentDescription = "Back",
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.align(Alignment.Center)
+                                .clickable {
+                                    onBack()
+                                }
                         )
                     }
 
@@ -279,26 +279,4 @@ fun AnimatedBookmarkIcon(
             tint = tint
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ArticleDetailScreenPreview() {
-    ArticleDetailScreen(sharedState = ArticleState(
-        article = ArticleData(
-            id = 1,
-            author = "John Doe",
-            content = "This is a detailed content of the article. It covers various aspects of the topic in depth.",
-            description = "A brief description of the article to provide an overview.",
-            publishedAt = "2024-12-23T10:00:00Z",
-            sourceDto = SourceData(
-                id = "source-1",
-                name = "Example News"
-            ),
-            title = "Sample Article Title",
-            url = "https://example.com/article",
-            urlToImage = "https://example.com/image.jpg",
-            timeAgo = "2 hours ago"
-        )
-    ))
 }
