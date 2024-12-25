@@ -1,6 +1,5 @@
 package com.yms.presentation.article_detail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yms.domain.model.news.ArticleData
@@ -12,10 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class NewsState(
-    val isLoading: Boolean = false,
-    val errorMessage: String? = null
-)
 
 sealed interface InsertNewsState{
     data object Success : InsertNewsState
@@ -32,11 +27,32 @@ class ArticleDetailViewModel @Inject constructor(
     val state: StateFlow<InsertNewsState>
         get() = _state
 
+    private val _isArticleSaved = MutableStateFlow(false)
+    val isArticleSaved: StateFlow<Boolean>
+        get() = _isArticleSaved
+
     fun onEvent(event: ArticleDetailEvent) {
         when (event) {
-            is ArticleDetailEvent.InsertArticle -> {
-                insertArticle(event.article)
-            }
+            is ArticleDetailEvent.InsertArticle -> insertArticle(event.article)
+
+            is ArticleDetailEvent.IsArticleSaved -> checkIfArticleIsSaved(event.articleUrl)
+
+            is ArticleDetailEvent.DeleteArticle -> deleteArticle(event.articleUrl)
+        }
+    }
+
+    private fun deleteArticle(articleUrl: String) {
+        viewModelScope.launch {
+            savedNewsUseCase.deleteSavedNews(articleUrl)
+            _isArticleSaved.value = false
+        }
+    }
+
+
+    private fun checkIfArticleIsSaved(articleUrl: String) {
+        viewModelScope.launch {
+            val isSaved = savedNewsUseCase.isNewsSaved(articleUrl)
+            _isArticleSaved.value = isSaved
         }
     }
 
@@ -45,7 +61,8 @@ class ArticleDetailViewModel @Inject constructor(
             val result = savedNewsUseCase.insertSavedNews(article)
             _state.value = when (result) {
                 is RootResult.Success -> {
-                    Log.d("ArticleDetailViewModel", "Article saved successfully")
+
+                    _isArticleSaved.value = true
                     InsertNewsState.Success
                 }
                 is RootResult.Error -> {
