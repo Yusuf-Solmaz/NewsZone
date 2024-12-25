@@ -21,6 +21,7 @@ import com.yms.presentation.home.NewsHomeScreen
 import com.yms.presentation.onboarding.OnBoardingScreen
 import com.yms.presentation.onboarding.viewmodel.OnBoardingEvent
 import com.yms.presentation.onboarding.viewmodel.OnBoardingState
+import com.yms.presentation.saved_news.SavedNews
 import com.yms.presentation.search.SearchScreen
 import com.yms.presentation.settings.SettingsScreen
 import com.yms.presentation.splash.SplashScreen
@@ -82,6 +83,10 @@ fun NewsZoneNavigation(
                     )
                 }
 
+            }
+
+            composable(NavigationGraph.SAVED_NEWS_SCREEN.name){
+                SavedNews()
             }
 
             composable(NavigationGraph.SETTINGS_SCREEN.name) {
