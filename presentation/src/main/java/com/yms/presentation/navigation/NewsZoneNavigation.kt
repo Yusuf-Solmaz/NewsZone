@@ -75,7 +75,10 @@ fun NewsZoneNavigation(
                     val state by sharedViewModel.sharedState.collectAsStateWithLifecycle()
 
                     ArticleDetailScreen(
-                        sharedState = state
+                        sharedState = state,
+                        onBack = {
+                            navController.popBackStack()
+                        }
                     )
                 }
 

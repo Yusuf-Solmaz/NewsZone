@@ -3,8 +3,8 @@ package com.yms.data.local.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "news")
-data class NewsEntity(
+@Entity(tableName = "saved_news")
+data class SavedNewsEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val author: String = "",
