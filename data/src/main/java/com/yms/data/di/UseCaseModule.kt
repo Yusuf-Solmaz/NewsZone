@@ -1,5 +1,6 @@
 package com.yms.data.di
 
+import com.yms.domain.repository.news.LocalSavedNewsRepository
 import com.yms.domain.repository.news.NewsRepository
 import com.yms.domain.repository.user_preferences.CustomizationRepository
 import com.yms.domain.repository.user_preferences.UserPreferencesRepository
@@ -7,6 +8,11 @@ import com.yms.domain.usecase.news.GetBreakingNews
 import com.yms.domain.usecase.news.GetNewsByMediator
 import com.yms.domain.usecase.news.NewsUseCase
 import com.yms.domain.usecase.news.SearchNews
+import com.yms.domain.usecase.saved_news.DeleteSavedNews
+import com.yms.domain.usecase.saved_news.GetSavedNews
+import com.yms.domain.usecase.saved_news.InsertSavedNews
+import com.yms.domain.usecase.saved_news.IsNewsSaved
+import com.yms.domain.usecase.saved_news.SavedNewsUseCase
 import com.yms.domain.usecase.user_preferences.app_entry.ReadAppEntry
 import com.yms.domain.usecase.user_preferences.app_entry.SaveAppEntry
 import com.yms.domain.usecase.user_preferences.app_entry.UserPreferencesUseCase
@@ -48,6 +54,18 @@ object UseCaseModule {
             GetBreakingNews(newsRepository),
             GetNewsByMediator(newsRepository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSavedNewsUseCase(localSavedNewsRepository: LocalSavedNewsRepository): SavedNewsUseCase{
+        return SavedNewsUseCase(
+            getSavedNews = GetSavedNews(localSavedNewsRepository),
+            deleteSavedNews = DeleteSavedNews(localSavedNewsRepository),
+            isNewsSaved = IsNewsSaved(localSavedNewsRepository),
+            insertSavedNews = InsertSavedNews(localSavedNewsRepository)
+        )
+
     }
 
 }
