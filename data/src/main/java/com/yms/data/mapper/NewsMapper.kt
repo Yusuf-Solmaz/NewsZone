@@ -1,17 +1,62 @@
 package com.yms.data.mapper
 
 import com.yms.data.local.model.CachedNewsEntity
+import com.yms.data.local.model.SavedNewsEntity
 import com.yms.data.remote.dto.news.ArticleDto
 import com.yms.data.remote.dto.news.NewsRoot
 import com.yms.data.remote.dto.news.SourceDto
 import com.yms.domain.model.news.ArticleData
 import com.yms.domain.model.news.NewsData
+import com.yms.domain.model.news.SavedNews
 import com.yms.domain.model.news.SourceData
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
 object NewsMapper {
+
+    fun SavedNews.toNewsEntity(): SavedNewsEntity {
+        return SavedNewsEntity(
+            author = author,
+            content = content,
+            description = description,
+            publishedAt = publishedAt,
+            title = title,
+            url = url,
+            urlToImage = urlToImage,
+            timeAgo = timeAgo,
+            sourceName = sourceName
+        )
+    }
+
+    fun SavedNewsEntity.toSavedNews(): SavedNews {
+        return SavedNews(
+            author = author,
+            content = content,
+            description = description,
+            publishedAt = publishedAt,
+            title = title,
+            url = url,
+            urlToImage = urlToImage,
+            timeAgo = timeAgo,
+            sourceName = sourceName,
+            id = id
+        )
+    }
+
+    fun ArticleData.toSavedNewsEntity(): SavedNewsEntity {
+        return SavedNewsEntity(
+            author = author,
+            content = content,
+            description = description,
+            publishedAt = publishedAt,
+            title = title,
+            url = url,
+            urlToImage = urlToImage,
+            timeAgo = timeAgo,
+            sourceName = sourceDto.name
+        )
+    }
 
     fun ArticleData.toNewsEntity(): CachedNewsEntity {
         return CachedNewsEntity(
