@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -40,18 +41,22 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.yms.domain.model.news.ArticleData
 import com.yms.presentation.R
 import com.yms.presentation.home.viewmodel.BreakingNewsState
 import kotlinx.coroutines.delay
 
 @Composable
-fun BreakingNewsSection(modifier: Modifier = Modifier, breakingNewsState: BreakingNewsState) {
+fun BreakingNewsSection(
+    modifier: Modifier = Modifier,
+    retry: () -> Unit,
+    breakingNewsState: BreakingNewsState
+) {
     Column(modifier = modifier.wrapContentSize()) {
         Row(
             modifier = Modifier
@@ -62,29 +67,47 @@ fun BreakingNewsSection(modifier: Modifier = Modifier, breakingNewsState: Breaki
         ) {
             Text(
                 stringResource(R.string.breaking_news),
-                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             )
-            Text(stringResource(R.string.view_all), style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground))
+            Text(
+                stringResource(R.string.view_all),
+                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground)
+            )
         }
 
-        if (breakingNewsState.isLoading){
-            Text(text = "Loading...")
-        }
-        else if (breakingNewsState.error != null){
-            Text(text = breakingNewsState.error)
-        }
-        else{
-            BreakingNewsCard(breakingNewsState = breakingNewsState)
-        }
+        when (val state = breakingNewsState) {
+            is BreakingNewsState.Error -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = state.message, color = MaterialTheme.colorScheme.error)
+                    Button(onClick = retry) {
+                        Text(text = "Retry")
+                    }
+                }
+            }
 
+            BreakingNewsState.Loading -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "Loading...")
+                }
+            }
+
+            is BreakingNewsState.Success -> {
+                BreakingNewsCard(articleList = state.news)
+            }
+
+            else -> Unit
+        }
     }
 }
 
 @Composable
-fun BreakingNewsCard(modifier: Modifier = Modifier, breakingNewsState: BreakingNewsState) {
+fun BreakingNewsCard(modifier: Modifier = Modifier, articleList: List<ArticleData>) {
 
     val pagerState = rememberPagerState(
-        pageCount = { breakingNewsState.news?.size ?: 0 }
+        pageCount = { articleList.size }
     )
     LaunchedEffect(Unit) {
         while (true) {
@@ -105,15 +128,16 @@ fun BreakingNewsCard(modifier: Modifier = Modifier, breakingNewsState: BreakingN
                 state = pagerState,
                 modifier.wrapContentSize()
             ) { currentPage ->
-                val article = breakingNewsState.news?.get(currentPage) ?: return@HorizontalPager
+                val article = articleList[currentPage]
 
                 Card(
-                    modifier = Modifier.wrapContentSize()
+                    modifier = Modifier
+                        .wrapContentSize()
                         .padding(
                             top = dimensionResource(R.dimen.padding_small),
                             bottom = dimensionResource(R.dimen.padding_small),
                             end = dimensionResource(R.dimen.padding_small),
-                           ),
+                        ),
                     elevation = CardDefaults.cardElevation(dimensionResource(R.dimen.elevation_small)),
                     shape = RoundedCornerShape(dimensionResource(R.dimen.corner_shape_big))
                 ) {
@@ -141,16 +165,17 @@ fun BreakingNewsCard(modifier: Modifier = Modifier, breakingNewsState: BreakingN
                                 isImageLoading = false
                             }
                         )
-                        if (!isImageLoading){
-
+                        if (!isImageLoading) {
 
 
                             Box(
-                                modifier = Modifier.matchParentSize()
+                                modifier = Modifier
+                                    .matchParentSize()
                                     .background(Color.Black.copy(alpha = 0.5f))
                             )
                             Column(
-                                modifier = Modifier.matchParentSize()
+                                modifier = Modifier
+                                    .matchParentSize()
                                     .padding(dimensionResource(R.dimen.padding_medium)),
                                 verticalArrangement = Arrangement.Bottom,
                                 horizontalAlignment = Alignment.Start
@@ -188,7 +213,7 @@ fun BreakingNewsCard(modifier: Modifier = Modifier, breakingNewsState: BreakingN
                                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                                     maxLines = 2,
                                 )
-                        }
+                            }
 
                         }
                     }
@@ -196,7 +221,7 @@ fun BreakingNewsCard(modifier: Modifier = Modifier, breakingNewsState: BreakingN
             }
         }
         PageIndicator(
-            pageCount = breakingNewsState.news?.size ?: 0,
+            pageCount = articleList.size,
             currentPage = pagerState.currentPage,
             modifier = modifier
         )
@@ -223,7 +248,8 @@ fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
     val width = animateDpAsState(
         targetValue = if (isSelected) 40.dp else 10.dp,
         animationSpec = tween(durationMillis = 400),
-        label = "")
+        label = ""
+    )
 
     Box(
         modifier = Modifier
@@ -231,12 +257,10 @@ fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
             .height(10.dp)
             .width(width.value)
             .clip(CircleShape)
-            .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
+            .background(
+                if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(
+                    alpha = 0.5f
+                )
+            )
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BreakingNewsSectionPreview() {
-    BreakingNewsSection(breakingNewsState = BreakingNewsState())
 }

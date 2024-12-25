@@ -16,40 +16,39 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+
 
 @HiltViewModel
 class NewsHomeViewModel @Inject constructor(
     val customizationPreferencesUseCase: CustomizationPreferencesUseCase,
     val newsUseCase: NewsUseCase,
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private companion object {
         const val STOP_TIME_MILLIS = 5_000L
 
     }
 
-    val pagedNews = MutableStateFlow<PagingData<ArticleData>>(PagingData.empty())
-
-    fun getPagedNewsWithMediator(category: NewsCategory?) {
-        viewModelScope.launch {
-
-            newsUseCase.getNewsByMediator(category?.title) // Burada getNewsByMediator çağırıyoruz
-                .cachedIn(viewModelScope)
-                .collect {
-                    pagedNews.value = it
-                }
+    fun onEvent(event: NewsHomeEvent) {
+        when (event) {
+            is NewsHomeEvent.GetNewsByCategory -> {
+                getNewsByCategory(event.category)
+            }
+            is NewsHomeEvent.GetBreakingNews -> {
+                getBreakingNews()
+            }
         }
     }
 
 
-
-    private val _breakingNewsState = MutableStateFlow(BreakingNewsState())
+    private val _breakingNewsState = MutableStateFlow<BreakingNewsState>(BreakingNewsState.Idle)
     val breakingNewsState: StateFlow<BreakingNewsState>
         get() = _breakingNewsState
+
+    val pagedNews = MutableStateFlow<PagingData<ArticleData>>(PagingData.empty())
 
     val categoryState: StateFlow<CategoryState> =
         customizationPreferencesUseCase.readCategory().map { category ->
@@ -58,7 +57,7 @@ class NewsHomeViewModel @Inject constructor(
 
                 CategoryState(category = enumCategory, isLoading = false)
             } catch (e: IllegalArgumentException) {
-                CategoryState(category = NewsCategory.GENERAL, isLoading = false,error = e.message)
+                CategoryState(category = NewsCategory.GENERAL, isLoading = false, error = e.message)
             }
         }.stateIn(
             scope = viewModelScope,
@@ -66,38 +65,41 @@ class NewsHomeViewModel @Inject constructor(
             initialValue = CategoryState()
         )
 
-
     init {
         getBreakingNews()
 
         Log.d("CategoryState", "$categoryState")
     }
 
-    fun getBreakingNews(page: Int = 1, pageSize: Int = 5) {
+    private fun getNewsByCategory(category: NewsCategory?) {
+        viewModelScope.launch {
+
+            newsUseCase.getNewsByMediator(category?.title)
+                .cachedIn(viewModelScope)
+                .collect {
+                    pagedNews.value = it
+                }
+        }
+    }
+
+    private fun getBreakingNews(page: Int = 1, pageSize: Int = 5) {
         viewModelScope.launch {
             newsUseCase.getBreakingNews(page, pageSize).collect { result ->
-                when (result) {
+                _breakingNewsState.value = when (result) {
                     is RootResult.Error -> {
-                        _breakingNewsState.update { state ->
-                            state.copy(isLoading = false, error = result.message)
-                        }
-
+                        BreakingNewsState.Error(result.message)
                     }
 
-                    RootResult.Loading -> {
-                        _breakingNewsState.update { state ->
-                            state.copy(isLoading = true)
-                        }
+                    is RootResult.Loading -> {
+                        BreakingNewsState.Loading
                     }
 
                     is RootResult.Success -> {
 
-                        val articles = result.data?.articleDtos ?: emptyList()
-                        Log.d("BreakingNews", "Articles: ${articles.get(0)}")
-                        _breakingNewsState.update { state ->
-                            state.copy(isLoading = false, news = articles)
-                        }
+                        BreakingNewsState.Success(result.data?.articleDtos ?: emptyList())
                     }
+
+                    else -> BreakingNewsState.Idle
                 }
             }
         }
@@ -105,12 +107,13 @@ class NewsHomeViewModel @Inject constructor(
 
 }
 
+sealed interface BreakingNewsState {
+    data class Success(val news: List<ArticleData>) : BreakingNewsState
+    data object Loading : BreakingNewsState
+    data class Error(val message: String) : BreakingNewsState
+    data object Idle : BreakingNewsState
+}
 
-data class BreakingNewsState(
-    val news: List<ArticleData>? = null,
-    val isLoading: Boolean = true,
-    val error: String? = null
-)
 
 data class CategoryState(
     val category: NewsCategory = NewsCategory.GENERAL,

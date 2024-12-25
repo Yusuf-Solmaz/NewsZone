@@ -4,6 +4,7 @@ package com.yms.presentation.article_detail
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -40,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.yms.domain.model.news.ArticleData
@@ -48,12 +51,13 @@ import com.yms.presentation.R
 import com.yms.utils.ArticleState
 
 @Composable
-fun ArticleDetailScreen(sharedState: ArticleState, modifier: Modifier = Modifier) {
+fun ArticleDetailScreen(sharedState: ArticleState, viewModel: ArticleDetailViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
 
     val systemUiController = rememberSystemUiController()
     val context = LocalContext.current
     val article = sharedState.article
 
+    val insertState = viewModel.state.collectAsState()
 
     DisposableEffect(Unit) {
         systemUiController.isStatusBarVisible = false
@@ -68,6 +72,22 @@ fun ArticleDetailScreen(sharedState: ArticleState, modifier: Modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+
+        when (val state = insertState.value) {
+            is InsertNewsState.Success -> {
+                Toast.makeText(context, "Article saved successfully!", Toast.LENGTH_SHORT).show()
+            }
+            is InsertNewsState.Error -> {
+                Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "Error: ${state.message}",
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            }
+            is InsertNewsState.Idle -> Unit
+        }
+
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -112,7 +132,13 @@ fun ArticleDetailScreen(sharedState: ArticleState, modifier: Modifier = Modifier
                             painter = painterResource(R.drawable.ic_send),
                             contentDescription = "Share",
                             tint = Color.White,
-                            modifier = Modifier.align(Alignment.Center)
+                            modifier = Modifier.align(Alignment.Center).clickable(
+                                onClick = {
+                                    if (article != null){
+                                        viewModel.onEvent(ArticleDetailEvent.InsertArticle(article))
+                                    }
+                                }
+                            )
                         )
                     }
                 }

@@ -32,6 +32,7 @@ import com.yms.domain.model.news.ArticleData
 import com.yms.presentation.R
 import com.yms.presentation.home.content.BreakingNewsSection
 import com.yms.presentation.home.content.NewsCategorySection
+import com.yms.presentation.home.viewmodel.NewsHomeEvent
 import com.yms.presentation.home.viewmodel.NewsHomeViewModel
 import com.yms.utils.NewsCategory
 
@@ -47,6 +48,10 @@ fun NewsHomeScreen(
     val pagedNews = viewModel.pagedNews.collectAsLazyPagingItems()
 
     val context = LocalContext.current
+
+    val getNewsByCategory: (NewsCategory) -> Unit = { category ->
+        viewModel.onEvent(NewsHomeEvent.GetNewsByCategory(category))
+    }
 
     LaunchedEffect(key1 = pagedNews.loadState) {
         if (pagedNews.itemCount > 0) {
@@ -71,7 +76,7 @@ fun NewsHomeScreen(
 
     if (!categoryState.isLoading) {
         LaunchedEffect(categoryState.category) {
-            viewModel.getPagedNewsWithMediator(categoryState.category)
+            getNewsByCategory(categoryState.category)
         }
     }
 
@@ -81,7 +86,7 @@ fun NewsHomeScreen(
             .padding(dimensionResource(R.dimen.padding_medium))
             .background(MaterialTheme.colorScheme.background)
     ) {
-        BreakingNewsSection(breakingNewsState = viewModel.breakingNewsState.collectAsState().value)
+        BreakingNewsSection( retry = { viewModel.onEvent(NewsHomeEvent.GetBreakingNews) } , modifier = Modifier.fillMaxWidth() , breakingNewsState = viewModel.breakingNewsState.collectAsState().value)
 
         SearchSection(
             modifier = Modifier.fillMaxWidth(),
@@ -89,7 +94,7 @@ fun NewsHomeScreen(
         )
 
         NewsCategorySection(
-            onTabSelected = { category -> viewModel.getPagedNewsWithMediator(category) },
+            onTabSelected = { category -> getNewsByCategory(category) },
             pagedNews = pagedNews,
             category = NewsCategory.fromString(categoryState.category.title) ?: NewsCategory.GENERAL,
             navigateToArticleDetailScreen = navigateToArticleDetailScreen
