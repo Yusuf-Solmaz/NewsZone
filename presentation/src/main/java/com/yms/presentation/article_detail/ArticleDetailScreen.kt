@@ -50,14 +50,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.yms.presentation.R
-import com.yms.utils.ArticleState
+import com.yms.utils.SharedArticleState
 
 @Composable
-fun ArticleDetailScreen(onBack: () -> Unit,sharedState: ArticleState, viewModel: ArticleDetailViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
+fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleState, viewModel: ArticleDetailViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
 
     val systemUiController = rememberSystemUiController()
     val context = LocalContext.current
-    val article = sharedState.article
+    val article = sharedArticleState.article
 
     val insertState = viewModel.state.collectAsState()
     val isSaved = viewModel.isArticleSaved.collectAsState()
