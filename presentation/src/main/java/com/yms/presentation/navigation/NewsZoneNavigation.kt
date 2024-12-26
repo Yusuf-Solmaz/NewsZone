@@ -6,15 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.yms.domain.model.news.ArticleData
 import com.yms.presentation.article_detail.ArticleDetailScreen
 import com.yms.presentation.customization.CustomizationScreen
 import com.yms.presentation.home.NewsHomeScreen
@@ -25,17 +23,18 @@ import com.yms.presentation.saved_news.SavedNews
 import com.yms.presentation.search.SearchScreen
 import com.yms.presentation.settings.SettingsScreen
 import com.yms.presentation.splash.SplashScreen
-import com.yms.utils.SharedViewModel
+import com.yms.utils.SharedArticleState
 
 @Composable
 fun NewsZoneNavigation(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     saveAppEntry: (OnBoardingEvent) -> Unit,
-    onBoardingState: OnBoardingState
+    onBoardingState: OnBoardingState,
+    updateSharedArticle: (ArticleData) -> Unit,
+    sharedArticleState: SharedArticleState
 ) {
 
-    val sharedViewModel: SharedViewModel = hiltViewModel()
 
     if (onBoardingState.isSplashScreenVisible) {
         SplashScreen()
@@ -64,7 +63,7 @@ fun NewsZoneNavigation(
                         },
                         navigateToArticleDetailScreen = {
                             articleData ->
-                            sharedViewModel.updateState(articleData)
+                            updateSharedArticle(articleData)
                             navController.navigate(NavigationGraph.ARTICLE_DETAIL_SCREEN.name)
                         }
                     )
@@ -72,17 +71,17 @@ fun NewsZoneNavigation(
                 composable(NavigationGraph.SEARCH_SCREEN.name) {
                     SearchScreen()
                 }
-                composable(NavigationGraph.ARTICLE_DETAIL_SCREEN.name){
-                    val state by sharedViewModel.sharedState.collectAsStateWithLifecycle()
+            }
 
-                    ArticleDetailScreen(
-                        sharedState = state,
-                        onBack = {
-                            navController.popBackStack()
-                        }
-                    )
-                }
+            composable(NavigationGraph.ARTICLE_DETAIL_SCREEN.name){
+                //val state by sharedViewModel.sharedState.collectAsStateWithLifecycle()
 
+                ArticleDetailScreen(
+                    sharedArticleState = sharedArticleState,
+                    onBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
 
             composable(NavigationGraph.SAVED_NEWS_SCREEN.name){
