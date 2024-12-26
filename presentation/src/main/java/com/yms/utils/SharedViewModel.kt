@@ -11,16 +11,16 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(
 ): ViewModel() {
 
-    private val _sharedState = MutableStateFlow<ArticleState>(ArticleState())
-    val sharedState: StateFlow<ArticleState>
-        get() = _sharedState
+    private val _sharedArticleState = MutableStateFlow<SharedArticleState>(SharedArticleState())
+    val sharedArticleState: StateFlow<SharedArticleState>
+        get() = _sharedArticleState
 
     fun updateState(article: ArticleData? = null){
         try {
-            _sharedState.value = _sharedState.value.copy(article = article,isLoading = false,error = null)
+            _sharedArticleState.value = _sharedArticleState.value.copy(article = article,isLoading = false,error = null)
         }
         catch (e:Exception){
-            _sharedState.value = _sharedState.value.copy(isLoading = false,error = e.message)
+            _sharedArticleState.value = _sharedArticleState.value.copy(isLoading = false,error = e.message)
         }
 
     }
@@ -31,7 +31,7 @@ class SharedViewModel @Inject constructor(
     }
 }
 
-data class ArticleState(
+data class SharedArticleState(
     val article: ArticleData? = null,
     val isLoading: Boolean = true,
     val error: String? = null
