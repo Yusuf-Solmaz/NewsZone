@@ -49,6 +49,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.yms.domain.model.news.ArticleData
+import com.yms.domain.model.news.BaseArticle
+import com.yms.domain.model.news.SavedNews
 import com.yms.presentation.R
 import com.yms.utils.SharedArticleState
 
@@ -57,7 +60,14 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
 
     val systemUiController = rememberSystemUiController()
     val context = LocalContext.current
-    val article = sharedArticleState.article
+    //val article = sharedArticleState.article
+
+    val article: BaseArticle? = when (val article = sharedArticleState.article) {
+        is ArticleData -> article
+        is SavedNews -> article
+        else -> null
+    }
+
 
     val insertState = viewModel.state.collectAsState()
     val isSaved = viewModel.isArticleSaved.collectAsState()
@@ -184,6 +194,12 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
             }
         }
 
+        val sourceName = when (val article = sharedArticleState.article) {
+            is ArticleData -> article.sourceDto.name
+            is SavedNews -> article.sourceName
+            else -> null
+        }
+
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -199,7 +215,7 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
                     Row (verticalAlignment = Alignment.CenterVertically){
 
                         Text(
-                            text = article?.sourceDto?.name ?: "",
+                            text = sourceName ?:  "",
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )

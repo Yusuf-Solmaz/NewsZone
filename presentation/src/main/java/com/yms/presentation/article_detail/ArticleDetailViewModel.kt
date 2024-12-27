@@ -3,6 +3,7 @@ package com.yms.presentation.article_detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yms.domain.model.news.ArticleData
+import com.yms.domain.model.news.BaseArticle
 import com.yms.domain.usecase.saved_news.SavedNewsUseCase
 import com.yms.domain.utils.RootResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,9 +57,9 @@ class ArticleDetailViewModel @Inject constructor(
         }
     }
 
-    private fun insertArticle(article: ArticleData) {
+    private fun insertArticle(article: BaseArticle) {
         viewModelScope.launch {
-            val result = savedNewsUseCase.insertSavedNews(article)
+            val result = savedNewsUseCase.insertSavedNews(article as ArticleData)
             _state.value = when (result) {
                 is RootResult.Success -> {
 

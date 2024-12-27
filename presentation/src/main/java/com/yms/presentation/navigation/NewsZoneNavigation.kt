@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.yms.domain.model.news.ArticleData
+import com.yms.domain.model.news.BaseArticle
 import com.yms.presentation.article_detail.ArticleDetailScreen
 import com.yms.presentation.customization.CustomizationScreen
 import com.yms.presentation.home.NewsHomeScreen
@@ -31,7 +31,7 @@ fun NewsZoneNavigation(
     modifier: Modifier = Modifier,
     saveAppEntry: (OnBoardingEvent) -> Unit,
     onBoardingState: OnBoardingState,
-    updateSharedArticle: (ArticleData) -> Unit,
+    updateSharedArticle: (BaseArticle) -> Unit,
     sharedArticleState: SharedArticleState
 ) {
 
@@ -85,7 +85,13 @@ fun NewsZoneNavigation(
             }
 
             composable(NavigationGraph.SAVED_NEWS_SCREEN.name){
-                SavedNews()
+                SavedNews(
+                    savedArticleToArticleDetail = {
+                        articleData ->
+                        updateSharedArticle(articleData)
+                        navController.navigate(NavigationGraph.ARTICLE_DETAIL_SCREEN.name)
+                    }
+                )
             }
 
             composable(NavigationGraph.SETTINGS_SCREEN.name) {

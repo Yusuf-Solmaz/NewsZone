@@ -1,7 +1,7 @@
 package com.yms.utils
 
 import androidx.lifecycle.ViewModel
-import com.yms.domain.model.news.ArticleData
+import com.yms.domain.model.news.BaseArticle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ class SharedViewModel @Inject constructor(
     val sharedArticleState: StateFlow<SharedArticleState>
         get() = _sharedArticleState
 
-    fun updateState(article: ArticleData? = null){
+    fun updateState(article: BaseArticle? = null){
         try {
             _sharedArticleState.value = _sharedArticleState.value.copy(article = article,isLoading = false,error = null)
         }
@@ -32,7 +32,7 @@ class SharedViewModel @Inject constructor(
 }
 
 data class SharedArticleState(
-    val article: ArticleData? = null,
+    val article: BaseArticle? = null,
     val isLoading: Boolean = true,
     val error: String? = null
 )

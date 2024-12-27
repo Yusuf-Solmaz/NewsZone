@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.yms.domain.model.news.ArticleData
+import com.yms.domain.model.news.BaseArticle
 import com.yms.presentation.R
 import com.yms.presentation.home.content.BreakingNewsSection
 import com.yms.presentation.home.content.NewsCategorySection
@@ -41,7 +41,7 @@ fun NewsHomeScreen(
     modifier: Modifier = Modifier,
     viewModel: NewsHomeViewModel = hiltViewModel(),
     navigateToSearchScreen: () -> Unit,
-    navigateToArticleDetailScreen: (ArticleData) -> Unit
+    navigateToArticleDetailScreen: (BaseArticle) -> Unit
 ) {
     val categoryState by viewModel.categoryState.collectAsState()
     val pagedNews = viewModel.pagedNews.collectAsLazyPagingItems()
