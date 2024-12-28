@@ -11,6 +11,7 @@ import com.yms.domain.usecase.user_preferences.category.CustomizationPreferences
 import com.yms.domain.utils.RootResult
 import com.yms.utils.NewsCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +19,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 
 @HiltViewModel
@@ -37,12 +37,18 @@ class NewsHomeViewModel @Inject constructor(
             is NewsHomeEvent.GetNewsByCategory -> {
                 getNewsByCategory(event.category)
             }
+
             is NewsHomeEvent.GetBreakingNews -> {
                 getBreakingNews()
+            }
+
+            is NewsHomeEvent.RefreshPage -> {
+                onRefresh(event.category)
             }
         }
     }
 
+    val isRefreshing = MutableStateFlow(false)
 
     private val _breakingNewsState = MutableStateFlow<BreakingNewsState>(BreakingNewsState.Idle)
     val breakingNewsState: StateFlow<BreakingNewsState>
@@ -69,6 +75,19 @@ class NewsHomeViewModel @Inject constructor(
         getBreakingNews()
 
         Log.d("CategoryState", "$categoryState")
+    }
+
+    private fun onRefresh(category: NewsCategory?) {
+        isRefreshing.value = true
+        viewModelScope.launch {
+            try {
+                getBreakingNews()
+                getNewsByCategory(category)
+                delay(1000)
+            } finally {
+                isRefreshing.value = false
+            }
+        }
     }
 
     private fun getNewsByCategory(category: NewsCategory?) {
@@ -116,7 +135,7 @@ sealed interface BreakingNewsState {
 
 
 data class CategoryState(
-    val category: NewsCategory = NewsCategory.GENERAL,
+    var category: NewsCategory = NewsCategory.GENERAL,
     val isLoading: Boolean = true,
     val error: String? = null
 )
