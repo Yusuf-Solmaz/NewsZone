@@ -5,4 +5,5 @@ import com.yms.utils.NewsCategory
 sealed interface NewsHomeEvent{
     data class GetNewsByCategory(val category: NewsCategory) : NewsHomeEvent
     data object GetBreakingNews : NewsHomeEvent
+    data class RefreshPage(val category: NewsCategory) : NewsHomeEvent
 }
