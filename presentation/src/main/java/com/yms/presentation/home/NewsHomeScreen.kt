@@ -1,5 +1,6 @@
 package com.yms.presentation.home
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,11 +9,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,6 +40,7 @@ import com.yms.presentation.home.viewmodel.NewsHomeViewModel
 import com.yms.utils.NewsCategory
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsHomeScreen(
     modifier: Modifier = Modifier,
@@ -45,12 +50,17 @@ fun NewsHomeScreen(
 ) {
     val categoryState by viewModel.categoryState.collectAsState()
     val pagedNews = viewModel.pagedNews.collectAsLazyPagingItems()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+
+    Log.d("isRefreshing", "$isRefreshing")
+
 
     val context = LocalContext.current
 
     val getNewsByCategory: (NewsCategory) -> Unit = { category ->
         viewModel.onEvent(NewsHomeEvent.GetNewsByCategory(category))
     }
+
 
     LaunchedEffect(key1 = pagedNews.loadState) {
         if (pagedNews.itemCount > 0) {
@@ -73,25 +83,50 @@ fun NewsHomeScreen(
         }
     }
 
-    Column(
+
+
+    PullToRefreshBox(
         modifier = modifier
             .fillMaxSize()
-            .padding(dimensionResource(R.dimen.padding_medium))
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background),
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            viewModel.onEvent(NewsHomeEvent.RefreshPage(categoryState.category))
+        }
     ) {
-        BreakingNewsSection( retry = { viewModel.onEvent(NewsHomeEvent.GetBreakingNews) } , modifier = Modifier.fillMaxWidth() , breakingNewsState = viewModel.breakingNewsState.collectAsState().value)
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(dimensionResource(R.dimen.padding_medium))
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            LazyColumn {
+                item{
+                    BreakingNewsSection(
+                        retry = { viewModel.onEvent(NewsHomeEvent.GetBreakingNews) },
+                        modifier = Modifier.fillMaxWidth(),
+                        breakingNewsState = viewModel.breakingNewsState.collectAsState().value,
+                        navigateToArticleDetailScreen = navigateToArticleDetailScreen
+                    )
+                }
+                item{
+                    SearchSection(
+                        modifier = Modifier.fillMaxWidth(),
+                        navigateToSearchScreen = navigateToSearchScreen
+                    )
+                }
+            }
 
-        SearchSection(
-            modifier = Modifier.fillMaxWidth(),
-            navigateToSearchScreen = navigateToSearchScreen
-        )
-
-        NewsCategorySection(
-            onTabSelected = { category -> getNewsByCategory(category) },
-            pagedNews = pagedNews,
-            category = NewsCategory.fromString(categoryState.category.title) ?: NewsCategory.GENERAL,
-            navigateToArticleDetailScreen = navigateToArticleDetailScreen
-        )
+            NewsCategorySection(
+                onTabSelected = { category ->
+                    categoryState.category = category
+                    getNewsByCategory(category) },
+                pagedNews = pagedNews,
+                category = NewsCategory.fromString(categoryState.category.title)
+                    ?: NewsCategory.GENERAL,
+                navigateToArticleDetailScreen = navigateToArticleDetailScreen
+            )
+        }
     }
 }
 
