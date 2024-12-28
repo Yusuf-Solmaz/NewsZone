@@ -1,5 +1,6 @@
 package com.yms.presentation.main
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationBar
@@ -32,6 +34,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -54,9 +57,9 @@ fun NewsZoneApp(
 ) {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-//    val  currentScreen = NavigationGraph.valueOf(
-//        backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
-//    )
+    val currentScreenTitle = NavigationGraph.valueOf(
+        backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
+    )
     val currentScreen = backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
 
 
@@ -72,7 +75,10 @@ fun NewsZoneApp(
                     || currentScreen == NavigationGraph.SEARCH_SCREEN.name
                     || currentScreen == NavigationGraph.NEWS_HOME.name
                 ) {
-                    TopBar(title = currentScreen)
+                    TopBar(title = stringResource(currentScreenTitle.title ?: R.string.home),
+                        isBackEnabled = currentScreen != NavigationGraph.NEWS_HOME.name,
+                        navigateBack = { navController.popBackStack() })
+                    Log.d("NewsZoneApp", "TopBar: $currentScreen")
                 }
 
             },
@@ -117,7 +123,7 @@ fun NewsZoneApp(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(title: String) {
+fun TopBar(title: String, isBackEnabled: Boolean, navigateBack: () -> Unit = {}) {
     CenterAlignedTopAppBar(
         title = {
             Text(text = title)
@@ -127,11 +133,17 @@ fun TopBar(title: String) {
         ),
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
         navigationIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_back),
-                contentDescription = "Menu",
-                modifier = Modifier.size(26.dp)
-            )
+            if (isBackEnabled) {
+                IconButton(
+                    onClick = navigateBack
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = "Menu",
+                        modifier = Modifier.size(26.dp),
+                    )
+                }
+            }
         },
         actions = {
             Icon(
