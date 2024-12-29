@@ -35,13 +35,14 @@ import com.yms.presentation.R
 @Composable
 fun ArticleCard(
     articleData: BaseArticle,
-    navigateToArticleDetailScreen: (BaseArticle) -> Unit
+    navigateToArticleDetailScreen: (BaseArticle) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(120.dp)
             .padding(8.dp)
