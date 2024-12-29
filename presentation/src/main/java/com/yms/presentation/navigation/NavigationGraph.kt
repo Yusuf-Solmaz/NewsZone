@@ -11,5 +11,7 @@ enum class NavigationGraph(@StringRes val title: Int?){
     ARTICLE_DETAIL_SCREEN(null),
     NEWS_HOME(R.string.home),
     SEARCH_SCREEN(R.string.search),
-    SETTINGS_SCREEN(R.string.settings)
+    SETTINGS_SCREEN(R.string.settings),
+    SAVED_NEWS_SCREEN(R.string.saved_news)
+
 }

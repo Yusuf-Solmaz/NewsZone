@@ -55,7 +55,8 @@ import kotlinx.coroutines.delay
 fun BreakingNewsSection(
     modifier: Modifier = Modifier,
     retry: () -> Unit,
-    breakingNewsState: BreakingNewsState
+    breakingNewsState: BreakingNewsState,
+    navigateToArticleDetailScreen: (ArticleData) -> Unit
 ) {
     Column(modifier = modifier.wrapContentSize()) {
         Row(
@@ -95,7 +96,7 @@ fun BreakingNewsSection(
             }
 
             is BreakingNewsState.Success -> {
-                BreakingNewsCard(articleList = state.news)
+                BreakingNewsCard(articleList = state.news,navigateToArticleDetailScreen = navigateToArticleDetailScreen)
             }
 
             else -> Unit
@@ -104,7 +105,7 @@ fun BreakingNewsSection(
 }
 
 @Composable
-fun BreakingNewsCard(modifier: Modifier = Modifier, articleList: List<ArticleData>) {
+fun BreakingNewsCard(modifier: Modifier = Modifier, articleList: List<ArticleData>,navigateToArticleDetailScreen: (ArticleData) -> Unit) {
 
     val pagerState = rememberPagerState(
         pageCount = { articleList.size }
@@ -131,6 +132,9 @@ fun BreakingNewsCard(modifier: Modifier = Modifier, articleList: List<ArticleDat
                 val article = articleList[currentPage]
 
                 Card(
+                    onClick = {
+                        navigateToArticleDetailScreen(article)
+                    },
                     modifier = Modifier
                         .wrapContentSize()
                         .padding(

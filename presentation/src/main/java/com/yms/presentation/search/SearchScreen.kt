@@ -28,7 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.yms.presentation.R
-import com.yms.presentation.home.content.NewsCard
+import com.yms.presentation.items.ArticleCard
 import com.yms.theme.onBackgroundLight
 import com.yms.theme.outlineLight
 import com.yms.theme.primaryLight
@@ -91,7 +91,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
 
                     if (article != null) {
                         Log.d("NewsHomeScreen", "Article: ${article.urlToImage}")
-                        NewsCard(
+                        ArticleCard(
                             articleData = article,
                             navigateToArticleDetailScreen = {}
 
