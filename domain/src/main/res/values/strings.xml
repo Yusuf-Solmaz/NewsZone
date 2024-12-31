@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="invalid_input_data">Invalid Data</string>
+    <string name="breaking_news">Breaking News</string>
 </resources>
