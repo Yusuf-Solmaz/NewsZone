@@ -7,6 +7,7 @@ import com.yms.data.local.db.NewsDatabase
 import com.yms.data.remote.NewsApi
 import com.yms.data.repository.customization.CustomizationRepositoryImpl
 import com.yms.data.repository.local.LocalSavedNewsRepositoryImpl
+import com.yms.data.repository.notification.BreakingNewsNotificationRepositoryImpl
 import com.yms.data.repository.remote.news.NewsRepositoryImpl
 import com.yms.domain.repository.news.LocalSavedNewsRepository
 import com.yms.domain.repository.news.NewsRepository
@@ -29,6 +30,14 @@ object RepositoryModule {
         workManager: WorkManager
     ): CustomizationRepository {
         return CustomizationRepositoryImpl(context, workManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBreakingNewsNotificationRepository(
+        workManager: WorkManager
+    ):BreakingNewsNotificationRepositoryImpl{
+        return BreakingNewsNotificationRepositoryImpl(workManager)
     }
 
     @Provides
