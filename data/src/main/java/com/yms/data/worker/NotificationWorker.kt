@@ -1,7 +1,6 @@
 package com.yms.data.worker
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
