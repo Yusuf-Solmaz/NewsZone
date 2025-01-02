@@ -1,6 +1,7 @@
 package com.yms.newszone
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -22,8 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yms.presentation.main.NewsZoneApp
+import com.yms.presentation.settings.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -44,12 +50,31 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RequestNotificationPermission(requestPermissionLauncher) {
+                val viewModel: SettingsViewModel = hiltViewModel()
+                val context = LocalContext.current
+
+                viewModel.languageState.collectAsStateWithLifecycle().value.language.let { language ->
+                    LocaleManager.changeAppLanguage(context, language)
+                }
+
                 NewsZoneApp()
             }
         }
     }
 }
 
+object LocaleManager {
+
+    fun changeAppLanguage(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = context.resources.configuration
+        config.setLocale(locale)
+
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+    }
+}
 
 @Composable
 fun ShowNotificationDialog(
