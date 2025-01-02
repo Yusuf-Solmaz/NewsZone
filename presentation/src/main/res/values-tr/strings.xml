@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_title_1">Anında Güncel Kalın</string>
+    <string name="onboarding_description_1">Teknoloji, dünya olayları ve daha fazlasıyla ilgili en son haberler bir dokunuş uzağınızda. Gerçek zamanlı olarak güncel kalmak için NewsZone u  keşfedin.</string>
+    <string name="onboarding_title_2">Kişiselleştirilmiş İçerik</string>
+    <string name="onboarding_description_2">Haberleri tercihlerinize göre filtreleyin ve yalnızca ilgilendiğiniz konuları alın. Haber akışınızı sizin için özelleştirelim.</string>
+    <string name="onboarding_title_3">Hızlı ve Kolay Erişim</string>
+    <string name="onboarding_description_3">Uygulamamız hızlı ve kolay erişim için tasarlandı. Son güncellemeleri dakikalar içinde alın ve haber akışınızı zahmetsizce gezin.</string>
+    <string name="home">ZoneNews</string>
+    <string name="get_started">Başlayın</string>
+    <string name="next">İleri</string>
+    <string name="follow_up_time_question">Haberleri ne sıklıkla takip ediyorsunuz?</string>
+    <string name="age_group_question">Yaş grubunuzu seçin</string>
+    <string name="gender_question">Cinsiyeti seçin</string>
+    <string name="back">Geri</string>
+    <string name="breaking_news">Son Dakika</string>
+    <string name="view_all">Tümünü Gör</string>
+    <string name="search">Ara</string>
+    <string name="settings">Ayarlar</string>
+    <string name="saved_news">Kaydedilen Haberler</string>
+    <string name="language">Dil</string>
+    <string name="language_subtitle">Dili değiştirin.</string>
+    <string name="appearence">Görünüm</string>
+    <string name="appearence_subtitle">Uygulama temasını açık veya koyu tema olarak değiştirin.</string>
+    <string name="dark">Koyu</string>
+    <string name="light">Açık</string>
+
+</resources>

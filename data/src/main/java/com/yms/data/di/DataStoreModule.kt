@@ -27,7 +27,7 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideUserPreferencesDataStore(dataStore: DataStore<Preferences>): UserPreferencesRepository {
-        return UserPreferencesDataStore(dataStore)
+    fun provideUserPreferencesDataStore(dataStore: DataStore<Preferences>, @ApplicationContext context: Context): UserPreferencesRepository {
+        return UserPreferencesDataStore(dataStore,context)
     }
 }

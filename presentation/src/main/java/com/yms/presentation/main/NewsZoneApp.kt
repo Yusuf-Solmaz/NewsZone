@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +46,7 @@ import com.yms.presentation.R
 import com.yms.presentation.navigation.NavigationGraph
 import com.yms.presentation.navigation.NewsZoneNavigation
 import com.yms.presentation.onboarding.viewmodel.OnBoardingViewModel
+import com.yms.presentation.settings.viewmodel.SettingsViewModel
 import com.yms.theme.NewsZoneTheme
 import com.yms.utils.SharedViewModel
 
@@ -53,13 +55,11 @@ import com.yms.utils.SharedViewModel
 fun NewsZoneApp(
     onBoardingViewModel: OnBoardingViewModel = hiltViewModel(),
     sharedViewModel: SharedViewModel = hiltViewModel(),
+    settingsViewModel: SettingsViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController()
 ) {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreenTitle = NavigationGraph.valueOf(
-        backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
-    )
     val currentScreen = backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
 
 
@@ -68,15 +68,36 @@ fun NewsZoneApp(
 
     val sharedArticleState by sharedViewModel.sharedArticleState.collectAsState()
 
-    NewsZoneTheme {
+    var currentScreenTitle = NavigationGraph.valueOf(
+        backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
+    )
+
+    val currentLanguage by settingsViewModel.languageState.collectAsState()
+    val isDarkMode by settingsViewModel.darkModeState.collectAsState()
+
+    LaunchedEffect(currentLanguage) {
+        currentScreenTitle = NavigationGraph.valueOf(
+            backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
+        )
+    }
+
+    NewsZoneTheme(
+        darkTheme = isDarkMode.isDarkMode,
+    ) {
         Scaffold(
             topBar = {
-                if (currentScreen == NavigationGraph.SAVED_NEWS_SCREEN.name
-                    || currentScreen == NavigationGraph.SEARCH_SCREEN.name
-                    || currentScreen == NavigationGraph.NEWS_HOME.name
+                if (currentScreen in listOf(
+                        NavigationGraph.SAVED_NEWS_SCREEN.name,
+                        NavigationGraph.SEARCH_SCREEN.name,
+                        NavigationGraph.NEWS_HOME.name,
+                        NavigationGraph.SETTINGS_SCREEN.name
+                    )
                 ) {
-                    TopBar(title = stringResource(currentScreenTitle.title ?: R.string.home),
+                    TopBar(
+                        title = stringResource(currentScreenTitle.title ?: R.string.home),
                         isBackEnabled = currentScreen != NavigationGraph.NEWS_HOME.name,
+                        isSettingsEnabled = currentScreen == NavigationGraph.NEWS_HOME.name,
+                        navigateToSettings = { navController.navigate(NavigationGraph.SETTINGS_SCREEN.name) },
                         navigateBack = { navController.popBackStack() })
                     Log.d("NewsZoneApp", "TopBar: $currentScreen")
                 }
@@ -123,7 +144,13 @@ fun NewsZoneApp(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(title: String, isBackEnabled: Boolean, navigateBack: () -> Unit = {}) {
+fun TopBar(
+    title: String,
+    isBackEnabled: Boolean,
+    isSettingsEnabled: Boolean,
+    navigateToSettings: () -> Unit,
+    navigateBack: () -> Unit = {}
+) {
     CenterAlignedTopAppBar(
         title = {
             Text(text = title)
@@ -146,11 +173,18 @@ fun TopBar(title: String, isBackEnabled: Boolean, navigateBack: () -> Unit = {})
             }
         },
         actions = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_settings),
-                contentDescription = "Settings",
-                modifier = Modifier.size(26.dp)
-            )
+            if (isSettingsEnabled) {
+                IconButton(
+                    onClick = navigateToSettings
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_settings),
+                        contentDescription = "Settings",
+                        modifier = Modifier.size(26.dp)
+                    )
+                }
+            }
+
         },
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
             rememberTopAppBarState()
@@ -163,8 +197,7 @@ fun TopBar(title: String, isBackEnabled: Boolean, navigateBack: () -> Unit = {})
 fun BottomBar(currentScreen: String, onNavigate: (NavigationGraph) -> Unit) {
     NavigationBar(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .height(60.dp),
+            .background(MaterialTheme.colorScheme.background),
         containerColor = MaterialTheme.colorScheme.background
     ) {
         listOf(
