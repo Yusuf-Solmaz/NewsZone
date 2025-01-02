@@ -19,6 +19,11 @@ import com.yms.domain.usecase.user_preferences.app_entry.UserPreferencesUseCase
 import com.yms.domain.usecase.user_preferences.category.CustomizationPreferencesUseCase
 import com.yms.domain.usecase.user_preferences.category.ReadCategory
 import com.yms.domain.usecase.user_preferences.category.SaveCategory
+import com.yms.domain.usecase.user_preferences.settings.ReadDarkMode
+import com.yms.domain.usecase.user_preferences.settings.ReadLanguage
+import com.yms.domain.usecase.user_preferences.settings.SaveDarkMode
+import com.yms.domain.usecase.user_preferences.settings.SaveLanguage
+import com.yms.domain.usecase.user_preferences.settings.SettingsPreferencesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,7 +70,17 @@ object UseCaseModule {
             isNewsSaved = IsNewsSaved(localSavedNewsRepository),
             insertSavedNews = InsertSavedNews(localSavedNewsRepository)
         )
+    }
 
+    @Provides
+    @Singleton
+    fun provideSettingsUseCase(userPreferencesRepository: UserPreferencesRepository): SettingsPreferencesUseCase{
+        return SettingsPreferencesUseCase(
+            readLanguage = ReadLanguage(userPreferencesRepository),
+            saveLanguage = SaveLanguage(userPreferencesRepository),
+            saveDarkMode = SaveDarkMode(userPreferencesRepository),
+            readDarkMode = ReadDarkMode(userPreferencesRepository)
+        )
     }
 
 }
