@@ -17,48 +17,49 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val userPreferencesUseCase: UserPreferencesUseCase
-) : ViewModel(){
+) : ViewModel() {
 
     private companion object {
         const val STOP_TIME_MILLIS = 5_000L
         const val TAG = "OnBoardingViewModel"
     }
 
-    fun onEvent(event: OnBoardingEvent){
-        when(event){
+    fun onEvent(event: OnBoardingEvent) {
+        when(event) {
             is OnBoardingEvent.SaveAppEntry -> {
                 saveAppEntry()
             }
         }
     }
 
-    fun saveAppEntry(){
+    fun saveAppEntry() {
         viewModelScope.launch {
             userPreferencesUseCase.saveAppEntry()
         }
     }
 
     val uiState: StateFlow<OnBoardingState> =
-        userPreferencesUseCase.readAppEntry().map {
-            appEntry ->
+        userPreferencesUseCase.readAppEntry().map { appEntry ->
             Log.d(TAG, "App Entry: $appEntry")
-            if (appEntry){
-                OnBoardingState(isLoading = false,startDestination =NavigationGraph.MAIN_CONTENT.name,isSplashScreenVisible = false)
-            }
-            else{
-                OnBoardingState(isLoading = false,startDestination = NavigationGraph.ONBOARDING_SCREEN.name,isSplashScreenVisible = false)
+            if (appEntry) {
+                OnBoardingState(
+                    isLoading = false,
+                    startDestination = NavigationGraph.MAIN_CONTENT.name,
+                )
+            } else {
+                OnBoardingState(
+                    isLoading = false,
+                    startDestination = NavigationGraph.ONBOARDING_SCREEN.name,
+                )
             }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(STOP_TIME_MILLIS),
             initialValue = OnBoardingState()
         )
-
-
 }
 
 data class OnBoardingState(
-    val isLoading:Boolean = true,
+    val isLoading: Boolean = true,
     val startDestination: String = NavigationGraph.ONBOARDING_SCREEN.name,
-    val isSplashScreenVisible: Boolean = true
 )
