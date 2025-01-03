@@ -2,9 +2,11 @@ package com.yms.data.mapper
 
 import com.yms.data.local.model.CachedNewsEntity
 import com.yms.data.local.model.SavedNewsEntity
+import com.yms.data.remote.dto.gemini.ArticleSummaryDto
 import com.yms.data.remote.dto.news.ArticleDto
 import com.yms.data.remote.dto.news.NewsRoot
 import com.yms.data.remote.dto.news.SourceDto
+import com.yms.domain.model.gemini.ArticleSummary
 import com.yms.domain.model.news.ArticleData
 import com.yms.domain.model.news.NewsData
 import com.yms.domain.model.news.SavedNews
@@ -14,20 +16,6 @@ import java.util.Locale
 import java.util.TimeZone
 
 object NewsMapper {
-
-    fun SavedNews.toNewsEntity(): SavedNewsEntity {
-        return SavedNewsEntity(
-            author = author,
-            content = content,
-            description = description,
-            publishedAt = publishedAt,
-            title = title,
-            url = url,
-            urlToImage = urlToImage,
-            timeAgo = timeAgo,
-            sourceName = sourceName
-        )
-    }
 
     fun SavedNewsEntity.toSavedNews(): SavedNews {
         return SavedNews(
@@ -184,5 +172,11 @@ object NewsMapper {
                 }
             } ?: "Data not available"
         } ?: "Data not available"
+    }
+
+    fun ArticleSummaryDto.toArticleSummary(): ArticleSummary {
+        return ArticleSummary(
+            summary = summary
+        )
     }
 }
