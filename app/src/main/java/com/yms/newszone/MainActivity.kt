@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -79,25 +81,20 @@ object LocaleManager {
 @Composable
 fun ShowNotificationDialog(
     onDismissRequest: () -> Unit,
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onConfirm: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
-        title = { Text(text = "Bildirim İzni") },
-        text = { Text("Uygulama bildirim gönderebilmesi için izin gereklidir.") },
+        title = { Text(text = "Önemli Hatırlatma") },
+        text = { Text("Uygulamadan en etkili bir şekilde yararlanmanız için bildirimleri açmanızı öneriririz.") },
         confirmButton = {
             Button(
-                onClick = onConfirm
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                )
             ) {
-                Text("İzin Ver")
-            }
-        },
-        dismissButton = {
-            Button(
-                onClick = onDismiss
-            ) {
-                Text("İptal")
+                Text("Tamam")
             }
         }
     )
@@ -126,10 +123,6 @@ fun RequestNotificationPermission(
                     },
                     onConfirm = {
                         requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        showDialog.value = false
-                    },
-                    onDismiss = {
-                        Toast.makeText(context, "Bildirim izni verilmedi", Toast.LENGTH_SHORT).show()
                         showDialog.value = false
                     }
                 )
