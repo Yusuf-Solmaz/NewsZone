@@ -9,8 +9,10 @@ import com.yms.data.repository.customization.CustomizationRepositoryImpl
 import com.yms.data.repository.local.LocalSavedNewsRepositoryImpl
 import com.yms.data.repository.notification.BreakingNewsNotificationRepositoryImpl
 import com.yms.data.repository.remote.news.NewsRepositoryImpl
+import com.yms.data.repository.summarization.ArticleSummarizationRepositoryImpl
 import com.yms.domain.repository.news.LocalSavedNewsRepository
 import com.yms.domain.repository.news.NewsRepository
+import com.yms.domain.repository.summarization.ArticleSummarizationRepository
 import com.yms.domain.repository.user_preferences.CustomizationRepository
 import dagger.Module
 import dagger.Provides
@@ -50,5 +52,11 @@ object RepositoryModule {
     @Singleton
     fun provideLocalSavedNewsRepositoryImpl(savedNewsDao: SavedNewsDao): LocalSavedNewsRepository {
         return LocalSavedNewsRepositoryImpl(savedNewsDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideArticleSummarizationRepositoryImpl(@ApplicationContext context: Context): ArticleSummarizationRepository {
+        return ArticleSummarizationRepositoryImpl(context)
     }
 }
