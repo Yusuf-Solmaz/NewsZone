@@ -22,6 +22,13 @@ android {
         properties.load(secretsPropertiesFile.inputStream())
 
         val apiKey = properties.getProperty("API_KEY") ?: ""
+        val apiKeyGemini = properties.getProperty("GEMINI_API_KEY") ?: ""
+
+        buildConfigField(
+            type = "String",
+            name = "GEMINI_API_KEY",
+            value = apiKeyGemini
+        )
 
         buildConfigField(
             type = "String",
