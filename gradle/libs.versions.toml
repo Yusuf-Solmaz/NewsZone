@@ -55,7 +55,8 @@ uiTooling = "1.7.6"
 #RoomDb
 roomKtx = "2.6.1"
 
-
+#Gemini
+generativeai = "0.2.2"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
@@ -104,6 +105,8 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomKtx" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomKtx" }
+
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
