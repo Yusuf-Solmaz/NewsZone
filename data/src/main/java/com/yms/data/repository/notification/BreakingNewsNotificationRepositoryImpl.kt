@@ -18,6 +18,7 @@ class BreakingNewsNotificationRepositoryImpl @Inject constructor(
         val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
             2, TimeUnit.HOURS
         )
+            .setInitialDelay(1, TimeUnit.HOURS)
             .setConstraints(
                 Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED)
