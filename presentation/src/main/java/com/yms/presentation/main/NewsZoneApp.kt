@@ -62,8 +62,6 @@ fun NewsZoneApp(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
 
-
-    val onBoardingState by onBoardingViewModel.uiState.collectAsState()
     val layoutDirection = LocalLayoutDirection.current
 
     val sharedArticleState by sharedViewModel.sharedArticleState.collectAsState()
@@ -115,7 +113,6 @@ fun NewsZoneApp(
                     NewsZoneNavigation(
                         navController = navController,
                         saveAppEntry = onBoardingViewModel::onEvent,
-                        onBoardingState = onBoardingState,
                         updateSharedArticle = sharedViewModel::updateState,
                         sharedArticleState = sharedArticleState
                     )
