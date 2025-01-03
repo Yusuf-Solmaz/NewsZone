@@ -2,8 +2,11 @@ package com.yms.data.di
 
 import com.yms.domain.repository.news.LocalSavedNewsRepository
 import com.yms.domain.repository.news.NewsRepository
+import com.yms.domain.repository.summarization.ArticleSummarizationRepository
 import com.yms.domain.repository.user_preferences.CustomizationRepository
 import com.yms.domain.repository.user_preferences.UserPreferencesRepository
+import com.yms.domain.usecase.gemini.GetSummary
+import com.yms.domain.usecase.gemini.SummaryUseCase
 import com.yms.domain.usecase.news.GetBreakingNews
 import com.yms.domain.usecase.news.GetNewsByMediator
 import com.yms.domain.usecase.news.NewsUseCase
@@ -80,6 +83,14 @@ object UseCaseModule {
             saveLanguage = SaveLanguage(userPreferencesRepository),
             saveDarkMode = SaveDarkMode(userPreferencesRepository),
             readDarkMode = ReadDarkMode(userPreferencesRepository)
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideSummaryUseCase(articleSummarizationRepository: ArticleSummarizationRepository): SummaryUseCase {
+        return SummaryUseCase(
+            getSummary = GetSummary(articleSummarizationRepository)
         )
     }
 
