@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt_summary">Summary of the news I gave:</string>
+    <string name="error_summary">An unexpected error occurred while extracting the summary.</string>
+</resources>
