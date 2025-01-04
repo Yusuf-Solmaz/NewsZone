@@ -42,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -68,14 +69,11 @@ fun BreakingNewsSection(
         ) {
             Text(
                 stringResource(R.string.breaking_news),
-                style = MaterialTheme.typography.titleLarge.copy(
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
-            )
-            Text(
-                stringResource(R.string.view_all),
-                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground)
             )
         }
 
@@ -146,14 +144,12 @@ fun BreakingNewsCard(modifier: Modifier = Modifier, articleList: List<ArticleDat
                     shape = RoundedCornerShape(dimensionResource(R.dimen.corner_shape_big))
                 ) {
                     Box {
-
-
                         SubcomposeAsyncImage(
                             model = article.urlToImage,
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(230.dp),
                             contentScale = ContentScale.Crop,
                             loading = {
                                 LottieAnimation(

@@ -3,7 +3,6 @@ package com.yms.presentation.home.content
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,13 +17,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.yms.domain.model.news.ArticleData
 import com.yms.domain.model.news.BaseArticle
-import com.yms.domain.model.news.SourceData
 import com.yms.presentation.items.ArticleCard
 import com.yms.utils.NewsCategory
 
@@ -90,37 +87,4 @@ fun NewsCategorySection(
             }
         }
     }
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun NewsCardPreview() {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
-    ) {
-        ArticleCard(
-            ArticleData(
-                id = 1,
-                author = "Ali Veli",
-                content = "content",
-                description = "description",
-                publishedAt = "publishedAt",
-
-                sourceDto = SourceData(
-                    id = "id",
-                    name = "name"
-                ),
-                title = "title",
-                url = "url",
-                urlToImage = "urlToImage",
-                timeAgo = "1d ago"
-            ),
-            navigateToArticleDetailScreen = {}
-        )
-
-    }
-
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -28,6 +29,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -97,7 +100,10 @@ fun NewsHomeScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(dimensionResource(R.dimen.padding_medium))
+                .padding(
+                    bottom = dimensionResource(R.dimen.padding_medium),
+                    start = dimensionResource(R.dimen.padding_medium),
+                    end = dimensionResource(R.dimen.padding_medium))
                 .background(MaterialTheme.colorScheme.background)
         ) {
             LazyColumn {
@@ -138,8 +144,9 @@ fun SearchSection(modifier: Modifier = Modifier, navigateToSearchScreen: () -> U
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Latest News",
-            style = MaterialTheme.typography.titleLarge.copy(
+            text = stringResource(R.string.latest_news),
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -152,7 +159,8 @@ fun SearchSection(modifier: Modifier = Modifier, navigateToSearchScreen: () -> U
             colors = IconButtonDefaults.iconButtonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
-            )
+            ),
+            modifier = Modifier.size(28.dp)
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_search),

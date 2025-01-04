@@ -168,14 +168,30 @@ fun TopBar(
     navigateToSettings: () -> Unit,
     navigateBack: () -> Unit = {}
 ) {
+
+    val isHomeScreen = title == stringResource(R.string.home)
+
+
     CenterAlignedTopAppBar(
         title = {
-            Text(text = title)
+            if (isHomeScreen) {
+                Text(
+                    text = buildAnnotatedString {
+                        append("News")
+                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                            append("Zone")
+                        }
+                    },
+                    style = MaterialTheme.typography.titleLarge
+                )
+            } else {
+                Text(text = title, style = MaterialTheme.typography.titleLarge)
+            }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background
         ),
-        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(top = dimensionResource(R.dimen.padding_medium)),
         navigationIcon = {
             if (isBackEnabled) {
                 IconButton(
@@ -214,6 +230,7 @@ fun TopBar(
 fun BottomBar(currentScreen: String, onNavigate: (NavigationGraph) -> Unit) {
     NavigationBar(
         modifier = Modifier
+            .height(60.dp)
             .background(MaterialTheme.colorScheme.background),
         containerColor = MaterialTheme.colorScheme.background
     ) {

@@ -11,6 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -51,8 +53,10 @@ fun CustomizationScreen(
                 progress = {animatedProgress},
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(vertical = dimensionResource(R.dimen.padding_big), horizontal = dimensionResource(R.dimen.padding_small))
                     .height(8.dp),
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                drawStopIndicator = { false }
             )
         }
     ) {
@@ -110,51 +114,83 @@ fun <T> DynamicPageWithEnumSelection(
         else -> null
     } as? T
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(dimensionResource(R.dimen.padding_medium))
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
-        options.forEach { option ->
-            val isSelected = selectedOption == option
-            Card(
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                color = MaterialTheme.colorScheme.onBackground,
+                text = title,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
+            )
+
+            options.forEach { option ->
+                val isSelected = selectedOption == option
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = dimensionResource(R.dimen.padding_small))
+                        .clickable {
+                            when (pageIndex) {
+                                0 -> viewModel.updateSelection(followUpTime = option as? FollowUpTime)
+                                1 -> viewModel.updateSelection(ageGroup = option as? AgeGroup)
+                                2 -> viewModel.updateSelection(gender = option as? Gender)
+                            }
+                            onNext()
+                        },
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer
+                    )
+                ) {
+                    Text(
+                        color = if (isSelected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimaryContainer,
+                        text = option.displayName,
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+
+            if (showBackButton) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(onClick = onBack) {
+                    Text(stringResource(R.string.back))
+                }
+            }
+        }
+
+        if (!showBackButton) {
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .clickable {
-                        when (pageIndex) {
-                            0 -> viewModel.updateSelection(followUpTime = option as? FollowUpTime)
-                            1 -> viewModel.updateSelection(ageGroup = option as? AgeGroup)
-                            2 -> viewModel.updateSelection(gender = option as? Gender)
-                        }
-                        onNext()
-                    },
-                colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer
-                )
+                    .align(Alignment.BottomStart)
+                    .padding(dimensionResource(R.dimen.padding_small)),
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.Start
             ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_dot),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(8.dp).padding(top = 4.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = option.displayName,
-                    modifier = Modifier.padding(16.dp),
-                    style = MaterialTheme.typography.bodyLarge
+                    text = stringResource(R.string.customization_category),
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
 
-        if (showBackButton) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onBack) {
-                Text(stringResource(R.string.back))
-            }
-        }
     }
 }
+
 
