@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier, viewModel: SettingsViewModel = hiltViewModel()) {
+fun SettingsScreen(modifier: Modifier = Modifier, viewModel: SettingsViewModel = hiltViewModel(),onChangeCategory: () -> Unit) {
 
     val languageState = viewModel.languageState.collectAsStateWithLifecycle()
     val darkModeState = viewModel.darkModeState.collectAsStateWithLifecycle()
@@ -101,6 +101,14 @@ fun SettingsScreen(modifier: Modifier = Modifier, viewModel: SettingsViewModel =
                 onclick = {
                     isThemeSheetVisible = true
                 }
+            )
+
+            SettingsRow(
+                icon = painterResource(R.drawable.ic_change),
+                title = stringResource(R.string.change_choosen_category_title),
+                subtitle = stringResource(R.string.change_choosen_category),
+                background = MaterialTheme.colorScheme.background,
+                onclick = onChangeCategory
             )
 
             if (isThemeSheetVisible) {
@@ -259,7 +267,7 @@ fun SettingsRow(
     icon: Painter,
     title: String,
     subtitle: String,
-    settingValue: String,
+    settingValue: String? = null,
     onclick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
@@ -311,12 +319,14 @@ fun SettingsRow(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                Text(
-                    text = settingValue,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_small))
-                )
+                if (settingValue != null) {
+                    Text(
+                        text = settingValue,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_small))
+                    )
+                }
 
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_forward),
