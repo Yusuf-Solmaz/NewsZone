@@ -1,15 +1,21 @@
 package com.yms.presentation.onboarding
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -24,9 +30,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.yms.presentation.R
 import kotlinx.coroutines.launch
 
@@ -41,62 +50,111 @@ fun OnBoardingScreen(modifier: Modifier = Modifier,navigateToCustomization: () -
     }
     val scope = rememberCoroutineScope()
 
-    Column(
-        modifier = modifier.background(MaterialTheme.colorScheme.background)
-    ) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ){
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxSize(),
             pageContent = { page ->
-                OnboardingPage(page = pager[page])
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    painter = painterResource(pager[page].image),
+                    contentDescription = null,
+                )
+
             }
         )
 
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 32.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            PageIndicator(
-                pageSize = pager.size,
-                selectedPage = pagerState.currentPage
-            )
-            NextBackButton(
-                currentPage = pagerState.currentPage,
-                onNextClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                    }
-                },
-                onBackClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                    }
-                },
-                onGetStartedClick = {
-                    scope.launch {
-                        navigateToCustomization()
-                    }
+                .height(400.dp)
+                .clip(RoundedCornerShape(topStartPercent = 10, topEndPercent = 10))
+                .background(MaterialTheme.colorScheme.background)
+                .align(Alignment.BottomCenter)
+        )
+        {
+            Column(Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+
+                PageIndicator(
+                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_big)),
+                    pageSize = pager.size,
+                    selectedPage = pagerState.currentPage
+                )
+
+                Text(
+                    text = stringResource(pager[pagerState.currentPage].title),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontSize = 30.sp
+                    ),
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 2.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+
+                Text(
+                    text = stringResource(pager[pagerState.currentPage].description),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 2.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    NextBackButton(
+                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
+                        currentPage = pagerState.currentPage,
+                        onNextClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                            }
+                        },
+                        onBackClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                            }
+                        },
+                        onGetStartedClick = {
+                            scope.launch {
+                                navigateToCustomization()
+                            }
+                        }
+                    )
                 }
-            )
+            }
+
         }
+
     }
+
 }
 
 @Composable
 fun PageIndicator(
+    modifier: Modifier = Modifier,
     pageSize: Int,
     selectedPage: Int
 ) {
-    Row(horizontalArrangement = Arrangement.SpaceBetween) {
+
+    Row(modifier = modifier, horizontalArrangement = Arrangement.SpaceBetween) {
         repeat(pageSize) { page ->
+
+            val width = animateDpAsState(
+                targetValue = if (page == selectedPage) 40.dp else 10.dp,
+                animationSpec = tween(durationMillis = 400),
+                label = ""
+            )
 
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
-                    .size(20.dp)
+                    .height(10.dp)
+                    .width(width.value)
                     .clip(CircleShape)
                     .background(
                         color = if (page == selectedPage) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
@@ -110,12 +168,14 @@ fun PageIndicator(
 
 @Composable
 fun NextBackButton(
+    modifier: Modifier = Modifier,
     currentPage: Int,
     onNextClick: () -> Unit,
     onBackClick: () -> Unit,
     onGetStartedClick: () -> Unit,
 ) {
     Row(
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (currentPage != 0) {
@@ -123,9 +183,8 @@ fun NextBackButton(
                 onBackClick()
             }) {
                 Text(
-                    text = "Back", style = TextStyle(
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                    text = "Back", style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
         }
@@ -147,7 +206,8 @@ fun NextBackButton(
             Text(
                 text = if (currentPage == 2) stringResource(R.string.get_started) else stringResource(
                     R.string.next
-                )
+                ),
+                style = MaterialTheme.typography.labelSmall
             )
         }
 
