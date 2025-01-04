@@ -6,7 +6,7 @@
     <string name="onboarding_description_2">Filter news based on your preferences and get only the topics you\'re interested in. Let us customize your news feed.</string>
     <string name="onboarding_title_3">Quick and Easy Access</string>
     <string name="onboarding_description_3">Our app is designed for quick and easy access. Get the latest updates within minutes and browse your news feed effortlessly.</string>
-    <string name="home">ZoneNews</string>
+    <string name="home">NewsZone</string>
     <string name="get_started">Get Started</string>
     <string name="next">Next</string>
     <string name="follow_up_time_question">How often do you follow the news?</string>
@@ -27,4 +27,7 @@
     <string name="night_mode">Night Mode</string>
     <string name="change_choosen_category">Change your customized news category for the homepage.</string>
     <string name="change_choosen_category_title">Customize Category</string>
+    <string name="splash_title">Stay informed about the world.</string>
+    <string name="customization_category">This section is designed for you to set your main category on the homepage. You can change this later at any time in the “Settings” section.</string>
+    <string name="latest_news">Latest News</string>
 </resources>
