@@ -1,11 +1,9 @@
 package com.yms.presentation.navigation
 
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -86,12 +84,15 @@ fun NewsZoneNavigation(
         }
 
         composable(NavigationGraph.SETTINGS_SCREEN.name) {
-            SettingsScreen()
+            SettingsScreen(
+                onChangeCategory = {
+                    navController.navigate(NavigationGraph.CUSTOMIZATION_SCREEN.name)
+                }
+            )
         }
 
         composable(NavigationGraph.ONBOARDING_SCREEN.name) {
             OnBoardingScreen(
-                modifier = Modifier.fillMaxSize(),
                 navigateToCustomization = {
                     navController.navigate(NavigationGraph.CUSTOMIZATION_SCREEN.name)
                 }
