@@ -25,4 +25,6 @@
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="night_mode">Night Mode</string>
+    <string name="change_choosen_category">Change your customized news category for the homepage.</string>
+    <string name="change_choosen_category_title">Customize Category</string>
 </resources>
