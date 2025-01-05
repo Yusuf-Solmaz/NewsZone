@@ -38,9 +38,11 @@ import com.yms.domain.model.news.BaseArticle
 import com.yms.presentation.R
 import com.yms.presentation.home.content.BreakingNewsSection
 import com.yms.presentation.home.content.NewsCategorySection
+import com.yms.presentation.home.viewmodel.BreakingNewsState
 import com.yms.presentation.home.viewmodel.NewsHomeEvent
 import com.yms.presentation.home.viewmodel.NewsHomeViewModel
 import com.yms.utils.NewsCategory
+import com.yms.utils.ShimmerNewsZoneHome
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,6 +54,7 @@ fun NewsHomeScreen(
     navigateToArticleDetailScreen: (BaseArticle) -> Unit
 ) {
     val categoryState by viewModel.categoryState.collectAsState()
+    val breakingNewsState by viewModel.breakingNewsState.collectAsState()
     val pagedNews = viewModel.pagedNews.collectAsLazyPagingItems()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
@@ -86,52 +89,57 @@ fun NewsHomeScreen(
         }
     }
 
-
-
-    PullToRefreshBox(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        isRefreshing = isRefreshing,
-        onRefresh = {
-            viewModel.onEvent(NewsHomeEvent.RefreshPage(categoryState.category))
-        }
+    ShimmerNewsZoneHome(
+        isLoading = (breakingNewsState is BreakingNewsState.Loading || pagedNews.itemCount <= 0)
     ) {
-        Column(
+        PullToRefreshBox(
             modifier = modifier
                 .fillMaxSize()
-                .padding(
-                    bottom = dimensionResource(R.dimen.padding_medium),
-                    start = dimensionResource(R.dimen.padding_medium),
-                    end = dimensionResource(R.dimen.padding_medium))
-                .background(MaterialTheme.colorScheme.background)
+                .background(MaterialTheme.colorScheme.background),
+            isRefreshing = isRefreshing,
+            onRefresh = {
+                viewModel.onEvent(NewsHomeEvent.RefreshPage(categoryState.category))
+            }
         ) {
-            LazyColumn {
-                item{
-                    BreakingNewsSection(
-                        retry = { viewModel.onEvent(NewsHomeEvent.GetBreakingNews) },
-                        modifier = Modifier.fillMaxWidth(),
-                        breakingNewsState = viewModel.breakingNewsState.collectAsState().value,
-                        navigateToArticleDetailScreen = navigateToArticleDetailScreen
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(
+                        bottom = dimensionResource(R.dimen.padding_medium),
+                        start = dimensionResource(R.dimen.padding_medium),
+                        end = dimensionResource(R.dimen.padding_medium)
                     )
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+                LazyColumn {
+                    item {
+                        BreakingNewsSection(
+                            retry = { viewModel.onEvent(NewsHomeEvent.GetBreakingNews) },
+                            modifier = Modifier.fillMaxWidth(),
+                            breakingNewsState = breakingNewsState,
+                            navigateToArticleDetailScreen = navigateToArticleDetailScreen
+                        )
+                    }
+                    item {
+                        SearchSection(
+                            modifier = Modifier.fillMaxWidth(),
+                            navigateToSearchScreen = navigateToSearchScreen
+                        )
+                    }
                 }
-                item{
-                    SearchSection(
-                        modifier = Modifier.fillMaxWidth(),
-                        navigateToSearchScreen = navigateToSearchScreen
-                    )
-                }
+
+                NewsCategorySection(
+                    onTabSelected = { category ->
+                        categoryState.category = category
+                        getNewsByCategory(category)
+                    },
+                    pagedNews = pagedNews,
+                    category = NewsCategory.fromString(categoryState.category.title)
+                        ?: NewsCategory.GENERAL,
+                    navigateToArticleDetailScreen = navigateToArticleDetailScreen
+                )
             }
 
-            NewsCategorySection(
-                onTabSelected = { category ->
-                    categoryState.category = category
-                    getNewsByCategory(category) },
-                pagedNews = pagedNews,
-                category = NewsCategory.fromString(categoryState.category.title)
-                    ?: NewsCategory.GENERAL,
-                navigateToArticleDetailScreen = navigateToArticleDetailScreen
-            )
         }
     }
 }
