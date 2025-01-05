@@ -1,6 +1,7 @@
 package com.yms.presentation.home.content
 
-import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import com.yms.domain.model.news.ArticleData
 import com.yms.domain.model.news.BaseArticle
 import com.yms.presentation.items.ArticleCard
 import com.yms.utils.NewsCategory
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,10 +37,17 @@ fun NewsCategorySection(
     navigateToArticleDetailScreen: (BaseArticle) -> Unit
 ) {
     val selectedTabIndex = remember { mutableStateOf(0) }
+    val animatedVisibilityStates = remember { mutableStateOf<List<Boolean>>(emptyList()) }
 
-    LaunchedEffect(category) {
-        val initialIndex = NewsCategory.entries.indexOf(category).coerceAtLeast(0)
-        selectedTabIndex.value = initialIndex
+    LaunchedEffect(pagedNews.itemSnapshotList) {
+
+        animatedVisibilityStates.value = List(pagedNews.itemCount) { false }
+        pagedNews.itemSnapshotList.forEachIndexed { index, _ ->
+            delay(100L * index)
+            animatedVisibilityStates.value = animatedVisibilityStates.value.toMutableList().apply {
+                this[index] = true
+            }
+        }
     }
 
     Column {
@@ -73,11 +82,16 @@ fun NewsCategorySection(
                 val article = pagedNews[index]
 
                 if (article != null) {
-                    Log.d("NewsHomeScreen", "Article: ${article.urlToImage}")
-                    ArticleCard(
-                        articleData = article,
-                        navigateToArticleDetailScreen = navigateToArticleDetailScreen
-                    )
+                    AnimatedVisibility(
+                        visible = animatedVisibilityStates.value.getOrElse(index) { false },
+                        enter = androidx.compose.animation.fadeIn(animationSpec = tween(500)),
+                        exit = androidx.compose.animation.fadeOut(animationSpec = tween(500))
+                    ) {
+                        ArticleCard(
+                            articleData = article,
+                            navigateToArticleDetailScreen = navigateToArticleDetailScreen
+                        )
+                    }
                 }
             }
             item {
@@ -88,3 +102,4 @@ fun NewsCategorySection(
         }
     }
 }
+
