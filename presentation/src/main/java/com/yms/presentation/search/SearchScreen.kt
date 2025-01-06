@@ -2,7 +2,6 @@ package com.yms.presentation.search
 
 import android.app.DatePickerDialog
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,16 +21,19 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.yms.domain.model.news.BaseArticle
 import com.yms.presentation.R
 import com.yms.presentation.items.ArticleCard
-import com.yms.theme.onBackgroundLight
 import com.yms.theme.outlineLight
-import com.yms.theme.primaryLight
+import com.yms.utils.LoadingLottie
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Calendar
@@ -39,7 +41,7 @@ import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(viewModel: SearchViewModel = hiltViewModel(),navigateToArticleDetailScreen :(BaseArticle) -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -54,7 +56,10 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
     var isFilterOpen by remember { mutableStateOf(false) }
 
     LaunchedEffect(searchedNews.loadState) {
-        if (searchedNews.loadState.refresh is LoadState.Error) {
+        if (searchedNews.itemCount > 0) {
+            //No Error
+        }
+        else if(searchedNews.loadState.refresh is LoadState.Error) {
             Toast.makeText(
                 context,
                 "Error: " + (searchedNews.loadState.refresh as LoadState.Error).error.message,
@@ -81,7 +86,21 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
         )
 
         if (searchedNews.itemCount == 0) {
-            Text(text = "No results found", modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally))
+            Column(modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    text = stringResource(R.string.empty_search_list),
+                    textAlign = TextAlign.Center,
+                )
+
+            }
+        }
+        else if (
+            searchedNews.loadState.refresh is LoadState.Loading
+        ){
+            LoadingLottie()
         }
         else {
 
@@ -90,11 +109,9 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
                     val article = searchedNews[index]
 
                     if (article != null) {
-                        Log.d("NewsHomeScreen", "Article: ${article.urlToImage}")
                         ArticleCard(
                             articleData = article,
-                            navigateToArticleDetailScreen = {}
-
+                            navigateToArticleDetailScreen = navigateToArticleDetailScreen
                         )
                     }
                 }
@@ -240,7 +257,7 @@ fun SearchBarWithDoneAction(
     searchQuery: String
 ) {
     var query = searchQuery
-    var isFocused by remember { mutableStateOf(false) } // Odak durumunu takip et
+    var isFocused by remember { mutableStateOf(false) }
 
 
     Box(
@@ -283,14 +300,17 @@ fun SearchBarWithDoneAction(
                         isFocused = focusState.isFocused
                     }
                 ,
-                placeholder = { Text("Search", color = Color.Gray) },
+                placeholder = { Text(stringResource(R.string.search), color = Color.Gray) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedBorderColor = Color.Transparent,
-                    focusedTextColor = onBackgroundLight,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+                    focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.primary,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                     focusedPlaceholderColor = outlineLight,
-                    cursorColor = primaryLight
+                    cursorColor =  MaterialTheme.colorScheme.onSurface,
                 ),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Search
@@ -310,10 +330,11 @@ fun SearchBarWithDoneAction(
                     .padding(start = 8.dp)
                     .clickable { onFilterIconClick() }
             )
+            VerticalDivider(modifier = Modifier.width(10.dp).height(38.dp).padding(start = 8.dp))
             Icon(
                 painter = painterResource(R.drawable.ic_send),
                 contentDescription = "Search Icon",
-                tint = Color.Gray,
+                tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .padding(start = 8.dp)
                     .clickable { onSearchClick() }
@@ -369,4 +390,10 @@ fun DatePicker(selectedDate: LocalDate?, onDateSelected: (LocalDate) -> Unit) {
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreview() {
+    SearchScreen(navigateToArticleDetailScreen = {})
 }
