@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt_summary">"Verdiğim haberi özetle: "</string>
+    <string name="error_summary">Özet çıkarılırken beklenmedik bir hata oluştu.</string>
+</resources>

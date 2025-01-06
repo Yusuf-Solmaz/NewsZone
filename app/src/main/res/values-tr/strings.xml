@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NewsZone</string>
+    <string name="notification_permission_granted">Bildirim izni verildi.</string>
+    <string name="notification_permission_denied">Bildirim izni reddedildi.</string>
+</resources>

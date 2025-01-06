@@ -33,4 +33,8 @@
     <string name="empty_search_list">It\'s empty for now. Start searching.</string>
     <string name="share_text">Take a look at this news: %1$s Link: %2$s #AndroidDessertClicker</string>
     <string name="sharing_not_available">Sharing Not Available</string>
+    <string name="no_saved_news">It looks empty for now.</string>
+    <string name="article_saved">News successfully saved.</string>
+    <string name="error">Error:</string>
+    <string name="no_title">Title not found.</string>
 </resources>

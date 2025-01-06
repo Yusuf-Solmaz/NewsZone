@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="invalid_input_data">Geçersiz Veri</string>
+    <string name="breaking_news">Son Dakika Haberleri</string>
+    <string name="every_day">Her Gün</string>
+    <string name="a_few_times_a_week">Haftada Birkaç Kez</string>
+    <string name="sometimes">Bazen</string>
+    <string name="very_rarely">Çok Nadiren</string>
+    <string name="female">Kadın</string>
+    <string name="male">Erkek</string>
+    <string name="data_not_available">Veri mevcut değil</string>
+    <string name="day_ago">g önce</string>
+    <string name="child_age">5-15</string>
+    <string name="teen_age">16-25</string>
+    <string name="adult_age">26-35</string>
+    <string name="senior_age">35+</string>
+</resources>
