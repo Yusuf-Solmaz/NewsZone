@@ -61,7 +61,12 @@ fun NewsZoneNavigation(
                 )
             }
             composable(NavigationGraph.SEARCH_SCREEN.name) {
-                SearchScreen()
+                SearchScreen(
+                    navigateToArticleDetailScreen = { articleData ->
+                        updateSharedArticle(articleData)
+                        navController.navigate(NavigationGraph.ARTICLE_DETAIL_SCREEN.name)
+                    }
+                )
             }
         }
 
