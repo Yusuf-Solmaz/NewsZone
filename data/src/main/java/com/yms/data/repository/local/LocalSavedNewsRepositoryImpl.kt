@@ -35,7 +35,7 @@ class LocalSavedNewsRepositoryImpl @Inject constructor(private val savedNewsDao:
                     .collect { savedNewsEntities ->
 
                         val savedNewsList = savedNewsEntities.map { it.toSavedNews() }
-                        emit(RootResult.Success(savedNewsList)) // Başarı durumu
+                        emit(RootResult.Success(savedNewsList))
                     }
             } catch (e: Exception) {
                 emit(RootResult.Error("Error fetching saved news: ${e.localizedMessage}"))

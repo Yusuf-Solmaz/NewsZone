@@ -34,8 +34,8 @@ fun makeStatusNotification(articleData: ArticleData, context: Context) {
         }
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Breaking News")
+            .setSmallIcon(R.drawable.ic_bg)
+            .setContentTitle(context.getString(R.string.breaking_news))
             .setContentText(articleData.title)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVibrate(longArrayOf(0, 500, 1000, 500))

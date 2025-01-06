@@ -2,15 +2,18 @@ package com.yms.presentation.main
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -43,6 +47,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -94,6 +99,7 @@ fun NewsZoneApp(
             backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
         )
     }
+
 
     NewsZoneTheme(
         darkTheme = isDarkMode.isDarkMode
@@ -192,7 +198,7 @@ fun TopBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background
         ),
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(top = dimensionResource(R.dimen.padding_medium)),
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
         navigationIcon = {
             if (isBackEnabled) {
                 IconButton(
@@ -231,7 +237,7 @@ fun TopBar(
 fun BottomBar(currentScreen: String, onNavigate: (NavigationGraph) -> Unit) {
     NavigationBar(
         modifier = Modifier
-            .height(60.dp)
+
             .background(MaterialTheme.colorScheme.background),
         containerColor = MaterialTheme.colorScheme.background
     ) {
@@ -279,7 +285,12 @@ fun BottomBar(currentScreen: String, onNavigate: (NavigationGraph) -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
+
     var isSheetOpen by remember { mutableStateOf(false) }
+
+    val gradient = Brush.linearGradient(
+        colors = listOf(Color(0xFF4285F4), Color(0xFFFF5C8D))
+    )
 
     NavigationBar(
         modifier = Modifier
@@ -292,9 +303,9 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
             onClick = { isSheetOpen = true },
             icon = {
                 Icon(
-                    Icons.Default.Build,
+                    painter = painterResource(id = R.drawable.ai_summary),
                     contentDescription = "Özet Çıkar",
-                    modifier = Modifier.size(26.dp)
+                    modifier = Modifier.size(32.dp)
                 )
             }
         )
@@ -307,11 +318,13 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
         }
 
         ModalBottomSheet(
-            onDismissRequest = { isSheetOpen = false }
+            onDismissRequest = { isSheetOpen = false },
+            dragHandle = null
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.5f)
                     .padding(dimensionResource(R.dimen.padding_medium))
             ) {
 
@@ -328,13 +341,35 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
                 )
 
                 when (summaryState) {
+
                     is SummaryState.Success -> {
-                        Text(
-                            text = summaryState.summary,
-                            modifier = Modifier.fillMaxWidth(),
-                            lineHeight = 20.sp,
-                            textAlign = TextAlign.Justify
-                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp)
+                                .verticalScroll(rememberScrollState()),
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.Start
+                        ){
+                            Text(
+                                text = summaryState.summary,
+                                modifier = Modifier.fillMaxWidth().padding(bottom = dimensionResource(R.dimen.padding_medium)),
+                                lineHeight = 20.sp,
+                                textAlign = TextAlign.Justify
+                            )
+                            Text(
+                                text = buildAnnotatedString {
+                                    append("Powered by ")
+                                    withStyle(SpanStyle(brush = gradient, fontWeight = FontWeight.Bold)) {
+                                        append("Gemini")
+                                    }
+                                },
+                                style = MaterialTheme.typography.bodyMedium,
+                                textAlign = TextAlign.Start,
+                            )
+                        }
+
+
                     }
 
                     is SummaryState.Error -> {

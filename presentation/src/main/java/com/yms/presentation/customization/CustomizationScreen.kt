@@ -153,7 +153,7 @@ fun <T> DynamicPageWithEnumSelection(
                 ) {
                     Text(
                         color = if (isSelected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimaryContainer,
-                        text = option.displayName,
+                        text = stringResource(option.displayName),
                         modifier = Modifier.padding(16.dp),
                         style = MaterialTheme.typography.bodyLarge
                     )

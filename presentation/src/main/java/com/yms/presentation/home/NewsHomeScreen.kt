@@ -134,8 +134,7 @@ fun NewsHomeScreen(
                         getNewsByCategory(category)
                     },
                     pagedNews = pagedNews,
-                    category = NewsCategory.fromString(categoryState.category.title)
-                        ?: NewsCategory.GENERAL,
+
                     navigateToArticleDetailScreen = navigateToArticleDetailScreen
                 )
             }

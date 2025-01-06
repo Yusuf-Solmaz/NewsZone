@@ -305,8 +305,8 @@ fun SearchBarWithDoneAction(
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+                    focusedBorderColor = MaterialTheme.colorScheme.surfaceContainerLowest,
                     focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                     focusedPlaceholderColor = outlineLight,

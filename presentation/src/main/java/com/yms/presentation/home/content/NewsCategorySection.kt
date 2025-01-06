@@ -1,7 +1,5 @@
 package com.yms.presentation.home.content
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,7 +31,6 @@ fun NewsCategorySection(
     onTabSelected: (NewsCategory) -> Unit, // Update to use enum
     modifier: Modifier = Modifier,
     pagedNews: LazyPagingItems<ArticleData>,
-    category: NewsCategory,
     navigateToArticleDetailScreen: (BaseArticle) -> Unit
 ) {
     val selectedTabIndex = remember { mutableStateOf(0) }
@@ -82,16 +79,12 @@ fun NewsCategorySection(
                 val article = pagedNews[index]
 
                 if (article != null) {
-                    AnimatedVisibility(
-                        visible = animatedVisibilityStates.value.getOrElse(index) { false },
-                        enter = androidx.compose.animation.fadeIn(animationSpec = tween(500)),
-                        exit = androidx.compose.animation.fadeOut(animationSpec = tween(500))
-                    ) {
+
                         ArticleCard(
                             articleData = article,
                             navigateToArticleDetailScreen = navigateToArticleDetailScreen
                         )
-                    }
+
                 }
             }
             item {
