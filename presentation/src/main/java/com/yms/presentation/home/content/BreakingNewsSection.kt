@@ -79,7 +79,11 @@ fun BreakingNewsSection(
 
         when (val state = breakingNewsState) {
             is BreakingNewsState.Error -> {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(text = state.message, color = MaterialTheme.colorScheme.error)
                     Button(onClick = retry) {
                         Text(text = "Retry")
