@@ -37,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yms.domain.model.news.BaseArticle
 import com.yms.presentation.items.ArticleCard
+import com.yms.utils.LoadingLottie
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -65,10 +66,7 @@ fun SavedNews(viewModel: SavedNewsViewModel = hiltViewModel(),savedArticleToArti
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Loading...",
-                    color = MaterialTheme.colorScheme.error,
-                )
+                LoadingLottie()
             }
         }
 
