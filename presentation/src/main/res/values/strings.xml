@@ -30,4 +30,7 @@
     <string name="splash_title">Stay informed about the world.</string>
     <string name="customization_category">This section is designed for you to set your main category on the homepage. You can change this later at any time in the “Settings” section.</string>
     <string name="latest_news">Latest News</string>
+    <string name="empty_search_list">It\'s empty for now. Start searching.</string>
+    <string name="share_text">Take a look at this news: %1$s Link: %2$s #AndroidDessertClicker</string>
+    <string name="sharing_not_available">Sharing Not Available</string>
 </resources>
