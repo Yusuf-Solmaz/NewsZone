@@ -3,4 +3,7 @@
     <string name="app_name">NewsZone</string>
     <string name="notification_permission_granted">Bildirim izni verildi.</string>
     <string name="notification_permission_denied">Bildirim izni reddedildi.</string>
+    <string name="notification_permission_description">Uygulamadan en etkili bir şekilde yararlanmanız için bildirimleri açmanızı öneriririz.</string>
+    <string name="notification_permission_title">Önemli Hatırlatma</string>
+    <string name="confirm">Tamam</string>
 </resources>

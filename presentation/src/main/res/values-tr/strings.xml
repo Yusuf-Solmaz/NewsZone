@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="onboarding_title_1">Anında Güncel Kalın</string>
-    <string name="onboarding_description_1">Teknoloji, dünya olayları ve daha fazlasıyla ilgili en son haberler bir dokunuş uzağınızda. Gerçek zamanlı olarak güncel kalmak için NewsZone u  keşfedin.</string>
+    <string name="onboarding_description_1">Teknoloji, dünya olayları ve daha fazlası parmaklarınızın ucunda. NewsZone ile anında bilgi sahibi olun.</string>
     <string name="onboarding_title_2">Kişiselleştirilmiş İçerik</string>
-    <string name="onboarding_description_2">Haberleri tercihlerinize göre filtreleyin ve yalnızca ilgilendiğiniz konuları alın. Haber akışınızı sizin için özelleştirelim.</string>
+    <string name="onboarding_description_2">Haberleri tercihlerinizle filtreleyin ve sadece ilgilendiğiniz konuları görün. Haber akışınızı kişiselleştirelim.</string>
     <string name="onboarding_title_3">Hızlı ve Kolay Erişim</string>
-    <string name="onboarding_description_3">Uygulamamız hızlı ve kolay erişim için tasarlandı. Son güncellemeleri dakikalar içinde alın ve haber akışınızı zahmetsizce gezin.</string>
-    <string name="home">ZoneNews</string>
+    <string name="onboarding_description_3">Uygulamamız hızlı ve kolay erişim için tasarlandı. Son güncellemeleri dakikalar içinde alın ve haber akışınızı zahmetsizce gezinin.</string>
+    <string name="home">NewsZone</string>
     <string name="get_started">Başlayın</string>
-    <string name="next">İleri</string>
+    <string name="next">Sonraki</string>
     <string name="follow_up_time_question">Haberleri ne sıklıkla takip ediyorsunuz?</string>
     <string name="age_group_question">Yaş grubunuzu seçin</string>
-    <string name="gender_question">Cinsiyeti seçin</string>
+    <string name="gender_question">Cinsiyetinizi seçin</string>
     <string name="back">Geri</string>
-    <string name="breaking_news">Son Dakika</string>
+    <string name="breaking_news">Son Dakika Haberleri</string>
     <string name="view_all">Tümünü Gör</string>
     <string name="search">Ara</string>
     <string name="settings">Ayarlar</string>
@@ -24,5 +24,30 @@
     <string name="appearence_subtitle">Uygulama temasını açık veya koyu tema olarak değiştirin.</string>
     <string name="dark">Koyu</string>
     <string name="light">Açık</string>
-
+    <string name="night_mode">Gece Modu</string>
+    <string name="change_choosen_category">Anasayfa için özelleştirilmiş haber kategorinizi değiştirin.</string>
+    <string name="change_choosen_category_title">Kategoriyi Özelleştir</string>
+    <string name="splash_title">Dünya hakkında bilgi sahibi olun.</string>
+    <string name="customization_category">Bu bölüm, anasayfa için ana kategorinizi ayarlamanız içindir. Bunu istediğiniz zaman “Ayarlar” bölümünden değiştirebilirsiniz.</string>
+    <string name="latest_news">Haberler</string>
+    <string name="empty_search_list">Burası şu an boş. Hemen aramaya başlayın.</string>
+    <string name="share_text">Bu haberi gözden geçirin: %1$s Bağlantı: %2$s #AndroidDessertClicker</string>
+    <string name="sharing_not_available">Paylaşım Mevcut Değil</string>
+    <string name="no_saved_news">Şu an boş görünüyor.</string>
+    <string name="article_saved">Haber başarıyla kaydedildi.</string>
+    <string name="error">Hata:</string>
+    <string name="no_title">Başlık bulunamadı.</string>
+    <string name="retry">Tekrar Dene</string>
+    <string name="loading">Yükleniyor...</string>
+    <string name="summarized">Özetledi</string>
+    <string name="relevancy">İlgililik</string>
+    <string name="popularity">Popülerlik</string>
+    <string name="published_at">Yayınlanma Tarihi</string>
+    <string name="title">Başlık</string>
+    <string name="description">Açıklama</string>
+    <string name="content">İçerik</string>
+    <string name="sort_by">Sıralama</string>
+    <string name="search_in">Ara</string>
+    <string name="from">Gönderen</string>
+    <string name="select_date">Tarih Seçin</string>
 </resources>

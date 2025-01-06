@@ -2,4 +2,7 @@
     <string name="app_name">NewsZone</string>
     <string name="notification_permission_granted">Notification authorized.</string>
     <string name="notification_permission_denied">Permission denied.</string>
+    <string name="notification_permission_description">We recommend enabling notifications to make the most out of the app.</string>
+    <string name="notification_permission_title">Important Reminder</string>
+    <string name="confirm">Confirm</string>
 </resources>
