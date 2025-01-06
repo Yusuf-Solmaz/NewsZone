@@ -1,12 +1,19 @@
 package com.yms.presentation.article_detail
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yms.domain.model.news.ArticleData
 import com.yms.domain.model.news.BaseArticle
 import com.yms.domain.usecase.saved_news.SavedNewsUseCase
 import com.yms.domain.utils.RootResult
+import com.yms.presentation.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,6 +28,7 @@ sealed interface InsertNewsState{
 
 @HiltViewModel
 class ArticleDetailViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val savedNewsUseCase: SavedNewsUseCase
 ) : ViewModel() {
 
@@ -34,12 +42,49 @@ class ArticleDetailViewModel @Inject constructor(
 
     fun onEvent(event: ArticleDetailEvent) {
         when (event) {
+            is ArticleDetailEvent.ShareArticle -> shareArticle(event.articleTitle, event.articleUrl)
+
+            is ArticleDetailEvent.GoToUrl -> goToUrl(event.url)
+
             is ArticleDetailEvent.InsertArticle -> insertArticle(event.article)
 
             is ArticleDetailEvent.IsArticleSaved -> checkIfArticleIsSaved(event.articleUrl)
 
             is ArticleDetailEvent.DeleteArticle -> deleteArticle(event.articleUrl)
         }
+    }
+
+    private fun shareArticle(articleTitle: String, articleUrl: String?) {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                context.getString(R.string.share_text, articleTitle, articleUrl)
+            )
+            type = "text/plain"
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        try {
+            context.startActivity(shareIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.sharing_not_available),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun goToUrl(url: String?) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
     }
 
     private fun deleteArticle(articleUrl: String) {
