@@ -1,9 +1,6 @@
 package com.yms.presentation.article_detail
 
 
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -40,6 +37,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -60,7 +58,7 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
 
     val systemUiController = rememberSystemUiController()
     val context = LocalContext.current
-    //val article = sharedArticleState.article
+
 
     val article: BaseArticle? = when (val article = sharedArticleState.article) {
         is ArticleData -> article
@@ -157,8 +155,6 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
                                 viewModel.onEvent(ArticleDetailEvent.InsertArticle(it))
                             } }
                         )
-
-
                     }
                 }
             }
@@ -217,6 +213,7 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
                         Text(
                             text = sourceName ?:  "",
                             style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.width(4.dp))
@@ -236,14 +233,30 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
 
                 }
 
+                Spacer(
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    painter = painterResource(R.drawable.ic_share),
+                    tint = MaterialTheme.colorScheme.primary,
+                    contentDescription = "Share",
+                    modifier = Modifier.size(36.dp)
+                        .padding(end = dimensionResource(R.dimen.padding_medium))
+                        .clickable(
+                            onClick = {
+                                viewModel.onEvent(ArticleDetailEvent.ShareArticle(article?.title ?: "Title not found.",article?.url))
+                            }
+                        )
+                )
+
                 Icon(
                     painter = painterResource(R.drawable.ic_open_in_new),
                     tint = MaterialTheme.colorScheme.primary,
                     contentDescription = "Open in browser",
                     modifier = Modifier.size(24.dp).clickable(
                         onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article?.url))
-                            context.startActivity(intent)
+                            viewModel.onEvent(ArticleDetailEvent.GoToUrl(article?.url))
                         }
                     )
                 )
@@ -253,16 +266,17 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
 
             val articleContent = (article?.content ?: "") + LoremIpsum(200).values.joinToString(" ")
             val cleanedContent = articleContent.replace(Regex("\\s+"), " ")
-            val scrollState = rememberScrollState()
 
-            Log.d("ArticleDetailScreen", "ArticleContent: $cleanedContent")
+            val paragraphContent = cleanedContent.chunked(592).joinToString("\n\n")
+            val scrollState = rememberScrollState()
 
             Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState) ) {
                 Text(
-                    text = cleanedContent,
-                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.fillMaxWidth(),
+                    softWrap = true,
+                    text = paragraphContent,
+                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onBackground,
-                    textAlign = TextAlign.Justify,
                     lineHeight = 20.sp
                 )
             }
