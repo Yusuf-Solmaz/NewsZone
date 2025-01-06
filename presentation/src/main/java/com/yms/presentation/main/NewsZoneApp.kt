@@ -57,6 +57,7 @@ import com.yms.presentation.navigation.NewsZoneNavigation
 import com.yms.presentation.onboarding.viewmodel.OnBoardingViewModel
 import com.yms.presentation.settings.viewmodel.SettingsViewModel
 import com.yms.theme.NewsZoneTheme
+import com.yms.utils.LoadingLottie
 import com.yms.utils.SharedViewModel
 import com.yms.utils.SummaryEvent
 import com.yms.utils.SummaryState
@@ -95,7 +96,7 @@ fun NewsZoneApp(
     }
 
     NewsZoneTheme(
-        darkTheme = isDarkMode.isDarkMode,
+        darkTheme = isDarkMode.isDarkMode
     ) {
         Scaffold(
             topBar = {
@@ -299,8 +300,6 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
         )
     }
 
-    // BottomSheetContent
-    // BottomSheetContent
     if (isSheetOpen) {
 
         LaunchedEffect(key1 = Unit) {
@@ -358,10 +357,7 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
                                 .padding(16.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "Loading...",
-                                textAlign = TextAlign.Center
-                            )
+                            LoadingLottie(resId = R.raw.summary_loading,height = 200.dp)
                         }
                     }
 
