@@ -26,6 +26,7 @@ interface NewsApi {
         @Query("searchIn") searchIn: String?,
         @Query("from") fromDate: String?,
         @Query("to") toDate: String?,
+        @Query("language") language: String = "en",
         @Query("sortBy") sortBy: String? = "publishedAt",
         @Query("page") page: Int = 1,
         @Query("pageSize") pageSize: Int = 20
