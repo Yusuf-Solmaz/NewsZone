@@ -71,8 +71,11 @@ NewsZone is a news reading application that allows users to follow daily news, s
 <!-- Demo -->
 ## Demo
 
-
-https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
+<div align="center">
+  <video width="300" height="600" controls>
+    <source src="https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0" type="video/mp4">
+  </video>
+</div>
 
 
 <!-- Open-Source Libraries -->
@@ -80,13 +83,13 @@ https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
 
 * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Used for managing and scheduling deferrable, asynchronous tasks that are expected to run even if the app is closed or the device restarts.
 * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Used for dependency injection, simplifying the management of application components.
-* [Jetpack Compose (1.9.1)](https://developer.android.com/develop/ui/compose) - A modern toolkit for building native UI in Android.
+* [Jetpack Compose](https://developer.android.com/develop/ui/compose) - A modern toolkit for building native UI in Android.
 * [Navigation](https://developer.android.com/develop/ui/compose/navigation) - Handles in-app navigation in a type-safe manner.
 * [Coroutines](https://developer.android.com/kotlin/coroutines?hl=tr) - Provides a simple way to manage background threads, making asynchronous programming easier and more efficient.
 * [Flow](https://developer.android.com/kotlin/flow) - A reactive streams API in Kotlin used for managing data streams asynchronously.
 * [DataStore](https://developer.android.com/topic/libraries/architecture/datastore) - Handles data storage and persistence, replacing SharedPreferences for more complex data structures.
 * [MVVM](https://developer.android.com/topic/libraries/architecture/viewmodel#implement) - A design pattern used to separate concerns, making the application more modular, testable, and maintainable.
-  * [Lifecycle (2.8.4)](https://developer.android.com/topic/libraries/architecture/lifecycle) - Manages Android lifecycle-aware components.
+  * [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle) - Manages Android lifecycle-aware components.
   * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes.
   * [UseCases](https://developer.android.com/topic/architecture/domain-layer) - Located domain layer that sits between the UI layer and the data layer.
   * [Repository](https://developer.android.com/topic/architecture/data-layer) - Located in the data layer that contains application data and business logic.
@@ -94,7 +97,7 @@ https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
 * [OkHttp](https://square.github.io/okhttp/) An HTTP client that efficiently makes network requests
 * [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) - A library for serializing and deserializing JSON data.
 * [Lottie Animation](https://lottiefiles.com/blog/working-with-lottie-animations/getting-started-with-lottie-animations-in-android-app) - Used to display animations in the app.
-* [Coil](https://coil-kt.github.io/coil/compose/) - An image loading library for Android backed by Kotlin Coroutines.
+* [Coil](https://coil-kt.github.io/coil/compose/) - An image-loading library for Android backed by Kotlin Coroutines.
 * [Gemini](https://ai.google.dev/gemini-api/docs?hl=en) - A powerful AI model developed by Google, designed to assist with natural language understanding, generation, and multimodal tasks, providing advanced capabilities for building intelligent applications.
   
 <!-- Architecture -->
