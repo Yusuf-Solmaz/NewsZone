@@ -50,8 +50,8 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel(),navigateToArticleD
 
     val searchOptions by viewModel.searchOptions.collectAsState()
 
-    val sortByOptions = listOf("Relevancy", "Popularity", "PublishedAt")
-    val searchInOptions = listOf("Title", "Description", "Content")
+    val sortByOptions = listOf(stringResource(R.string.relevancy), stringResource(R.string.popularity), stringResource(R.string.published_at))
+    val searchInOptions = listOf(stringResource(R.string.title), stringResource(R.string.description), stringResource(R.string.content))
 
     var isFilterOpen by remember { mutableStateOf(false) }
 
@@ -151,7 +151,7 @@ private fun FilterContent(
     updateSearchOptions: (SearchOptions.() -> SearchOptions) -> Unit
 ) {
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Sort By", style = MaterialTheme.typography.titleMedium)
+        Text(text = stringResource(R.string.sort_by), style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         sortByOptions.forEach { option ->
             Row(
@@ -178,7 +178,7 @@ private fun FilterContent(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Search In", style = MaterialTheme.typography.titleMedium)
+        Text(text = stringResource(R.string.search_in), style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         searchInOptions.forEach { option ->
             Row(
@@ -216,7 +216,7 @@ private fun FilterContent(
 
         Spacer(modifier = Modifier.height(16.dp))
         DatePickerSection(
-            title = "From",
+            title = stringResource(R.string.from),
             selectedDate = searchOptions.fromDate,
             onDateSelected = { selectedDate ->
                 updateSearchOptions {
@@ -381,7 +381,7 @@ fun DatePicker(selectedDate: LocalDate?, onDateSelected: (LocalDate) -> Unit) {
     ) {
         Column {
             Text(
-                text = selectedDate?.toString() ?: "Select Date",
+                text = selectedDate?.toString() ?: stringResource(R.string.select_date),
                 modifier = Modifier
                     .clickable {
                         datePickerDialog.show()

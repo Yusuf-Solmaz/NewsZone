@@ -74,7 +74,7 @@ fun NewsHomeScreen(
         } else if (pagedNews.loadState.refresh is LoadState.Error) {
             Toast.makeText(
                 context,
-                "Error: " + (pagedNews.loadState.refresh as LoadState.Error).error.message,
+                 context.getString(R.string.error) + (pagedNews.loadState.refresh as LoadState.Error).error.message,
                 Toast.LENGTH_LONG
             ).show()
         }

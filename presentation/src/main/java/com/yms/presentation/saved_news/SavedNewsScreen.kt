@@ -19,7 +19,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissBoxState
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -57,7 +56,7 @@ fun SavedNews(viewModel: SavedNewsViewModel = hiltViewModel(),savedArticleToArti
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Error: ${savedNewsState.message}",
+                    text = "${stringResource(R.string.error)} ${savedNewsState.message}",
                     color = MaterialTheme.colorScheme.error,
                 )
             }
@@ -156,7 +155,7 @@ fun <T> SwipeToDeleteContainer(
         SwipeToDismissBox(
             state = state,
             backgroundContent = {
-                DeleteBackground(swipeDismissState = state)
+                DeleteBackground()
             },
             content = { content(item) }
         )
@@ -165,12 +164,7 @@ fun <T> SwipeToDeleteContainer(
 
 @Composable
 fun DeleteBackground(
-    swipeDismissState: SwipeToDismissBoxState
 ) {
-    val color = when (swipeDismissState.dismissDirection) {
-        SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.background
-        else -> Color.Transparent
-    }
 
     Box(
         modifier = Modifier

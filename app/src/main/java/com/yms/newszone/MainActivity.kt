@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yms.newszone.component.RequestNotificationPermission
@@ -22,9 +21,11 @@ class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                Toast.makeText(this, getString(R.string.notification_permission_granted), Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(this, "Bildirim izni verildi", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, getString(R.string.notification_permission_denied), Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(this, "Bildirim izni verilmedi", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -34,13 +35,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             RequestNotificationPermission(requestPermissionLauncher) {
                 val viewModel: SettingsViewModel = hiltViewModel()
-                val context = LocalContext.current
+
 
                 viewModel.languageState.collectAsStateWithLifecycle().value.language.let { language ->
-                    LocaleManager.changeAppLanguage(context, language)
+                    LocaleManager.changeAppLanguage(this, language)
                 }
+
                 NewsZoneApp()
             }
         }
     }
 }
+

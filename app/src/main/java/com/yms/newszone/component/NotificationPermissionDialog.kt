@@ -9,33 +9,37 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
+import com.yms.newszone.R
 
 @Composable
 fun ShowNotificationDialog(
     onDismissRequest: () -> Unit,
     onConfirm: () -> Unit
 ) {
+
     AlertDialog(
+        containerColor = Color(0xFF1E3C4D) ,
         onDismissRequest = onDismissRequest,
-        title = { Text(text = "Önemli Hatırlatma") },
-        text = { Text("Uygulamadan en etkili bir şekilde yararlanmanız için bildirimleri açmanızı öneriririz.") },
+        title = { Text(color = Color.White,text = stringResource(R.string.notification_permission_title)) },
+        text = { Text(color = Color.White,text=stringResource(R.string.notification_permission_description)) },
         confirmButton = {
             Button(
                 onClick = onConfirm,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = Color(0xFF2F5862),
                 )
             ) {
-                Text("Tamam")
+                Text(color = Color.White,text=stringResource(R.string.confirm))
             }
         }
     )

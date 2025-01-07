@@ -86,14 +86,14 @@ fun BreakingNewsSection(
                 ) {
                     Text(text = state.message, color = MaterialTheme.colorScheme.error)
                     Button(onClick = retry) {
-                        Text(text = "Retry")
+                        Text(text = stringResource(R.string.retry))
                     }
                 }
             }
 
             BreakingNewsState.Loading -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "Loading...")
+                    Text(text = stringResource(R.string.loading))
                 }
             }
 
