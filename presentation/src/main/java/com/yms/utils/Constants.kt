@@ -1,20 +1,19 @@
 package com.yms.utils
 
-enum class NewsCategory(val title: String) {
-    BUSINESS("business"),
-    ENTERTAINMENT("entertainment"),
-    GENERAL("general"),
-    HEALTH("health"),
-    SCIENCE("science"),
-    SPORTS("sports"),
-    TECHNOLOGY("technology");
+import com.yms.presentation.R
+
+enum class NewsCategory(val title: String, val displayName: Int){
+    GENERAL("general", R.string.general),
+    BUSINESS("business", R.string.business),
+    SCIENCE("science", R.string.science),
+    SPORTS("sports", R.string.sports),
+    TECHNOLOGY("technology", R.string.technology),
+    ENTERTAINMENT("entertainment", R.string.entertainment),
+    HEALTH("health", R.string.health);
 
     companion object {
-        // String'i NewsCategory'ye dönüştürmek için yardımcı fonksiyon
         fun fromString(value: String): NewsCategory? {
             return NewsCategory.entries.find { it.title.equals(value, ignoreCase = true) }
         }
     }
 }
-
-val newsTabTitles = NewsCategory.entries.map { it.title }
