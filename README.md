@@ -5,6 +5,7 @@ NewsZone
 <p align="center">
   <img src="https://img.shields.io/badge/-Kotlin-7c6fe1?style=flat&logo=kotlin&logoColor=white">
   <img src="https://img.shields.io/badge/Jetpack_Compose-4285f4?style=flat&logo=jetpackcompose&logoColor=white">
+  <img alt="API" src="https://img.shields.io/badge/API-26%2B-orange.svg?style=flat"/>
 </p>
 
 <div align="center">
@@ -30,7 +31,7 @@ NewsZone
     <li><a href="#demo">Demo</a></li>
     <li><a href="#open-source-libraries">Open-Source Libraries</a></li>
     <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#api-and-services">API and Services</a></li>
+    <li><a href="#api">API</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -123,20 +124,10 @@ Clean Architecture & Multi Module
 ![image](https://github.com/user-attachments/assets/eb3bf886-2376-4cb6-9234-ece71d036a68)
 
 <!-- API and Services -->
-## API and Services
-The application integrates with the following APIs and services:
-* OpenWeather API: Provides weather data and forecasts. More information can be found [here](https://openweathermap.org/api).
-* Restful API: Utilized for data communication and integration to get weather data.
-* Retrofit: A type-safe HTTP client for Android, used for interacting with RESTful APIs.
-* OkHttp: An HTTP client used for making network requests and handling responses efficiently.
-* Firebase: Used for various backend services, including:
-  * Authentication: User sign-in and management.
-  * Firestore Database: Real-time database for storing and syncing app data.
-  * Storage: File storage and retrieval.
-  * Crashlytics: Real-time crash reporting and diagnostics.
-  * Performance Monitoring: Monitoring and optimizing app performance.
-  * Analytics: Data collection and insights on app usage.
-* Google Services: Used for location services, allowing the app to access and manage location data. [More detail](https://developers.google.com/android/reference/com/google/android/gms/common/package-summary)
+## API
+The application integrates with the following APIs:
+* News API: Provides news data. More information can be found [here](https://newsapi.org/).
+* Gemini API: Provides a summary of the news. More information can be found [here](https://ai.google.dev/gemini-api/docs?hl=en).
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -145,44 +136,27 @@ The application integrates with the following APIs and services:
 1. Clone this repository to your preferred directory using the following command:
 
 ```
-git clone https://github.com/Yusuf-Solmaz/TeamMaker
+git clone https://github.com/Yusuf-Solmaz/NewsZone
 ```
 2. Open the cloned project in Android Studio.
 
     ### Configuration Steps
 
-1. Create `secrets.properties` file in the project directory.
+1. Create `api.properties` file in the project directory.
 
-2. Add the following line with your API key to `secrets.properties`:
+2. Add the following line with your API keys (for news and Gemini API ) and  to `api.properties`:
 ```
 API_KEY=YOUR_API_KEY_HERE
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
 ```
 3. Build and run the app on an emulator or a physical device.
 
 ----------------------------------------------------------------
-
-* Or you can download the APK of the application [here](https://drive.google.com/file/d/1HBI3oGsVa8FhTK1ZWQVRXkq3W8uqYREe/view?usp=sharing)
   
 <!-- Contact Section -->
 ## Contact
 
 <table style="border-collapse: collapse; width: 100%;">
-  <tr>
-    <td style="padding-right: 10px;">Bengisu Şahin - <a href="mailto:bengisusaahin@gmail.com">bengisusaahin@gmail.com</a></td>
-    <td>
-      <a href="https://www.linkedin.com/in/bengisu-sahin/" target="_blank">
-        <img src="https://img.shields.io/badge/linkedin-%231E77B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin" style="vertical-align: middle;" />
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td style="padding-right: 10px;">Talha Çalışır - <a href="mailto:talha5797@gmail.com">talha5797@gmail.com</a></td>
-    <td>
-      <a href="https://www.linkedin.com/in/talhatlc/" target="_blank">
-        <img src="https://img.shields.io/badge/linkedin-%231E77B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin" style="vertical-align: middle;" />
-      </a>
-    </td>
-  </tr>
   <tr>
     <td style="padding-right: 10px;">Yusuf Mücahit Solmaz - <a href="mailto:yusufmucahitsolmaz@gmail.com">yusufmucahitsolmaz@gmail.com</a></td>
     <td>
@@ -196,21 +170,3 @@ API_KEY=YOUR_API_KEY_HERE
 <!-- LICENCE -->
 ## Licence
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/Yusuf-Solmaz/TeamMaker.svg?style=for-the-badge
-[contributors-url]: https://github.com/Yusuf-Solmaz/TeamMaker/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Yusuf-Solmaz/TeamMaker.svg?style=for-the-badge
-[forks-url]: https://github.com/Yusuf-Solmaz/TeamMaker/network/members
-[stars-shield]: https://img.shields.io/github/stars/Yusuf-Solmaz/TeamMaker.svg?style=for-the-badge
-[stars-url]: https://github.com/Yusuf-Solmaz/TeamMaker/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Yusuf-Solmaz/TeamMaker.svg?style=for-the-badge
-[issues-url]: https://github.com/Yusuf-Solmaz/TeamMaker/issues
-[license-shield]: https://img.shields.io/github/license/Yusuf-Solmaz/TeamMaker.svg?style=for-the-badge
-[license-url]: https://github.com/Yusuf-Solmaz/TeamMaker/blob/master/LICENSE.txt
-
-<!-- [linkedin-shield]: https://img.shields.io/badge/linkedin-%231E77B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white alt=linkedin style="margin-bottom: 5px;"
-[linkedin-url]: https://www.linkedin.com/in/bengisu-sahin/
-[linkedinT-url]: https://www.linkedin.com/in/talhatlc/
-[linkedinY-url]: https://www.linkedin.com/in/yusuf-mucahit-solmaz/--!>
