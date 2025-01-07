@@ -8,16 +8,8 @@ NewsZone
   <img alt="API" src="https://img.shields.io/badge/API-26%2B-orange.svg?style=flat"/>
 </p>
 
-<div align="center">
-  
-  [![Contributors][contributors-shield]][contributors-url]
-  [![Forks][forks-shield]][forks-url]
-  [![Stargazers][stars-shield]][stars-url]
-  [![Issues][issues-shield]][issues-url]
 
-</div>
-
-  NewsZone is a news reading application that allows users to follow daily news, search for news, save news, customize the homepage, and many other features.
+NewsZone is a news reading application that allows users to follow daily news, search for news, save news, customize the homepage, and many other features.
 
 
 <!-- TABLE OF CONTENTS -->
