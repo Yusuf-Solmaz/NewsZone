@@ -5,5 +5,5 @@ import com.yms.domain.utils.RootResult
 import kotlinx.coroutines.flow.Flow
 
 interface ArticleSummarizationRepository {
-    fun getSummary(content: String): Flow<RootResult<ArticleSummary>>
+    fun getSummary(prompt: String,content: String): Flow<RootResult<ArticleSummary>>
 }

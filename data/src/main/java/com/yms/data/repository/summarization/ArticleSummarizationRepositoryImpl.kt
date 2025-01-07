@@ -18,12 +18,12 @@ import kotlinx.coroutines.flow.flowOn
 
 class ArticleSummarizationRepositoryImpl(val context: Context) : ArticleSummarizationRepository {
 
-    override fun getSummary(content: String): Flow<RootResult<ArticleSummary>> = flow {
+    override fun getSummary(prompt: String,content: String): Flow<RootResult<ArticleSummary>> = flow {
         emit(RootResult.Loading)
 
         val response = generativeModel.generateContent(
             content {
-                text("${context.getString(R.string.prompt_summary)} $content")
+                text("$prompt $content")
             }
         ).text ?: context.getString(R.string.error_summary)
 

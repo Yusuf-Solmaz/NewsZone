@@ -25,16 +25,16 @@ class SharedViewModel @Inject constructor(val summaryUseCase: SummaryUseCase) : 
     fun onEvent(event: SummaryEvent) {
         when (event) {
             is SummaryEvent.GetSummary -> {
-                getSummary(event.content)
+                getSummary(event.prompt,event.content)
             }
         }
     }
 
-    private fun getSummary(content: String) {
+    private fun getSummary(prompt: String, content: String) {
         _summaryState.value = SummaryState.Loading
 
         viewModelScope.launch {
-            summaryUseCase.getSummary(content).collect {
+            summaryUseCase.getSummary(prompt = prompt,content).collect {
                 result ->
                 when (result) {
                     is RootResult.Success -> {
@@ -73,7 +73,7 @@ class SharedViewModel @Inject constructor(val summaryUseCase: SummaryUseCase) : 
 
 
 sealed interface SummaryEvent {
-    data class GetSummary(val content: String) : SummaryEvent
+    data class GetSummary(val prompt: String,val content: String) : SummaryEvent
 }
 
 sealed interface SummaryState {

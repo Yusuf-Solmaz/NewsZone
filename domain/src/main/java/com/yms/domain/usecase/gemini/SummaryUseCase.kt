@@ -7,5 +7,5 @@ data class SummaryUseCase(
 )
 
 class GetSummary(val repository: ArticleSummarizationRepository) {
-    operator fun invoke(content: String) = repository.getSummary(content)
+    operator fun invoke(prompt: String,content: String) = repository.getSummary(prompt,content)
 }

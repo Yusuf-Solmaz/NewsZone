@@ -41,7 +41,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -79,8 +78,6 @@ fun NewsZoneApp(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route ?: NavigationGraph.NEWS_HOME.name
 
-    val layoutDirection = LocalLayoutDirection.current
-
     val sharedArticleState by sharedViewModel.sharedArticleState.collectAsState()
 
     var currentScreenTitle = NavigationGraph.valueOf(
@@ -91,6 +88,7 @@ fun NewsZoneApp(
     val isDarkMode by settingsViewModel.darkModeState.collectAsState()
 
     val summaryState by sharedViewModel.summaryState.collectAsState()
+    val prompt = stringResource(R.string.prompt_summary)
 
     Log.d("NewsZoneApp", "sharedArticleState: ${sharedArticleState.article.toString()}")
 
@@ -155,7 +153,8 @@ fun NewsZoneApp(
                             getSummary = {
                                 sharedViewModel.onEvent(
                                     SummaryEvent.GetSummary(
-                                        sharedArticleState.article.toString()))
+                                        prompt = prompt,
+                                        content = sharedArticleState.article.toString()))
                             },
                             summaryState = summaryState
                         )
@@ -294,8 +293,7 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
 
     NavigationBar(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .height(60.dp),
+            .background(MaterialTheme.colorScheme.background),
         containerColor = MaterialTheme.colorScheme.background
     ) {
         NavigationBarItem(
@@ -304,7 +302,7 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ai_summary),
-                    contentDescription = "Özet Çıkar",
+                    contentDescription = "Summary",
                     modifier = Modifier.size(32.dp)
                 )
             }
@@ -334,7 +332,7 @@ fun BottomBarWithSheet(getSummary: () -> Unit, summaryState: SummaryState) {
                         withStyle(style = SpanStyle(color = Color.Red)) {
                             append("AI ")
                         }
-                        append("Summarized")
+                        append(stringResource(R.string.summarized))
                     },
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_big))
