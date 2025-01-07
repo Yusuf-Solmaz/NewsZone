@@ -34,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,8 +53,6 @@ import com.yms.utils.SharedArticleState
 
 @Composable
 fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleState, viewModel: ArticleDetailViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
-
-    val context = LocalContext.current
 
     val article: BaseArticle? = when (val article = sharedArticleState.article) {
         is ArticleData -> article

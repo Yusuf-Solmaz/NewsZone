@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yms.newszone.component.RequestNotificationPermission
 import com.yms.presentation.main.NewsZoneApp
-import com.yms.presentation.settings.viewmodel.SettingsViewModel
+import com.yms.presentation.settings.SettingsViewModel
 import com.yms.utils.LocaleManager
 import dagger.hilt.android.AndroidEntryPoint
 

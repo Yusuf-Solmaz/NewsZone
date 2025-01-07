@@ -59,7 +59,7 @@ import com.yms.presentation.R
 import com.yms.presentation.navigation.NavigationGraph
 import com.yms.presentation.navigation.NewsZoneNavigation
 import com.yms.presentation.onboarding.viewmodel.OnBoardingViewModel
-import com.yms.presentation.settings.viewmodel.SettingsViewModel
+import com.yms.presentation.settings.SettingsViewModel
 import com.yms.theme.NewsZoneTheme
 import com.yms.utils.LoadingLottie
 import com.yms.utils.SharedViewModel
