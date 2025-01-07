@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -31,6 +32,7 @@ fun NewsCategorySection(
     onTabSelected: (NewsCategory) -> Unit,
     modifier: Modifier = Modifier,
     pagedNews: LazyPagingItems<ArticleData>,
+    category: NewsCategory,
     navigateToArticleDetailScreen: (BaseArticle) -> Unit
 ) {
     val selectedTabIndex = remember { mutableStateOf(0) }
@@ -45,6 +47,11 @@ fun NewsCategorySection(
                 this[index] = true
             }
         }
+    }
+
+    LaunchedEffect(category) {
+        val initialIndex = NewsCategory.entries.indexOf(category).coerceAtLeast(0)
+        selectedTabIndex.value = initialIndex
     }
 
     Column {
@@ -62,7 +69,7 @@ fun NewsCategorySection(
                     },
                     text = {
                         Text(
-                            text = categoryEnum.title.replaceFirstChar { it.uppercase() },
+                            text = stringResource(categoryEnum.displayName),
                             style = MaterialTheme.typography.titleSmall.copy(
                                 color = MaterialTheme.colorScheme.primary
                             )

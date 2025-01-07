@@ -133,8 +133,8 @@ fun NewsHomeScreen(
                         categoryState.category = category
                         getNewsByCategory(category)
                     },
+                    category = categoryState.category,
                     pagedNews = pagedNews,
-
                     navigateToArticleDetailScreen = navigateToArticleDetailScreen
                 )
             }
