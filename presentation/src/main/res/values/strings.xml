@@ -50,4 +50,5 @@
     <string name="search_in">Search In</string>
     <string name="from">From</string>
     <string name="select_date">Select Date</string>
+    <string name="prompt_summary">Summarize the news I gave:</string>
 </resources>

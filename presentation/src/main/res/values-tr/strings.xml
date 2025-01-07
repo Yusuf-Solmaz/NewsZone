@@ -50,4 +50,5 @@
     <string name="search_in">Ara</string>
     <string name="from">Gönderen</string>
     <string name="select_date">Tarih Seçin</string>
+    <string name="prompt_summary">Verdiğim haberi Türkçe olarak özetle:</string>
 </resources>
