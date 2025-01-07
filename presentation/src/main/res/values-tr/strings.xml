@@ -51,4 +51,11 @@
     <string name="from">Gönderen</string>
     <string name="select_date">Tarih Seçin</string>
     <string name="prompt_summary">Verdiğim haberi Türkçe olarak özetle:</string>
+    <string name="general">Genel</string>
+    <string name="business">İş Dünyası</string>
+    <string name="science">Bilim</string>
+    <string name="sports">Spor</string>
+    <string name="technology">Teknoloji</string>
+    <string name="entertainment">Eğlence</string>
+    <string name="health">Sağlık</string>
 </resources>
