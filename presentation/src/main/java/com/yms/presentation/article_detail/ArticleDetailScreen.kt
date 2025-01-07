@@ -1,7 +1,6 @@
 package com.yms.presentation.article_detail
 
 
-import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -83,7 +82,7 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
 
         when (val state = insertState.value) {
             is InsertNewsState.Success -> {
-                Toast.makeText(context, stringResource(R.string.article_saved), Toast.LENGTH_SHORT).show()
+
             }
             is InsertNewsState.Error -> {
                 Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
