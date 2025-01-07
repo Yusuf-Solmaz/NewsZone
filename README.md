@@ -71,9 +71,7 @@ NewsZone is a news reading application that allows users to follow daily news, s
 <!-- Demo -->
 ## Demo
 
-<div align="center">
-  https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
-</div>
+https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
 
 
 <!-- Open-Source Libraries -->
