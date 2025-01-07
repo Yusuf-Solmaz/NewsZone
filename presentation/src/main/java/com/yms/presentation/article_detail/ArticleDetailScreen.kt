@@ -39,7 +39,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -263,28 +262,13 @@ fun ArticleDetailScreen(onBack: () -> Unit, sharedArticleState: SharedArticleSta
             }
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp).fillMaxWidth())
 
-            val articleContent = (article?.content ?: "") + "\n"
-
-            val cleanedContent = LoremIpsum(200).values
-                .joinToString(" ")
-                .replace(Regex("\\s+"), " ")
-                .chunked(563)
-                .joinToString("\n\n")
-
 
             val scrollState = rememberScrollState()
 
             Column(modifier = Modifier.fillMaxWidth().padding(top = dimensionResource(R.dimen.padding_medium)).verticalScroll(scrollState) ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = articleContent,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    lineHeight = 20.sp
-                )
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = cleanedContent,
+                    text = article?.content ?: "",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onBackground,
                     lineHeight = 20.sp
