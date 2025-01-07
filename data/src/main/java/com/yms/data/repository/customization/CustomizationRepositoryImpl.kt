@@ -5,11 +5,11 @@ import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.yms.data.utils.AGE_GROUP_KEY
+import com.yms.data.utils.FOLLOW_UP_TIME_KEY
+import com.yms.data.utils.GENDER_KEY
 import com.yms.data.worker.DetermineCategoryWorker
 import com.yms.data.worker.SaveCategoryWorker
-import com.yms.data.worker.utils.AGE_GROUP_KEY
-import com.yms.data.worker.utils.FOLLOW_UP_TIME_KEY
-import com.yms.data.worker.utils.GENDER_KEY
 import com.yms.domain.model.user_preferences.AgeGroup
 import com.yms.domain.model.user_preferences.FollowUpTime
 import com.yms.domain.model.user_preferences.Gender

@@ -6,8 +6,8 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.yms.data.worker.utils.OUTPUT_CATEGORY_KEY
-import com.yms.data.worker.utils.WORKER_ERROR
+import com.yms.data.utils.OUTPUT_CATEGORY_KEY
+import com.yms.data.utils.WORKER_ERROR
 import com.yms.domain.R
 import com.yms.domain.repository.user_preferences.UserPreferencesRepository
 import dagger.assisted.Assisted
