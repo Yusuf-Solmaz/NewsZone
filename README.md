@@ -72,7 +72,7 @@ NewsZone
 
 | Settings | Light Mode | Language Exchange | Notification
 |--|-------------|--|----|
-| <img src="https://github.com/user-attachments/assets/cbf83f3b-7d65-4cf0-a38b-b5da1276a092" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/14d08b10-1601-4bf3-a641-d13693081e93" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/b68db404-e07c-4d12-9254-d2aaca60bf59" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/6744efc2-2997-4e72-9cdd-cbbd5cbd4365" width="100" height="200"/> 
+| <img src="https://github.com/user-attachments/assets/cbf83f3b-7d65-4cf0-a38b-b5da1276a092" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/14d08b10-1601-4bf3-a641-d13693081e93" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/b68db404-e07c-4d12-9254-d2aaca60bf59" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/6744efc2-2997-4e72-9cdd-cbbd5cbd4365" width="200" height="100"/> 
 
 <!-- Demo -->
 ## Demo
