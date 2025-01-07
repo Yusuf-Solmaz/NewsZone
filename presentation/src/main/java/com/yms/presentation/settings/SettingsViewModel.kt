@@ -1,4 +1,4 @@
-package com.yms.presentation.settings.viewmodel
+package com.yms.presentation.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -72,8 +72,3 @@ data class DarkModeState(
     val isDarkMode: Boolean = false,
     val error: String? = null
 )
-
-sealed interface SettingsEvent {
-    data class SaveLanguage(val language: UserPreferencesLanguage) : SettingsEvent
-    data class SaveDarkMode(val isDarkMode: Boolean) : SettingsEvent
-}

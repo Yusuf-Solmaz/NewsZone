@@ -1,4 +1,4 @@
-package com.yms.presentation.customization.viewmodel
+package com.yms.presentation.customization
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +18,14 @@ class CustomizationViewModel @Inject constructor(val customizationPreferencesUse
     private val _uiState = mutableStateOf(CustomizationUiState())
     val uiState: State<CustomizationUiState> = _uiState
 
-    fun updateSelection(followUpTime: FollowUpTime? = null, ageGroup: AgeGroup? = null, gender: Gender? = null) {
+    fun onEvent(event: CustomizationEvent) {
+        when (event) {
+            is CustomizationEvent.UpdateSelection -> updateSelection(event.followUpTime, event.ageGroup, event.gender)
+            is CustomizationEvent.SavePreferences -> savePreferences(event.onComplete)
+        }
+    }
+
+    private fun updateSelection(followUpTime: FollowUpTime? = null, ageGroup: AgeGroup? = null, gender: Gender? = null) {
         _uiState.value = _uiState.value.copy(
             followUpTimeSelection = followUpTime ?: _uiState.value.followUpTimeSelection,
             ageGroupSelection = ageGroup ?: _uiState.value.ageGroupSelection,
@@ -26,7 +33,7 @@ class CustomizationViewModel @Inject constructor(val customizationPreferencesUse
         )
     }
 
-    fun savePreferences(onComplete: () -> Unit) {
+    private fun savePreferences(onComplete: () -> Unit) {
         val followUpTime = _uiState.value.followUpTimeSelection
         val ageGroup = _uiState.value.ageGroupSelection
         val gender = _uiState.value.genderSelection
