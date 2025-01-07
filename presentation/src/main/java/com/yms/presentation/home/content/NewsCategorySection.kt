@@ -28,7 +28,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsCategorySection(
-    onTabSelected: (NewsCategory) -> Unit, // Update to use enum
+    onTabSelected: (NewsCategory) -> Unit,
     modifier: Modifier = Modifier,
     pagedNews: LazyPagingItems<ArticleData>,
     navigateToArticleDetailScreen: (BaseArticle) -> Unit

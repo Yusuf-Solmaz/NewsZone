@@ -51,7 +51,7 @@ fun OnBoardingScreen(modifier: Modifier = Modifier,navigateToCustomization: () -
     val scope = rememberCoroutineScope()
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ){
         HorizontalPager(
@@ -183,7 +183,7 @@ fun NextBackButton(
                 onBackClick()
             }) {
                 Text(
-                    text = "Back", style = MaterialTheme.typography.labelSmall,
+                    text = stringResource(R.string.back), style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onBackground
                 )
             }
