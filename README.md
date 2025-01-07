@@ -78,6 +78,7 @@ https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
 ## Open-Source Libraries
 
 * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Used for managing and scheduling deferrable, asynchronous tasks that are expected to run even if the app is closed or the device restarts.
+* [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) -  This library is optimized to manage the paging process and keep the UI responsive when loading data.
 * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Used for dependency injection, simplifying the management of application components.
 * [Jetpack Compose](https://developer.android.com/develop/ui/compose) - A modern toolkit for building native UI in Android.
 * [Navigation](https://developer.android.com/develop/ui/compose/navigation) - Handles in-app navigation in a type-safe manner.
