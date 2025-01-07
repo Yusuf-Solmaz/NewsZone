@@ -43,8 +43,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yms.domain.model.user_preferences.UserPreferencesLanguage
 import com.yms.presentation.R
-import com.yms.presentation.settings.viewmodel.SettingsEvent
-import com.yms.presentation.settings.viewmodel.SettingsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -70,7 +68,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, viewModel: SettingsViewModel =
             modifier = modifier
                 .fillMaxSize()
                 .padding(vertical = dimensionResource(R.dimen.padding_big))
-                .background(MaterialTheme.colorScheme.background) // Aynı animasyon
+                .background(MaterialTheme.colorScheme.background)
         ) {
             Text(
                 text = "General",
