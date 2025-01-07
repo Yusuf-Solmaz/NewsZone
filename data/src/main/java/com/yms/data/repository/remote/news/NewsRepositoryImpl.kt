@@ -56,6 +56,9 @@ class NewsRepositoryImpl @Inject constructor(val api: NewsApi, val newsDatabase:
             .map { pagingData ->
                 pagingData
                     .filter { newsEntity ->
+                        // In this section, I did not include those with empty image urls in the list.
+                        // The reason for this was that there was too much data without image urls in the data coming from the API.
+                        // This prevented the application from looking good.
                         newsEntity.urlToImage.isNotBlank()
                     }
                     .map { newsEntity -> newsEntity.toArticleData() }
