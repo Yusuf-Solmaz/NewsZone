@@ -72,9 +72,7 @@ NewsZone is a news reading application that allows users to follow daily news, s
 ## Demo
 
 <div align="center">
-  <video width="300" height="600" controls>
-    <source src="https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0" type="video/mp4">
-  </video>
+  https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
 </div>
 
 
