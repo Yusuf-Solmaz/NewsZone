@@ -52,13 +52,14 @@ NewsZone
 * Share the News: You can go to the web page of the news you want or share the news with your friends.
 * Search for News: Search news by popularity, publication time, relevance, title, description, content and date.
 * Get the Latest News with Notification: NewsZone ensures you get the latest news every hour with a notification.
+* Navigate Offline: NewsZone allows you to read news even when you are not connected to the internet.
 
 
 <!-- Screenshots -->
 ## Screenshots
 | Splash  | Onboarding  | Determine Category  
 |----|---|-----|
-| <img src="https://github.com/user-attachments/assets/47b2a159-3340-4544-8f58-b052e85a65b7" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/85ad90b4-cf9e-47c9-aa5c-7da42d1cddee" width="250" height="500"/>|<img src="https://github.com/user-attachments/assets/de08802b-9eb5-40c7-921d-23688b66ab40" width="250" height="500"/>
+| <img src="https://github.com/user-attachments/assets/31204518-8935-4849-a043-2def43df94ac" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/85ad90b4-cf9e-47c9-aa5c-7da42d1cddee" width="250" height="500"/>|<img src="https://github.com/user-attachments/assets/de08802b-9eb5-40c7-921d-23688b66ab40" width="250" height="500"/>
 
 | Home  | News Detail   | News Summary
 |--|-------------|--|
@@ -78,51 +79,30 @@ NewsZone
 ## Demo
 
 
-
-https://github.com/user-attachments/assets/617e756c-7909-444a-855b-13bff5ca1f2b
-
+https://github.com/user-attachments/assets/809e3f54-9f0c-4cf6-9724-9453ce0d2ab0
 
 
 <!-- Open-Source Libraries -->
 ## Open-Source Libraries
-* Minimum SDK level 26
-* [Dependency Injection (Hilt) (2.51.1)](https://developer.android.com/training/dependency-injection/hilt-android) - Used for dependency injection, simplifying the management of application components.
+
+* [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Used for managing and scheduling deferrable, asynchronous tasks that are expected to run even if the app is closed or the device restarts.
+* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Used for dependency injection, simplifying the management of application components.
 * [Jetpack Compose (1.9.1)](https://developer.android.com/develop/ui/compose) - A modern toolkit for building native UI in Android.
-* [Navigation (1.2.0)](https://developer.android.com/develop/ui/compose/navigation) - Handles in-app navigation in a type-safe manner.
-* [Compose Lifecycle (2.8.4)](https://developer.android.com/develop/ui/compose/lifecycle) - Manages lifecycle-aware components in Jetpack Compose.
+* [Navigation](https://developer.android.com/develop/ui/compose/navigation) - Handles in-app navigation in a type-safe manner.
 * [Coroutines](https://developer.android.com/kotlin/coroutines?hl=tr) - Provides a simple way to manage background threads, making asynchronous programming easier and more efficient.
 * [Flow](https://developer.android.com/kotlin/flow) - A reactive streams API in Kotlin used for managing data streams asynchronously.
-* [DataStore (1.1.1)](https://developer.android.com/topic/libraries/architecture/datastore) - Handles data storage and persistence, replacing SharedPreferences for more complex data structures.
+* [DataStore](https://developer.android.com/topic/libraries/architecture/datastore) - Handles data storage and persistence, replacing SharedPreferences for more complex data structures.
 * [MVVM](https://developer.android.com/topic/libraries/architecture/viewmodel#implement) - A design pattern used to separate concerns, making the application more modular, testable, and maintainable.
   * [Lifecycle (2.8.4)](https://developer.android.com/topic/libraries/architecture/lifecycle) - Manages Android lifecycle-aware components.
-  * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores
-      UI-related data that isn't destroyed on UI changes.
-  * [UseCases](https://developer.android.com/topic/architecture/domain-layer) - Located domain
-      layer that sits between the UI layer and the data layer.
-  * [Repository](https://developer.android.com/topic/architecture/data-layer) - Located in the data
-      layer that contains application data and business logic.
-* [Retrofit (2.11.0)](https://square.github.io/retrofit/) A type-safe HTTP client for Android and Java
-* [OkHttp (5.0.0-alpha.14)](https://square.github.io/okhttp/) An HTTP client that efficiently makes network requests
-* [Gson (2.11.0)](https://mvnrepository.com/artifact/com.google.code.gson/gson) - A library for serializing and deserializing JSON data.
-* [Firebase](https://firebase.google.com/) - A suite of tools used for backend services including authentication, Firestore database, storage, crash reporting, analytics, and performance monitoring.
-    * [Firebase Authentication (23.0.0)](https://firebase.google.com/docs/auth) Firebase Authentication
-      provides backend services, easy-to-use SDKs, and ready-made UI libraries to authenticate users
-      to your app.
-    * [Firebase Firestore (25.0.0)](https://firebase.google.com/docs/firestore) Cloud Firestore is a
-      flexible, scalable database for mobile, web, and server development from Firebase and Google
-      Cloud.
-    * [Firebase Storage (21.0.0)](https://firebase.google.com/docs/storage?hl=en)
-    * [Firebase Crashlytics (19.0.3)](https://firebase.google.com/docs/crashlytics) Firebase Crashlytics is a
-      lightweight, real-time crash reporter that helps you track, prioritize, and fix stability
-      issues that erode your app quality.
-    * [Firebase Performance (21.0.1)](https://firebase.google.com/docs/perf-mon?hl=en)
-    * [Firebase Analytics (22.0.2)](https://firebase.google.com/docs/analytics) Firebase Analytics is a free
-      app measurement solution that provides insight on app usage and user engagement.
-* [Location (21.3.0)](https://developers.google.com/android/guides/setup?hl=en) - Used for obtaining device location data.
-* [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences) Store
-  private primitive data in key-value pairs. Standard Android library with no specific version (comes with the Android SDK).
-* [Lottie Animation (6.3.0)](https://lottiefiles.com/blog/working-with-lottie-animations/getting-started-with-lottie-animations-in-android-app) - Used to display animations in the app.
-* [Coil (2.6.0)](https://coil-kt.github.io/coil/compose/) - An image loading library for Android backed by Kotlin Coroutines.
+  * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes.
+  * [UseCases](https://developer.android.com/topic/architecture/domain-layer) - Located domain layer that sits between the UI layer and the data layer.
+  * [Repository](https://developer.android.com/topic/architecture/data-layer) - Located in the data layer that contains application data and business logic.
+* [Retrofit](https://square.github.io/retrofit/) A type-safe HTTP client for Android and Java
+* [OkHttp](https://square.github.io/okhttp/) An HTTP client that efficiently makes network requests
+* [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) - A library for serializing and deserializing JSON data.
+* [Lottie Animation](https://lottiefiles.com/blog/working-with-lottie-animations/getting-started-with-lottie-animations-in-android-app) - Used to display animations in the app.
+* [Coil](https://coil-kt.github.io/coil/compose/) - An image loading library for Android backed by Kotlin Coroutines.
+* [Gemini](https://ai.google.dev/gemini-api/docs?hl=en) - A powerful AI model developed by Google, designed to assist with natural language understanding, generation, and multimodal tasks, providing advanced capabilities for building intelligent applications.
   
 <!-- Architecture -->
 ## Architecture
@@ -138,7 +118,7 @@ Clean Architecture & Multi Module
 - App Module: The core module that integrates all other modules and provides the main entry point of the application.
 - Data Module: Handles data sources, such as APIs and databases, and provides data to the Domain Layer.
 - Domain Module: Contains the core business logic and use cases, which are independent of external frameworks.
-- Feature Module: Encapsulates the app's features, allowing for modular development and testing of individual functionalities.
+- Presentation (Feature) Module: Encapsulates the app's features, allowing for modular development and testing of individual functionalities.
   
 ![image](https://github.com/user-attachments/assets/eb3bf886-2376-4cb6-9234-ece71d036a68)
 
