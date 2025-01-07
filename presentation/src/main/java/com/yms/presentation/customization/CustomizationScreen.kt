@@ -21,7 +21,6 @@ import com.yms.domain.model.user_preferences.Displayable
 import com.yms.domain.model.user_preferences.FollowUpTime
 import com.yms.domain.model.user_preferences.Gender
 import com.yms.presentation.R
-import com.yms.presentation.customization.viewmodel.CustomizationViewModel
 
 @Composable
 fun CustomizationScreen(
@@ -79,10 +78,10 @@ fun CustomizationScreen(
                     if (currentPage.value < totalPages) {
                         currentPage.value++
                     } else {
-                        viewModel.savePreferences {
+                        viewModel.onEvent(CustomizationEvent.SavePreferences {
                             saveAppEntry()
                             navigateToHome()
-                        }
+                        })
                     }
                 },
                 onBack = {
@@ -141,9 +140,9 @@ fun <T> DynamicPageWithEnumSelection(
                         .padding(vertical = dimensionResource(R.dimen.padding_small))
                         .clickable {
                             when (pageIndex) {
-                                0 -> viewModel.updateSelection(followUpTime = option as? FollowUpTime)
-                                1 -> viewModel.updateSelection(ageGroup = option as? AgeGroup)
-                                2 -> viewModel.updateSelection(gender = option as? Gender)
+                                0 -> viewModel.onEvent(CustomizationEvent.UpdateSelection(followUpTime = option as? FollowUpTime))
+                                1 -> viewModel.onEvent(CustomizationEvent.UpdateSelection(ageGroup = option as? AgeGroup))
+                                2 -> viewModel.onEvent(CustomizationEvent.UpdateSelection(gender = option as? Gender))
                             }
                             onNext()
                         },

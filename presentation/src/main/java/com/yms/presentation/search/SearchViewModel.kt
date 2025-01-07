@@ -23,12 +23,23 @@ class SearchViewModel @Inject constructor(val newsUseCase: NewsUseCase) : ViewMo
 
     val pagedSearchNews = MutableStateFlow<PagingData<ArticleData>>(PagingData.empty())
 
+    fun onEvent(event: SearchScreenEvent) {
+        when (event) {
+            is SearchScreenEvent.UpdateSearchOptions -> {
+                updateSearchOptions(event.update)
+            }
 
-    fun updateSearchOptions(update: SearchOptions.() -> SearchOptions) {
+            is SearchScreenEvent.Search -> {
+                search()
+            }
+        }
+    }
+
+    private fun updateSearchOptions(update: SearchOptions.() -> SearchOptions) {
         _searchOptions.value = _searchOptions.value.update()
     }
 
-    fun search() {
+    private fun search() {
         val options = _searchOptions.value
         val transformedSearchIn = options.searchIn.joinToString(",").lowercase()
         val transformedSortBy = options.sortBy?.replaceFirstChar { it.lowercaseChar() }

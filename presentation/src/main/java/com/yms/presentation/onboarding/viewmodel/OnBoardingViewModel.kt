@@ -32,7 +32,7 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun saveAppEntry() {
+    private fun saveAppEntry() {
         viewModelScope.launch {
             userPreferencesUseCase.saveAppEntry()
         }
