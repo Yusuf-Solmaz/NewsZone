@@ -60,13 +60,19 @@ NewsZone
 |----|---|-----|
 | <img src="https://github.com/user-attachments/assets/47b2a159-3340-4544-8f58-b052e85a65b7" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/85ad90b4-cf9e-47c9-aa5c-7da42d1cddee" width="250" height="500"/>|<img src="https://github.com/user-attachments/assets/de08802b-9eb5-40c7-921d-23688b66ab40" width="250" height="500"/>
 
-| Home  | News Detail   | News Summary  | Search  
-|--|-------------|--|----|
-| <img src="https://github.com/user-attachments/assets/99091ba4-8124-48cf-8e17-a40b9a9e28a3" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/def2701d-a9d0-4987-8283-a2ae4d1973b3" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/6c98d06f-20f7-41c6-96f3-de1ae81ba1bb" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/f81cb867-ba95-4c50-b108-a8fb062d9984" width="250" height="500"/> 
+| Home  | News Detail   | News Summary
+|--|-------------|--|
+| <img src="https://github.com/user-attachments/assets/99091ba4-8124-48cf-8e17-a40b9a9e28a3" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/def2701d-a9d0-4987-8283-a2ae4d1973b3" width="250" height="500"/>| <img src="https://github.com/user-attachments/assets/6c98d06f-20f7-41c6-96f3-de1ae81ba1bb" width="250" height="500"/>
 
-| Options                  | Players                   | Add Player Dialog             | Create Competition        | Competition Detail    | Saved Competition | Delete Saved Competition
-|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|
-|<img src="/screenshots/Screenshot_options_page.png" width="220"/> | <img src="/screenshots/Screenshot_players_page.png" width="220"/> | <img src="/screenshots/Screenshot_add_player_page.png" width="260"/> | <img src="/screenshots/Screenshot_create_competition_page.png" width="150"/> | <img src="/screenshots/Screenshot_competition_detail_page.png" width="120"/> | <img src="/screenshots/Screenshot_saved_competition_page.png" width="130"/>| <img src="/screenshots/Screenshot_delete_dialog.png" width="120"/>
+| Search  | Search Options | Saved News
+|--|-------------|--|
+| <img src="https://github.com/user-attachments/assets/f81cb867-ba95-4c50-b108-a8fb062d9984" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/82189ed5-dd69-428a-981c-ce7a82f9d416" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/066f87bb-cac1-4149-8b93-c087822326e3" width="250" height="500"/> 
+
+
+
+| Settings | Light Mode | Language Exchange | Notification
+|--|-------------|--|----|
+| <img src="https://github.com/user-attachments/assets/cbf83f3b-7d65-4cf0-a38b-b5da1276a092" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/14d08b10-1601-4bf3-a641-d13693081e93" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/b68db404-e07c-4d12-9254-d2aaca60bf59" width="250" height="500"/> | <img src="https://github.com/user-attachments/assets/6744efc2-2997-4e72-9cdd-cbbd5cbd4365" width="250" height="500"/> 
 
 <!-- Demo -->
 ## Demo
