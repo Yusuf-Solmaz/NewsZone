@@ -1,6 +1,5 @@
 package com.yms.data.repository.customization
 
-import android.content.Context
 import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
@@ -14,11 +13,9 @@ import com.yms.domain.model.user_preferences.AgeGroup
 import com.yms.domain.model.user_preferences.FollowUpTime
 import com.yms.domain.model.user_preferences.Gender
 import com.yms.domain.repository.user_preferences.CustomizationRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class CustomizationRepositoryImpl @Inject constructor(
-    @ApplicationContext private val ctx: Context,
     private val workManager: WorkManager
 ) : CustomizationRepository{
 

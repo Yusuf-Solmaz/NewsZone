@@ -3,7 +3,7 @@ package com.yms.newszone
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.yms.data.repository.notification.BreakingNewsNotificationRepositoryImpl
+import com.yms.domain.repository.news.BreakingNewsNotificationRepository
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class NewsZoneApplication: Application(), Configuration.Provider {
     lateinit var workerFactory: HiltWorkerFactory
 
     @Inject
-    lateinit var breakingNewsNotificationRepository: BreakingNewsNotificationRepositoryImpl
+    lateinit var breakingNewsNotificationRepository: BreakingNewsNotificationRepository
 
     override fun onCreate() {
         super.onCreate()

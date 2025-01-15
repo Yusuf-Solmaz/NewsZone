@@ -6,15 +6,16 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.yms.data.worker.NotificationWorker
+import com.yms.domain.repository.news.BreakingNewsNotificationRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BreakingNewsNotificationRepositoryImpl @Inject constructor(
     private val workManager: WorkManager
-) {
+): BreakingNewsNotificationRepository {
 
 
-    fun scheduleBreakingNewsNotification() {
+    override fun scheduleBreakingNewsNotification() {
         val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
             1, TimeUnit.HOURS
         )

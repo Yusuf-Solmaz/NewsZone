@@ -10,13 +10,15 @@ import com.yms.data.utils.generativeModel
 import com.yms.domain.model.gemini.ArticleSummary
 import com.yms.domain.repository.summarization.ArticleSummarizationRepository
 import com.yms.domain.utils.RootResult
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class ArticleSummarizationRepositoryImpl(val context: Context) : ArticleSummarizationRepository {
+class ArticleSummarizationRepositoryImpl @Inject constructor(@ApplicationContext val context: Context) : ArticleSummarizationRepository {
 
     override fun getSummary(prompt: String,content: String): Flow<RootResult<ArticleSummary>> = flow {
         emit(RootResult.Loading)
