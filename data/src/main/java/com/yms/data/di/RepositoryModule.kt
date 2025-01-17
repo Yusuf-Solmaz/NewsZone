@@ -14,37 +14,32 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
     @Binds
-    @Singleton
     abstract fun bindCustomizationRepository(
         customizationRepositoryImpl: CustomizationRepositoryImpl
     ): CustomizationRepository
 
     @Binds
-    @Singleton
     abstract fun bindBreakingNewsNotificationRepository(
         breakingNewsNotificationRepositoryImpl: BreakingNewsNotificationRepositoryImpl
     ): BreakingNewsNotificationRepository
 
     @Binds
-    @Singleton
     abstract fun bindNewsRepository(
         newsRepositoryImpl: NewsRepositoryImpl
     ): NewsRepository
 
     @Binds
-    @Singleton
     abstract fun bindLocalSavedNewsRepository(
         localSavedNewsRepositoryImpl: LocalSavedNewsRepositoryImpl
     ): LocalSavedNewsRepository
 
     @Binds
-    @Singleton
     abstract fun bindArticleSummarizationRepository(
         articleSummarizationRepositoryImpl: ArticleSummarizationRepositoryImpl
     ): ArticleSummarizationRepository

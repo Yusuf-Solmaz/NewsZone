@@ -31,7 +31,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 
 @Module
@@ -40,7 +39,6 @@ object UseCaseModule {
 
 
     @Provides
-    @Singleton
     fun provideUserPreferencesUseCase(userPreferencesRepository: UserPreferencesRepository): UserPreferencesUseCase {
         return UserPreferencesUseCase(
             saveAppEntry = SaveAppEntry(userPreferencesRepository),
@@ -49,13 +47,11 @@ object UseCaseModule {
     }
 
     @Provides
-    @Singleton
     fun provideCustomizationPreferencesUseCase(userPreferencesRepository: UserPreferencesRepository,customizationRepository: CustomizationRepository): CustomizationPreferencesUseCase {
         return CustomizationPreferencesUseCase(SaveCategory(customizationRepository),ReadCategory(userPreferencesRepository))
     }
 
     @Provides
-    @Singleton
     fun provideNewsUseCase(newsRepository: NewsRepository): NewsUseCase {
         return NewsUseCase(
             SearchNews(newsRepository),
@@ -65,7 +61,6 @@ object UseCaseModule {
     }
 
     @Provides
-    @Singleton
     fun provideSavedNewsUseCase(localSavedNewsRepository: LocalSavedNewsRepository): SavedNewsUseCase{
         return SavedNewsUseCase(
             getSavedNews = GetSavedNews(localSavedNewsRepository),
@@ -76,7 +71,6 @@ object UseCaseModule {
     }
 
     @Provides
-    @Singleton
     fun provideSettingsUseCase(userPreferencesRepository: UserPreferencesRepository): SettingsPreferencesUseCase{
         return SettingsPreferencesUseCase(
             readLanguage = ReadLanguage(userPreferencesRepository),
@@ -86,7 +80,7 @@ object UseCaseModule {
         )
     }
 
-    @Singleton
+
     @Provides
     fun provideSummaryUseCase(articleSummarizationRepository: ArticleSummarizationRepository): SummaryUseCase {
         return SummaryUseCase(
