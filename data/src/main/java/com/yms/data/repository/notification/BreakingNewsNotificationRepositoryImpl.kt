@@ -1,5 +1,6 @@
 package com.yms.data.repository.notification
 
+import android.util.Log
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
@@ -19,7 +20,7 @@ class BreakingNewsNotificationRepositoryImpl @Inject constructor(
         val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
             1, TimeUnit.HOURS
         )
-            .setInitialDelay(1, TimeUnit.HOURS)
+            //.setInitialDelay(1, TimeUnit.HOURS)
             .setConstraints(
                 Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -31,8 +32,12 @@ class BreakingNewsNotificationRepositoryImpl @Inject constructor(
 
         workManager.enqueueUniquePeriodicWork(
             NotificationWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
+            ExistingPeriodicWorkPolicy.UPDATE,
             workRequest
         )
+
+        workManager.getWorkInfosForUniqueWork(NotificationWorker.WORK_NAME).get().forEach { workInfo ->
+            Log.d("WorkManagerState", "Work ID: ${workInfo.id}, State: ${workInfo.state}")
+        }
     }
 }
