@@ -9,13 +9,13 @@ import androidx.navigation.NavBackStackEntry
 fun slideInToRight(scope: AnimatedContentTransitionScope<NavBackStackEntry>): EnterTransition {
     return scope.slideIntoContainer(
         AnimatedContentTransitionScope.SlideDirection.Right,
-        animationSpec = tween(300)
+        animationSpec = tween(400)
     )
 }
 
 fun slideOutToLeft(scope: AnimatedContentTransitionScope<NavBackStackEntry>): ExitTransition {
     return scope.slideOutOfContainer(
         AnimatedContentTransitionScope.SlideDirection.Left,
-        animationSpec = tween(300)
+        animationSpec = tween(400)
     )
 }
