@@ -1,3 +1,5 @@
+
+
 <h1 align="center">
 NewsZone 
 </h1>
@@ -136,7 +138,7 @@ git clone https://github.com/Yusuf-Solmaz/NewsZone
 
 1. Create `api.properties` file in the project directory.
 
-2. Add the following line with your API keys (for news and Gemini API ) and  to `api.properties`:
+2. Add the following lines with your API keys to `api.properties`:
 ```
 API_KEY=YOUR_API_KEY_HERE
 GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
